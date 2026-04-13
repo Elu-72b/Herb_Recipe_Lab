@@ -3,9 +3,9 @@
 
 # 実装ステータス
 
-- 現在のタスク:Issue 1
+- 現在のタスク:　Issue 3
 
-- 完了済み: なし
+- 完了済み: Issue 1〜2
 
 # 🌿 Herb Recipe Lab: MVP実装 Issueリスト
 
