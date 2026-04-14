@@ -1,1 +1,35 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+/* Herb Recipe Lab Base Theme */
+@theme {
+    --color-herb-green-50: #e9f1e3;
+    /* 図鑑背景 */
+    --color-herb-green-100: #d4e2ca;
+    /* 確認画面背景 */
+    --color-herb-green-600: #89bc7b;
+    /* 風味タグ・確定ボタン */
+    --color-herb-green-700: #3a5b52;
+    /* ヘッダー・フッター・メインボタン・文字色 */
+    --color-herb-yellow-400: #f6ad49;
+    /* 効能タグ */
+    --color-herb-white: #ffffff;
+}
+
+@layer base {
+    body {
+        /* @apply の中に全てまとめます。text-herb-green-700 を追加しました */
+        @apply bg-herb-green-50 text-herb-green-700;
+    }
+
+    /* 入力欄の基本スタイル */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    textarea,
+    select {
+        /* 全てのプロパティを1つの @apply 内に記述するのが正解です */
+        @apply w-full border-2 border-herb-green-600 bg-herb-white rounded-lg px-4 py-2 text-herb-green-700 placeholder:text-slate-400 focus:border-herb-green-700 focus:outline-none focus:ring-2 focus:ring-herb-green-700/20 transition-all duration-200;
+    }
+}

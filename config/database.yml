@@ -18,6 +18,7 @@ default: &default
   host: db # compose.ymlで指定したサービス名
   user: postgres # デフォルトのユーザー名
   password: password # compose.ymlで指定したパスワード
+  url: <%= ENV['DATABASE_URL'] %> # DATABASE_URLがあればそちらを優先する
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -85,3 +86,4 @@ production:
   database: myapp_production
   username: myapp
   password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+  url: <%= ENV["MY_APP_DATABASE_URL"] %>
