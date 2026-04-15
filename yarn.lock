@@ -427,7 +427,7 @@
 
 daisyui@^5.5.19:
   version "5.5.19"
-  resolved "https://registry.npmjs.org/daisyui/-/daisyui-5.5.19.tgz"
+  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-5.5.19.tgz#9aa962243c32c39d8e8f3eb187e48092bcd186fc"
   integrity sha512-pbFAkl1VCEh/MPCeclKL61I/MqRIFFhNU7yiXoDDRapXN4/qNCoMxeCCswyxEEhqL5eiTTfwHvucFtOE71C9sA==
 
 detect-libc@^2.0.3:
