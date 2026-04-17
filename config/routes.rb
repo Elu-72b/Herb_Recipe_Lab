@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
-  get "static_pages/top"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # 1. ルートパス（/）の設定
+  # 未ログインなら static_pages#top（ログインフォーム付き）を表示し、
+  # ログイン済みなら Controller 側で home へリダイレクトさせます。
+  root 'static_pages#top'
+
+  # 2. 新規登録画面のURLをシンプルにする（任意）
+  # /users/sign_up ではなく /signup でアクセスしたい場合に残します。
+  devise_scope :user do
+    get '/signup', to: 'devise/registrations#new'
+  end
+
+  # 3. 認証後のメイン画面
+  get 'home', to: 'static_pages#home'
+
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-  root 'static_pages#top'
-  get 'signup', to: 'static_pages#signup' # 新規登録画面
-  get 'home', to: 'static_pages#home'     # ホーム画面
 end

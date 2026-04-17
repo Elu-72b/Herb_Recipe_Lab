@@ -7,6 +7,19 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <div class="fixed top-4 right-4 z-50 space-y-2">
+      <% if notice %>
+        <div class="bg-herb-green-100 border border-herb-green-600 text-herb-green-700 px-6 py-3 rounded-xl shadow-lg">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="bg-red-100 border border-red-600 text-red-700 px-6 py-3 rounded-xl shadow-lg">
+          <%= alert %>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">

@@ -1,0 +1,54 @@
+<%# app/views/devise/registrations/new.html.erb %>
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 space-y-6 w-full">
+
+  <header class="w-full py-8 flex justify-center">
+    <div class="bg-herb-green-100 px-12 py-4 rounded-full shadow-sm border border-herb-green-600/20">
+      <h1 class="text-2xl md:text-3xl text-herb-green-700 font-medium tracking-wide">Herb Recipe Lab</h1>
+    </div>
+  </header>
+
+  <main class="flex-grow flex flex-col items-center justify-center px-4 pb-20">
+    <h2 class="text-4xl md:text-5xl font-light text-herb-green-700 mb-10 tracking-widest">新規登録</h2>
+
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-8 md:p-10">
+      <%# Deviseのフォーム開始 %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <%# ユーザー名（ER図に合わせて追加している場合） %>
+        <div>
+          <%= f.label :name, "ユーザー名", class: "block text-lg text-herb-green-700 mb-2 ml-1" %>
+          <%= f.text_field :name, placeholder: "Herb Lover", class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 focus:border-transparent outline-none text-lg" %>
+        </div>
+
+        <%# メールアドレス %>
+        <div>
+          <%= f.label :email, "メールアドレス", class: "block text-lg text-herb-green-700 mb-2 ml-1" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@mail.com", class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 focus:border-transparent outline-none text-lg" %>
+        </div>
+
+        <%# パスワード %>
+        <div>
+          <%= f.label :password, "パスワード", class: "block text-lg text-herb-green-700 mb-2 ml-1" %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "6文字以上", class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 focus:border-transparent outline-none text-lg" %>
+        </div>
+
+        <%# パスワード（確認用） %>
+        <div>
+          <%= f.label :password_confirmation, "パスワード（確認用）", class: "block text-lg text-herb-green-700 mb-2 ml-1" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "もう一度入力してください", class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 focus:border-transparent outline-none text-lg" %>
+        </div>
+
+        <%# 登録ボタン %>
+        <div class="pt-4">
+          <%= f.submit "アカウントを作成", class: "w-full py-4 bg-herb-green-600 text-white text-xl font-medium rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm cursor-pointer active:transform active:scale-[0.99]" %>
+        </div>
+
+        <div class="text-center pt-2">
+          <p class="text-herb-green-600 text-sm">既にアカウントをお持ちですか？</p>
+          <%= render "devise/shared/links" %>
+        </div>
+      <% end %>
+    </div>
+  </main>
+</div>
