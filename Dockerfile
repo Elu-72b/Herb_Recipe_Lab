@@ -39,6 +39,9 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
 
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
