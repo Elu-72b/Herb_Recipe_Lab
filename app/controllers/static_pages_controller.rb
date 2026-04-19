@@ -11,5 +11,6 @@ class StaticPagesController < ApplicationController
 
   def home
     # ホーム画面用
+    @recipes = Recipe.all.includes(:user).order(created_at: :desc)
   end
 end

@@ -5,16 +5,30 @@
 
 <div class="max-w-sm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-10">
     <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
-      <h2 class="display: justify-content: center flex text-2xl md:text-2xl text-herb-green-700 font-medium tracking-wide">
+      <h2 class="display: justify-content: center flex text-2xl md:text-2xl text-herb-green-700 font-medium tracking-wide ">
         ブレンド研究一覧
       </h2>
     </div>
     <br>
     <div class="flex-grow flex flex-col items-center justify-center border-2 border-dashed border-herb-green-50 rounded-2xl py-12 mb-6 bg-herb-green-50/30">
-        <p class="text-herb-green-300 text-sm">研究データがまだありません</p>
-        <p class="text-herb-green-200 text-xs">最初の一杯を記録しましょう</p>
+        <% if @recipes.empty? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% @recipes.each do |recipe| %>
+            <div class="bg-white rounded-lg shadow-md p-4 border border-herb-green-100">
+              <h2 class="text-xl font-bold text-herb-green-800 mb-2"><%= recipe.title %></h2>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3"><%= recipe.content %></p>
+              <div class="flex justify-between items-center text-xs text-gray-500">
+                <span>投稿者: <%= recipe.user.name %></span>
+                <span><%= l recipe.created_at, format: :short %></span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <% else %>
+          <p class="text-herb-green-300 text-sm">研究データがまだありません<br>最初の一杯を記録しましょう</p>
+        <% end %>
     </div>
-    <br>
+
     <div class="pt-2" w-full>
         <button type="submit" class="w-full py-4 bg-herb-green-600 text-white text-l font-medium rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm active:transform active:scale-[0.99]">
         ブレンド研究記録を作成する
