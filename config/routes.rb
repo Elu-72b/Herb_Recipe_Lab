@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "recipes/index"
+  get "recipes/new"
+  get "recipes/create"
+  get "recipes/show"
   get "herbs/index"
   get "herbs/show"
   get "herbs/new"
@@ -13,7 +17,8 @@ Rails.application.routes.draw do
   # ログイン済みなら Controller 側で home へリダイレクトさせます。
   root 'static_pages#top'
 
-  resources :herbs
+  resources :herbs, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy]
 
   # 2. 新規登録画面のURLをシンプルにする（任意）
   # /users/sign_up ではなく /signup でアクセスしたい場合に残します。
