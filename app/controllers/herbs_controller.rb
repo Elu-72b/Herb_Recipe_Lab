@@ -1,8 +1,9 @@
 class HerbsController < ApplicationController
   before_action :set_herb, only: [:show, :edit, :update, :destroy]
+  before_action :set_tags, only: [:new, :create, :edit, :update]
 
   def index
-    @herbs = Herb.all
+    @herbs = Herb.all.includes(:flavor_tags, :functional_tags)
   end
 
   def show
@@ -26,7 +27,7 @@ class HerbsController < ApplicationController
 
   def update
     if @herb.update(herb_params)
-      redirect_to @herb, notice: "ハーブ情報を更新しました"
+      redirect_to @herb, notice: "更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +35,7 @@ class HerbsController < ApplicationController
 
   def destroy
     @herb.destroy
-    redirect_to herbs_path, notice: "ハーブを削除しました"
+    redirect_to herbs_path, notice: "削除しました"
   end
 
   private
@@ -43,8 +44,18 @@ class HerbsController < ApplicationController
     @herb = Herb.find(params[:id])
   end
 
+  def set_tags
+    @flavor_tags = FlavorTag.all
+    @functional_tags = FunctionalTag.all
+    @caution_tags = CautionTag.all
+  end
+
   def herb_params
-    # :imageをストロングパラメーターに追加
-    params.require(:herb).permit(:name, :description, :caution, :image)
+    params.require(:herb).permit(
+      :name, :description, :caution, :image,
+      flavor_tag_ids: [],      # 複数選択のため配列で受け取る
+      functional_tag_ids: [],
+      caution_tag_ids: []
+    )
   end
 end
