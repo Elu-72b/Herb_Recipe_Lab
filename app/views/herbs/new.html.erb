@@ -1,4 +1,48 @@
-<div>
-  <h1 class="font-bold text-4xl">Herbs#new</h1>
-  <p>Find me in app/views/herbs/new.html.erb</p>
+<div class="max-w-md mx-auto mt-10 p-6">
+<%= render 'shared/header' %>
+  <h1 class="text-2xl text-herb-green-700 mb-6">ハーブを登録する</h1>
+
+  <%= form_with model: @herb, local: true do |form| %>
+
+    <%# エラーメッセージ表示 %>
+    <% if @herb.errors.any? %>
+      <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <% @herb.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# ハーブ名 %>
+    <div class="mb-4">
+      <%= form.label :name, "ハーブ名", class: "form-label" %>
+      <%= form.text_field :name, placeholder: "例：カモミール" %>
+    </div>
+
+    <%# 説明 %>
+    <div class="mb-4">
+      <%= form.label :description, "説明", class: "form-label" %>
+      <%= form.text_area :description, rows: 3, placeholder: "ハーブの説明" %>
+    </div>
+
+    <%# 禁忌 %>
+    <div class="mb-4">
+      <%= form.label :caution, "禁忌", class: "form-label" %>
+      <%= form.text_area :caution, rows: 2, placeholder: "注意事項" %>
+    </div>
+
+    <%# 画像アップロード %>
+    <div class="mb-6">
+      <%= form.label :image, "ハーブ画像", class: "form-label" %>
+      <%= form.file_field :image,
+          accept: Herb::ACCEPTED_CONTENT_TYPES.join(",") %>
+      <p class="text-xs text-herb-green-700/60 mt-1">
+        JPEG・PNG・GIF・WebP形式、5MB以下
+      </p>
+    </div>
+
+    <%= form.submit "登録する", class: "btn-primary-lg" %>
+
+  <% end %>
 </div>
+<%= render 'shared/footer' %>

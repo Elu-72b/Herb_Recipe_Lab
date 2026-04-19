@@ -1,4 +1,54 @@
-<div>
-  <h1 class="font-bold text-4xl">Herbs#index</h1>
-  <p>Find me in app/views/herbs/index.html.erb</p>
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 space-y-3 w-full">
+  <%= render 'shared/header' %>
+
+  <div class="max-w-sm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-10">
+    <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+      <h2 class="flex justify-center text-2xl md:text-2xl text-herb-green-700 font-medium tracking-wide">
+        ハーブ図鑑
+      </h2>
+    </div>
+
+    <%# ハーブが1件もない場合 %>
+    <% if @herbs.empty? %>
+      <div class="text-center py-20 text-herb-green-700/50">
+        <p>まだハーブが登録されていません</p>
+      </div>
+
+    <%# ハーブ一覧 %>
+    <% else %>
+      <div class="space-y-6 mt-2 pt-2">
+        <% @herbs.each do |herb| %>
+          <%= link_to herb_path(herb), class: "flex herb-card block hover:opacity-80 transition" do %>
+
+            <%# 画像（小さく左寄り） %>
+            <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+              <% if herb.image.attached? %>
+                <%= image_tag herb.image, class: "w-full h-full object-cover" %>
+              <% else %>
+                <div class="w-full h-full flex items-center justify-center text-herb-green-700/30 text-xs">
+                  NO IMG
+                </div>
+              <% end %>
+            </div>
+
+            <%# テキスト情報（右側） %>
+            <div class="p-5 w-56 shrink-0">
+
+              <%# 名称 %>
+              <p class="text-herb-green-700 text-lg sm:text-xl font-serif font-medium tracking-wide mb-1 transition">
+                <%= herb.name %>
+              </p>
+            </div>
+          <% end %>  <%# link_to の end %>
+        <% end %>   <%# each の end %>
+      </div>
+    <% end %>       <%# if の end %>
+
+    <div class="flex justify-end space-y-3 mt-6 pt-2">
+      <%= link_to "＋ 新規登録", new_herb_path,
+          class: "text-sm bg-herb-green-600 text-white px-4 py-2 rounded-xl" %>
+    </div>
+  </div>
+
+  <%= render 'shared/footer' %>
 </div>
