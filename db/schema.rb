@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_19_174405) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_19_185042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,10 +54,20 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_19_174405) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "flavor_tags_recipes", id: false, force: :cascade do |t|
+    t.bigint "flavor_tag_id", null: false
+    t.bigint "recipe_id", null: false
+  end
+
   create_table "functional_tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "functional_tags_recipes", id: false, force: :cascade do |t|
+    t.bigint "functional_tag_id", null: false
+    t.bigint "recipe_id", null: false
   end
 
   create_table "herb_caution_tags", force: :cascade do |t|
@@ -102,6 +112,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_19_174405) do
     t.text "history"
   end
 
+  create_table "recipe_herbs", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.bigint "herb_id", null: false
+    t.float "quantity"
+    t.integer "unit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["herb_id"], name: "index_recipe_herbs_on_herb_id"
+    t.index ["recipe_id"], name: "index_recipe_herbs_on_recipe_id"
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -132,5 +153,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_19_174405) do
   add_foreign_key "herb_flavor_tags", "herbs"
   add_foreign_key "herb_functional_tags", "functional_tags"
   add_foreign_key "herb_functional_tags", "herbs"
+  add_foreign_key "recipe_herbs", "herbs"
+  add_foreign_key "recipe_herbs", "recipes"
   add_foreign_key "recipes", "users"
 end

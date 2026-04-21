@@ -1,15 +1,4 @@
 Rails.application.routes.draw do
-  get "recipes/index"
-  get "recipes/new"
-  get "recipes/create"
-  get "recipes/show"
-  get "herbs/index"
-  get "herbs/show"
-  get "herbs/new"
-  get "herbs/create"
-  get "herbs/edit"
-  get "herbs/update"
-  get "herbs/destroy"
   devise_for :users
 
   # 1. ルートパス（/）の設定
@@ -19,7 +8,6 @@ Rails.application.routes.draw do
 
   resources :herbs, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy]
-
   # 2. 新規登録画面のURLをシンプルにする（任意）
   # /users/sign_up ではなく /signup でアクセスしたい場合に残します。
   devise_scope :user do
