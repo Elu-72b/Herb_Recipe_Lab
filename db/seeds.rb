@@ -1,5 +1,5 @@
 # 風味タグ
-flavor_names = %w[甘味 酸味 苦味 渋味 フルーティー スパイシー 清涼感 香ばしさ]
+flavor_names = %w[甘味 酸味 苦味 渋味 フルーティー スパイシー 清涼感 華やかさ]
 flavor_names.each { |name| FlavorTag.find_or_create_by!(name: name) }
 
 # 効能タグ
@@ -18,19 +18,3 @@ caution_names = [
   "ホルモン感受性注意", "鎮静作用あり", "光感作注意"
 ]
 caution_names.each { |name| CautionTag.find_or_create_by!(name: name) }
-
-herbs_data.each do |data|
-  herb = Herb.find_or_create_by!(name: data[:name]) do |h|
-    h.alias_name          = data[:alias_name]
-    h.active_ingredients  = data[:active_ingredients]
-    h.flavor_description  = data[:flavor_description]
-    h.effect_description  = data[:effect_description]
-    h.caution_description = data[:caution_description]
-    h.history             = data[:history]
-  end
-
-  # タグを紐付ける
-  herb.flavor_tags     = FlavorTag.where(name: data[:flavor_tags])
-  herb.functional_tags = FunctionalTag.where(name: data[:functional_tags])
-  herb.caution_tags    = CautionTag.where(name: data[:caution_tags])
-end

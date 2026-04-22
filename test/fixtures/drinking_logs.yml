@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipe: one
+  rating: 1
+  sweetness: 1
+  bitterness: 1
+  astringency: 1
+  freshness: 1
+  savory: 1
+  spicy: 1
+  fruity: 1
+  acidity: 1
+  impression: MyText
+
+two:
+  recipe: two
+  rating: 1
+  sweetness: 1
+  bitterness: 1
+  astringency: 1
+  freshness: 1
+  savory: 1
+  spicy: 1
+  fruity: 1
+  acidity: 1
+  impression: MyText

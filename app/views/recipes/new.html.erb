@@ -1,0 +1,194 @@
+<%# app/views/recipes/new.html.erb %>
+<div class="min-h-screen bg-gradient-to-br from-herb-green-50 to-white flex flex-col items-center p-4 w-full">
+  <%= render 'shared/header' %>
+
+  <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
+
+    <%# タイトル %>
+    <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20 mb-6 inline-block">
+      <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">
+        STEP 1｜ブレンドを記録する
+      </h2>
+    </div>
+
+    <%# バリデーションエラー表示 %>
+    <% if @recipe.errors.any? %>
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+        <p class="text-red-600 text-sm font-medium mb-1">入力内容を確認してください</p>
+        <ul class="text-red-500 text-sm space-y-1">
+          <% @recipe.errors.full_messages.each do |msg| %>
+            <li>・<%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @recipe, class: "space-y-5" do |f| %>
+
+      <%# レシピ名 %>
+      <div>
+        <%= f.label :title, "レシピ名", class: "block text-sm font-medium text-herb-green-700 mb-1" %>
+        <%= f.text_field :title,
+              placeholder: "例）夜のリラックスブレンド",
+              class: "w-full border border-herb-green-200 rounded-xl px-4 py-3 text-sm
+                      focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+      </div>
+
+      <%# 作成日 %>
+      <div>
+        <%= f.label :brewed_at, "作成日", class: "block text-sm font-medium text-herb-green-700 mb-1" %>
+        <%= f.date_field :brewed_at,
+              value: Date.today,
+              class: "w-full border border-herb-green-200 rounded-xl px-4 py-3 text-sm
+                      focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+      </div>
+
+      <%# 抽出量 %>
+      <div>
+        <%= f.label :amount, "抽出量（ml）", class: "block text-sm font-medium text-herb-green-700 mb-1" %>
+        <div class="flex items-center gap-2">
+          <%= f.number_field :amount,
+                value: 200,
+                min: 1,
+                placeholder: "200",
+                class: "w-full border border-herb-green-200 rounded-xl px-4 py-3 text-sm
+                        focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+          <span class="text-sm text-gray-400 whitespace-nowrap">ml</span>
+        </div>
+      </div>
+
+      <%# ハーブ配合 %>
+      <div>
+        <p class="block text-sm font-medium text-herb-green-700 mb-2">ハーブ配合</p>
+        <div class="space-y-3" id="recipe-herbs-fields">
+          <%# 既存行（バリデーション失敗時の再表示 or 初期の1行） %>
+          <%= f.fields_for :recipe_herbs do |herb_f| %>
+            <div class="flex gap-2 items-center recipe-herb-row">
+              <%= herb_f.collection_select :herb_id, @herbs, :id, :name, { include_blank: "ハーブを選択" },
+                    class: "flex-1 border border-herb-green-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+
+              <%= herb_f.number_field :quantity, step: 0.1, min: 0, placeholder: "量",
+                    class: "w-20 border border-herb-green-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+
+              <%= herb_f.select :unit, [["g", "g"], ["小さじ", "teaspoon"], ["枚", "piece"], ["個", "individual"]], {},
+                    class: "w-24 border border-herb-green-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+
+              <% if herb_f.object.persisted? %>
+                <%= herb_f.check_box :_destroy, class: "hidden" %>
+              <% end %>
+              <button type="button" onclick="this.closest('.recipe-herb-row').remove()"
+                class="text-red-400 hover:text-red-600 text-xl font-bold px-2 leading-none">
+                ×
+              </button>
+            </div>
+          <% end %>
+        </div>
+
+        <%# ハーブ追加ボタン %>
+        <button type="button" id="add-herb-btn"
+          class="mt-3 text-herb-green-600 text-sm border border-herb-green-300 rounded-xl
+                 px-4 py-2 hover:bg-herb-green-50 transition-colors w-full">
+          ＋ ハーブを追加する
+        </button>
+      </div>
+
+      <%# 淹れる前のメモ %>
+      <div>
+        <%= f.label :memo, "淹れる前のメモ（任意）",
+              class: "block text-sm font-medium text-herb-green-700 mb-1" %>
+        <%= f.text_area :memo,
+              rows: 3,
+              placeholder: "例）鎮静効果のあるハーブを中心に配合",
+              class: "w-full border border-herb-green-200 rounded-xl px-4 py-3 text-sm
+                      focus:outline-none focus:ring-2 focus:ring-herb-green-400 resize-none" %>
+      </div>
+
+      <%# 公開設定 %>
+      <div class="flex items-center gap-3 bg-herb-green-50 rounded-xl px-4 py-3">
+        <%= f.check_box :is_public,
+              class: "w-4 h-4 text-herb-green-600 rounded focus:ring-herb-green-400" %>
+        <div>
+          <%= f.label :is_public, "このレシピを公開する",
+                class: "text-sm font-medium text-herb-green-700" %>
+          <p class="text-xs text-gray-400">オンにすると他のユーザーに表示されます</p>
+        </div>
+      </div>
+
+      <%# 保存ボタン %>
+      <div class="pt-2">
+        <%= f.submit "記録を保存する（STEP 1）",
+              class: "w-full py-4 bg-herb-green-600 text-white text-base font-medium
+                      rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm cursor-pointer
+                      active:scale-[0.99]" %>
+      </div>
+
+    <% end %>
+
+    <%# 戻るリンク %>
+    <div class="text-center mt-4">
+      <%= link_to "← 一覧に戻る", home_path,
+            class: "text-herb-green-500 text-sm hover:text-herb-green-700 transition-colors" %>
+    </div>
+  </div>
+
+  <%= render 'shared/footer' %>
+</div>
+
+<%# ハーブ行を動的に追加するJavaScript %>
+<script data-turbo-track="reload">
+  document.addEventListener("turbo:load", function () {
+    const addBtn = document.getElementById("add-herb-btn");
+    if (!addBtn) return; // ボタンがない画面では実行しない
+
+    // 既にイベントが設定されている場合は重複登録を防ぐ
+    if (addBtn.dataset.listener === "true") return;
+
+    // ハーブのselectオプションを文字列で用意
+    const herbOptions = `
+      <option value="">ハーブを選択</option>
+      <% @herbs.each do |herb| %>
+        <option value="<%= herb.id %>"><%= herb.name %></option>
+      <% end %>
+    `;
+
+    addBtn.addEventListener("click", function () {
+      const container = document.getElementById("recipe-herbs-fields");
+      const herbIndex = container.querySelectorAll(".recipe-herb-row").length;
+
+      const row = document.createElement("div");
+      row.className = "flex gap-2 items-center recipe-herb-row";
+      row.innerHTML = `
+        <select name="recipe[recipe_herbs_attributes][${herbIndex}][herb_id]"
+          class="flex-1 border border-herb-green-200 rounded-xl px-3 py-2 text-sm
+                 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+          ${herbOptions}
+        </select>
+
+        <input type="number" step="0.1" min="0"
+          name="recipe[recipe_herbs_attributes][${herbIndex}][quantity]"
+          placeholder="量"
+          class="w-20 border border-herb-green-200 rounded-xl px-3 py-2 text-sm
+                 focus:outline-none focus:ring-2 focus:ring-herb-green-400" />
+
+        <select name="recipe[recipe_herbs_attributes][${herbIndex}][unit]"
+          class="w-24 border border-herb-green-200 rounded-xl px-3 py-2 text-sm
+                 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+          <option value="g">g</option>
+          <option value="teaspoon">小さじ</option>
+          <option value="piece">枚</option>
+          <option value="individual">個</option>
+        </select>
+
+        <button type="button"
+          onclick="this.closest('.recipe-herb-row').remove()"
+          class="text-red-400 hover:text-red-600 text-xl font-bold px-2 leading-none">
+          ×
+        </button>
+      `;
+      container.appendChild(row);
+    });
+
+    // リスナー設定済みフラグを立てる
+    addBtn.dataset.listener = "true";
+  });
+</script>

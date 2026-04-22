@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  get "herbs/index"
-  get "herbs/show"
-  get "herbs/new"
-  get "herbs/create"
-  get "herbs/edit"
-  get "herbs/update"
-  get "herbs/destroy"
   devise_for :users
 
   # 1. ルートパス（/）の設定
@@ -13,8 +6,10 @@ Rails.application.routes.draw do
   # ログイン済みなら Controller 側で home へリダイレクトさせます。
   root 'static_pages#top'
 
-  resources :herbs
-
+  resources :herbs, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :recipes do
+    resources :drinking_logs, only: [:new, :create, :show, :edit, :update]
+  end
   # 2. 新規登録画面のURLをシンプルにする（任意）
   # /users/sign_up ではなく /signup でアクセスしたい場合に残します。
   devise_scope :user do
