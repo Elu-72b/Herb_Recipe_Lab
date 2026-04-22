@@ -70,7 +70,7 @@
               <%= herb_f.number_field :quantity, step: 0.1, min: 0, placeholder: "量",
                     class: "w-20 border border-herb-green-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
 
-              <%= herb_f.select :unit, RecipeHerb.units.keys.map { |k| [I18n.t("enums.recipe_herb.unit.#{k}", default: k), k] }, {},
+              <%= herb_f.select :unit, [["g", "g"], ["小さじ", "teaspoon"], ["枚", "piece"], ["個", "individual"]], {},
                     class: "w-24 border border-herb-green-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
 
               <% if herb_f.object.persisted? %>
@@ -135,12 +135,15 @@
 </div>
 
 <%# ハーブ行を動的に追加するJavaScript %>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // 現在のハーブ行数をインデックスに使う
-    let herbIndex = document.querySelectorAll(".recipe-herb-row").length;
+<script data-turbo-track="reload">
+  document.addEventListener("turbo:load", function () {
+    const addBtn = document.getElementById("add-herb-btn");
+    if (!addBtn) return; // ボタンがない画面では実行しない
 
-    // ハーブのselectオプションを文字列で用意（Rubyから埋め込む）
+    // 既にイベントが設定されている場合は重複登録を防ぐ
+    if (addBtn.dataset.listener === "true") return;
+
+    // ハーブのselectオプションを文字列で用意
     const herbOptions = `
       <option value="">ハーブを選択</option>
       <% @herbs.each do |herb| %>
@@ -148,8 +151,9 @@
       <% end %>
     `;
 
-    document.getElementById("add-herb-btn").addEventListener("click", function () {
+    addBtn.addEventListener("click", function () {
       const container = document.getElementById("recipe-herbs-fields");
+      const herbIndex = container.querySelectorAll(".recipe-herb-row").length;
 
       const row = document.createElement("div");
       row.className = "flex gap-2 items-center recipe-herb-row";
@@ -182,7 +186,9 @@
         </button>
       `;
       container.appendChild(row);
-      herbIndex++;
     });
+
+    // リスナー設定済みフラグを立てる
+    addBtn.dataset.listener = "true";
   });
 </script>
