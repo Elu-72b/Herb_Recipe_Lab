@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   end
 
   get 'home', to: 'static_pages#home'
+  get 'profile', to: 'profiles#show'
+  get 'bookmarks', to: 'bookmarks#index'
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

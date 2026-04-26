@@ -1,0 +1,17 @@
+<div class="max-w-sm mx-auto mt-8 bg-white rounded-2xl shadow-sm border border-herb-green-100 p-8 space-y-6">
+  <h2 class="text-xl font-medium text-herb-green-700">プロフィール</h2>
+
+  <div class="space-y-4">
+    <div>
+      <p class="text-xs text-herb-green-600/60 mb-1">名前</p>
+      <p class="text-herb-green-700 font-medium"><%= current_user.name.presence || "未設定" %></p>
+    </div>
+    <div>
+      <p class="text-xs text-herb-green-600/60 mb-1">メールアドレス</p>
+      <p class="text-herb-green-700"><%= current_user.email %></p>
+    </div>
+  </div>
+
+  <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete },
+      class: "block w-full text-center py-3 border border-herb-green-600 text-herb-green-600 rounded-xl hover:bg-herb-green-50 transition-colors" %>
+</div>

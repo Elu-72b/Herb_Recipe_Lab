@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "Herb Recipe Lab" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
 
+  <body class="min-h-screen pb-20">
+    <%= render 'shared/header' %>
     <div class="fixed top-4 right-4 z-50 space-y-2">
       <% if notice %>
         <div class="bg-herb-green-100 border border-herb-green-600 text-herb-green-700 px-6 py-3 rounded-xl shadow-lg">
@@ -19,21 +29,9 @@
         </div>
       <% end %>
     </div>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
-
-  <body>
-    <body class="min-h-screen pb-20">
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-0 px-5 flex">
       <%= yield %>
     </main>
+    <%= render 'shared/footer' %>
   </body>
 </html>
