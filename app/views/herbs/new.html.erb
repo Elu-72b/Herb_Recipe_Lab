@@ -90,14 +90,14 @@
     </div>
 
     <%# 画像 %>
-    <div class="mb-6">
-      <%= form.label :image, "ハーブ画像", class: "form-label" %>
-      <%= form.file_field :image,
-          accept: Herb::ACCEPTED_CONTENT_TYPES.join(",") %>
-      <p class="text-xs text-herb-green-700/60 mt-1">
-        JPEG・PNG・GIF・WebP形式、5MB以下
-      </p>
-    </div>
+    <%# <div class="mb-6"> %>
+      <%# <%= form.label :image, "ハーブ画像", class: "inline-block border rounded-full px-6 py-2" %>
+      <%# <%= form.file_field :image, %>
+          <%# accept: Herb::ACCEPTED_CONTENT_TYPES.join(",") %>
+      <%# <p class="text-xs text-herb-green-700/60 mt-1"> %>
+        <%# JPEG・PNG・GIF・WebP形式、5MB以下 %>
+      <%# </p> %>
+    <%# </div> %>
 
     <%= form.submit "登録する", class: "btn-primary-lg w-full justify-center" %>
 
