@@ -1,5 +1,5 @@
-<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 space-y-3 w-full">
-<div class="max-w-sm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-8 md:p-10">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-3 space-y-3 w-full">
+<div class="max-w-lm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-8 md:p-10">
 
   <%# 名称・別名 %>
   <h1 class="text-2xl text-herb-green-700 font-medium"><%= @herb.name %></h1>
@@ -11,99 +11,77 @@
 
   <div class="flex gap-4 mb-6 justify-center">
     <%# 画像 %>
-    <div class="w-full rounded-2xl overflow-hidden aspect-video">
-      <% if @herb.image.attached? %>
-        <%= image_tag @herb.image, class: "w-full h-full object-cover" %>
-      <% else %>
-        <div class="w-full h-full flex items-center justify-center text-herb-green-700/30">
-          画像なし
-        </div>
-      <% end %>
-    </div>
-    <div class="flex flex-col gap-4 w-full">
+    <%# <div class="w-full rounded-2xl overflow-hidden aspect-video"> %>
+      <%# <% if @herb.image.attached? %>
+        <%# <%= image_tag @herb.image, class: "w-full h-full object-cover" %>
+      <%# <% else %>
+        <%# <div class="w-full h-full flex items-center justify-center text-herb-green-700/30"> %>
+          <%# 画像なし %>
+        <%# </div> %>
+      <%# <% end %>
+    <%# </div> %>
+
+    <div class="flex flex-col gap-1 w-full">
       <%# 風味タグ %>
       <% if @herb.flavor_tags.any? %>
-        <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-          <p class="text-xs text-herb-green-700/50 mb-2">風味</p>
-          <div class="flex flex-wrap gap-1">
-            <% @herb.flavor_tags.each do |tag| %>
-              <span class="w-full h-full tag-herb"><%= tag.name %></span>
-            <% end %>
-          </div>
+        <p class="text-xs text-herb-green-700/50">風味</p>
+        <div class="flex flex-wrap gap-1">
+          <% @herb.flavor_tags.each do |tag| %>
+            <span class="flex flex-wrap gap-1 tag-herb"><%= tag.name %></span>
+          <% end %>
         </div>
       <% end %>
 
       <%# 効能タグ %>
       <% if @herb.functional_tags.any? %>
-        <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-          <p class="text-xs text-herb-green-700/50 mb-2">効能</p>
-          <div class="flex flex-wrap gap-1">
-            <% @herb.functional_tags.each do |tag| %>
-              <span class="w-full h-full tag-benefit"><%= tag.name %></span>
-            <% end %>
-          </div>
+        <p class="text-xs text-herb-green-700/50">効能</p>
+        <div class="flex flex-wrap gap-1">
+          <% @herb.functional_tags.each do |tag| %>
+            <span class="flex flex-wrap gap-1 tag-benefit"><%= tag.name %></span>
+          <% end %>
         </div>
       <% end %>
 
       <%# 禁忌タグ %>
       <% if @herb.caution_tags.any? %>
-        <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-          <p class="text-xs text-herb-green-700/50 mb-2">禁忌</p>
-          <div class="flex flex-wrap gap-1">
-            <% @herb.caution_tags.each do |tag| %>
-              <span class="w-full h-full bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
-                ⚠ <%= tag.name %>
-              </span>
-            <% end %>
-          </div>
+        <p class="text-xs text-herb-green-700/50">禁忌</p>
+        <div class="flex flex-wrap gap-1">
+          <% @herb.caution_tags.each do |tag| %>
+            <span class="flex flex-wrap gap-1 bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
+              ⚠ <%= tag.name %>
+            </span>
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
 
-    <%# 有効成分 %>
-    <% if @herb.active_ingredients.present? %>
-      <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-        <p class="text-xs text-herb-green-700/50 mb-2">有効成分</p>
-        <p class="text-sm text-herb-green-700"><%= @herb.active_ingredients %></p>
-      </div>
-    <% end %>
-
-    <%# 風味の特徴 %>
-    <% if @herb.flavor_description.present? %>
-      <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-        <p class="text-xs text-herb-green-700/50 mb-2">風味の特徴</p>
-        <p class="text-sm text-herb-green-700 leading-relaxed"><%= @herb.flavor_description %></p>
-      </div>
-    <% end %>
-
-    <%# 効能の説明 %>
-    <% if @herb.effect_description.present? %>
-      <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-        <p class="text-xs text-herb-green-700/50 mb-2">効能の説明</p>
-        <p class="text-sm text-herb-green-700 leading-relaxed"><%= @herb.effect_description %></p>
-      </div>
-    <% end %>
-
-    <%# 禁忌の説明 %>
-    <% if @herb.caution_description.present? %>
-      <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-        <p class="text-xs text-herb-green-700/50 mb-2">禁忌の説明</p>
-        <p class="text-sm text-herb-green-700 leading-relaxed"><%= @herb.caution_description %></p>
-      </div>
-    <% end %>
-
-    <%# 歴史 %>
-    <% if @herb.history.present? %>
-      <div class="bg-white rounded-2xl p-4 border border-herb-green-100">
-        <p class="text-xs text-herb-green-700/50 mb-2">歴史</p>
-        <p class="text-sm text-herb-green-700 leading-relaxed"><%= @herb.history %></p>
-      </div>
-    <% end %>
+  <%# 説明 %>
+  <% if @herb.description.present? %>
+    <div class="bg-herb-green-50/50 rounded-2xl p-2 border border-herb-green-100">
+      <p class="text-xs text-herb-green-700/50 mb-2">説明</p>
+      <p class="text-sm text-herb-green-700/80 leading-relaxed"><%= @herb.description %></p>
+    </div>
+  <% end %>
+  <br>
+  <%# 禁忌・注意事項 %>
+  <% if @herb.caution.present? %>
+    <div class="bg-red-50 rounded-2xl p-2 border border-red-100">
+      <p class="text-xs text-red-500 mb-2">⚠ 禁忌・注意事項</p>
+      <p class="text-sm text-red-700 leading-relaxed"><%= @herb.caution %></p>
+    </div>
+  <% end %>
 
   <br>
-  <%= link_to "一覧に戻る", herbs_path,
-    class:"inline-block border rounded-full px-6 py-2" %>
+  <div class="flex gap-3 items-center">
+    <%= link_to "一覧に戻る", herbs_path,
+        class: "inline-block border border-herb-green-600 text-herb-green-600 rounded-full px-5 py-2 text-sm hover:bg-herb-green-50 transition" %>
+    <%= link_to "編集", edit_herb_path(@herb),
+        class: "inline-block bg-herb-green-600 text-white rounded-full px-5 py-2 text-sm hover:bg-herb-green-700 transition" %>
+    <%= link_to "削除", herb_path(@herb),
+        data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+        class: "inline-block bg-red-100 text-red-600 rounded-full px-5 py-2 text-sm hover:bg-red-200 transition" %>
+  </div>
 
 </div>
 </div>

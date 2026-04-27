@@ -1,4 +1,98 @@
-<div>
-  <h1 class="font-bold text-4xl">Herbs#edit</h1>
-  <p>Find me in app/views/herbs/edit.html.erb</p>
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 space-y-3 w-full">
+
+  <div class="max-w-lm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5">
+    <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+      <h2 class="flex justify-center text-2xl text-herb-green-700 font-medium tracking-wide">
+        ハーブを編集する
+      </h2>
+    </div>
+  <br>
+  <%= form_with model: @herb do |form| %>
+
+    <% if @herb.errors.any? %>
+      <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <% @herb.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# ハーブ名 %>
+    <div class="mb-4">
+      <%= form.label :name, "ハーブ名", class: "form-label" %>
+      <%= form.text_field :name, placeholder: "例：カモミール" %>
+    </div>
+
+    <%# 説明 %>
+    <div class="mb-4">
+      <%= form.label :description, "説明", class: "form-label" %>
+      <%= form.text_area :description, rows: 3 %>
+    </div>
+
+    <%# 風味タグ（複数選択） %>
+    <div class="mb-4">
+      <p class="form-label">風味タグ</p>
+      <div class="flex flex-wrap gap-2">
+        <% @flavor_tags.each do |tag| %>
+          <label class="cursor-pointer">
+            <%= check_box_tag "herb[flavor_tag_ids][]", tag.id,
+                @herb.flavor_tag_ids.include?(tag.id),
+                id: "flavor_tag_#{tag.id}" %>
+            <span class="tag-herb ml-1"><%= tag.name %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <%# 効能タグ（カテゴリ別） %>
+    <div class="mb-4">
+      <p class="form-label">効能タグ</p>
+      <% @grouped_functional_tags.each do |category, tags| %>
+        <% next if tags.empty? %>
+        <p class="text-xs text-herb-green-700/50 mt-3 mb-1 font-medium"><%= category %></p>
+        <div class="flex flex-wrap gap-2">
+          <% tags.each do |tag| %>
+            <label class="cursor-pointer">
+              <%= check_box_tag "herb[functional_tag_ids][]", tag.id,
+                  @herb.functional_tag_ids.include?(tag.id),
+                  id: "functional_tag_#{tag.id}" %>
+              <span class="tag-benefit ml-1"><%= tag.name %></span>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# 禁忌タグ（カテゴリ別） %>
+    <div class="mb-4">
+      <p class="form-label">禁忌タグ</p>
+      <% @grouped_caution_tags.each do |category, tags| %>
+        <% next if tags.empty? %>
+        <p class="text-xs text-red-400 mt-3 mb-1 font-medium"><%= category %></p>
+        <div class="flex flex-wrap gap-2">
+          <% tags.each do |tag| %>
+            <label class="cursor-pointer">
+              <%= check_box_tag "herb[caution_tag_ids][]", tag.id,
+                  @herb.caution_tag_ids.include?(tag.id),
+                  id: "caution_tag_#{tag.id}" %>
+              <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full ml-1">
+                ⚠ <%= tag.name %>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# 禁忌・注意事項 %>
+    <div class="mb-4">
+      <%= form.label :caution, "禁忌・注意事項", class: "form-label" %>
+      <%= form.text_area :caution, rows: 2 %>
+    </div>
+
+    <%= form.submit "更新する", class: "btn-primary-lg w-full justify-center" %>
+
+  <% end %>
+  </div>
+
 </div>

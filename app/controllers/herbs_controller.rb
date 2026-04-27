@@ -46,8 +46,8 @@ class HerbsController < ApplicationController
 
   def set_tags
     @flavor_tags = FlavorTag.all
-    @functional_tags = FunctionalTag.all
-    @caution_tags = CautionTag.all
+    @grouped_functional_tags = FunctionalTag.grouped_by_category
+    @grouped_caution_tags = CautionTag.grouped_by_category
   end
 
   def herb_params

@@ -20,15 +20,15 @@
           <%= link_to herb_path(herb), class: "herb-card hover:opacity-80 transition" do %>
 
             <%# 画像（小さく・左寄り） %>
-            <div class="w-12 h-12 rounded-lg overflow-hidden bg-herb-green-50 flex-shrink-0">
-              <% if herb.image.attached? %>
-                <%= image_tag herb.image, class: "w-full h-full object-cover" %>
-              <% else %>
-                <div class="w-full h-full flex items-center justify-center text-herb-green-700/30 text-xs">
-                  NO IMG
-                </div>
-              <% end %>
-            </div>
+            <%# <div class="w-12 h-12 rounded-lg overflow-hidden bg-herb-green-50 flex-shrink-0"> %>
+              <%# <% if herb.image.attached? %>
+                <%# <%= image_tag herb.image, class: "w-full h-full object-cover" %>
+              <%# <% else %>
+                <%# <div class="w-full h-full flex items-center justify-center text-herb-green-700/30 text-xs"> %>
+                  <%# NO IMG %>
+                <%# </div> %>
+              <%# <% end %>
+            <%# </div> %>
 
             <%# テキスト情報（右側） %>
             <div class="flex-1 min-w-0">
@@ -38,7 +38,7 @@
               <% if herb.flavor_tags.any? %>
                 <div class="flex flex-wrap gap-1 mt-1">
                   <% herb.flavor_tags.each do |tag| %>
-                    <span class="w-full h-full tag-herb"><%= tag.name %></span>
+                    <span class="flex flex-wrap gap-1 tag-herb"><%= tag.name %></span>
                   <% end %>
                 </div>
               <% end %>
@@ -47,7 +47,7 @@
               <% if herb.functional_tags.any? %>
                 <div class="flex flex-wrap gap-1 mt-1">
                   <% herb.functional_tags.each do |tag| %>
-                    <span class="w-full h-full tag-benefit"><%= tag.name %></span>
+                    <span class="flex flex-wrap gap-1 tag-benefit"><%= tag.name %></span>
                   <% end %>
                 </div>
               <% end %>
@@ -56,7 +56,7 @@
               <% if herb.caution_tags.any? %>
                 <div class="flex flex-wrap gap-1">
                   <% herb.caution_tags.each do |tag| %>
-                    <span class="w-full h-full bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
+                    <span class="flex flex-wrap gap-1 mt-1 bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
                       ⚠ <%= tag.name %>
                     </span>
                   <% end %>
