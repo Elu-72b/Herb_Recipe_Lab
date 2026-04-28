@@ -15,15 +15,15 @@
             </div>
 
             <div class="pt-2">
-                <%= f.submit "ログイン", class: "block w-full py-4 bg-herb-green-600 text-white text-xl font-medium rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm cursor-pointer active:transform active:scale-[0.99]" %>
+                <%= f.submit "ログイン", class: "btn-primary-lg w-full justify-center" %>
             </div>
             <div class="pt-2">
-                <%= link_to "新規作成", signup_path, class: "block w-full text-center py-4 bg-herb-green-600 text-white text-xl font-medium rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm active:transform active:scale-[0.99]" %>
+                <%= link_to "新規作成", signup_path, class: "btn-primary-lg w-full justify-center" %>
             </div>
         <% end %>
     </div>
 
-  <div class="text-center pt-2">
-    <%= link_to "パスワードをお忘れの方はこちら", new_password_path(resource_name), class: "text-herb-green-700 border-b border-herb-green-700 pb-0.5 hover:opacity-70 transition-opacity" %>
-  </div>
+  <%# <div class="text-center pt-2"> %>
+    <%# <%= link_to "パスワードをお忘れの方はこちら", new_password_path(resource_name), class: "text-herb-green-700 border-b border-herb-green-700 pb-0.5 hover:opacity-70 transition-opacity" %>
+  <%# </div> %>
 </div>

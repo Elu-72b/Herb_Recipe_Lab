@@ -116,9 +116,7 @@
       <%# 保存ボタン %>
       <div class="pt-2">
         <%= f.submit "記録を保存する（STEP 1）",
-              class: "w-full py-4 bg-herb-green-600 text-white text-base font-medium
-                      rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm cursor-pointer
-                      active:scale-[0.99]" %>
+              class: "btn-primary-lg w-full justify-center" %>
       </div>
 
     <% end %>
@@ -126,7 +124,7 @@
     <%# 戻るリンク %>
     <div class="text-center mt-4">
       <%= link_to "← 一覧に戻る", home_path,
-            class: "text-herb-green-500 text-sm hover:text-herb-green-700 transition-colors" %>
+            class: "inline-block border border-herb-green-600 text-herb-green-600 rounded-full px-5 py-2 text-sm hover:bg-herb-green-50 transition" %>
     </div>
   </div>
 

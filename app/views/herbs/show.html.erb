@@ -3,9 +3,6 @@
 
   <%# 名称・別名 %>
   <h1 class="text-2xl text-herb-green-700 font-medium"><%= @herb.name %></h1>
-    <% if @herb.alias_name.present? %>
-      <p class="text-sm text-herb-green-700/60">別名：<%= @herb.alias_name %></p>
-    <% end %>
 
   <hr class="border-herb-green-200 mb-3">
 
@@ -73,14 +70,16 @@
   <% end %>
 
   <br>
-  <div class="flex gap-3 items-center">
+  <div class="flex gap-1 items-center">
     <%= link_to "一覧に戻る", herbs_path,
         class: "inline-block border border-herb-green-600 text-herb-green-600 rounded-full px-5 py-2 text-sm hover:bg-herb-green-50 transition" %>
-    <%= link_to "編集", edit_herb_path(@herb),
-        class: "inline-block bg-herb-green-600 text-white rounded-full px-5 py-2 text-sm hover:bg-herb-green-700 transition" %>
-    <%= link_to "削除", herb_path(@herb),
-        data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-        class: "inline-block bg-red-100 text-red-600 rounded-full px-5 py-2 text-sm hover:bg-red-200 transition" %>
+    <% if user_signed_in? && @herb.user_id == current_user.id %>
+      <%= link_to "編集", edit_herb_path(@herb),
+          class: "inline-block bg-herb-green-600 text-white rounded-full px-5 py-2 text-sm hover:bg-herb-green-600/70 transition" %>
+      <%= link_to "削除", herb_path(@herb),
+          data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+          class: "inline-block bg-red-100 text-red-600 rounded-full px-5 py-2 text-sm hover:bg-red-200 transition" %>
+    <% end %>
   </div>
 
 </div>
