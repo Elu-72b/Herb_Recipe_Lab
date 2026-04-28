@@ -10,6 +10,8 @@ class Herb < ApplicationRecord
   has_many :herb_caution_tags, dependent: :destroy
   has_many :caution_tags, through: :herb_caution_tags
 
+  has_many :recipe_herbs, dependent: :destroy
+
   ACCEPTED_CONTENT_TYPES = %w[image/jpeg image/png image/gif image/webp].freeze
 
   validates :name, presence: true
