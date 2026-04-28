@@ -6,7 +6,12 @@
   <ul class="space-y-2">
     <% recipe.recipe_herbs.each do |rh| %>
       <li class="flex justify-between text-sm">
-        <span class="text-herb-green-800 font-medium"><%= rh.herb&.name || rh.custom_herb_name %></span>
+        <% if rh.herb %>
+          <%= link_to rh.herb.name, herb_path(rh.herb),
+                class: "tag-herb text-xs hover:opacity-70 transition" %>
+        <% else %>
+          <span class="text-herb-green-800 font-medium"><%= rh.custom_herb_name %></span>
+        <% end %>
         <span class="text-herb-green-600"><%= rh.quantity %> <%= unit_labels[rh.unit] %></span>
       </li>
     <% end %>

@@ -29,10 +29,16 @@
                 <% end %>
               </div>
 
-              <p class="text-herb-green-700/60 text-xs mb-3 truncate">
-                <%= recipe.recipe_herbs.map { |rh| rh.herb&.name || rh.custom_herb_name
-              }.compact.join("・") %>
-              </p>
+              <div class="flex flex-wrap gap-1 mb-3">
+                <% recipe.recipe_herbs.each do |rh| %>
+                  <% if rh.herb %>
+                    <%= link_to rh.herb.name, herb_path(rh.herb),
+                          class: "tag-herb text-[10px] hover:opacity-70 transition" %>
+                  <% elsif rh.custom_herb_name.present? %>
+                    <span class="tag-herb text-[10px]"><%= rh.custom_herb_name %></span>
+                  <% end %>
+                <% end %>
+              </div>
 
               <div class="flex justify-end items-center text-[10px] text-herb-green-700/40">
                 <span><%= l recipe.created_at, format: :short %></span>

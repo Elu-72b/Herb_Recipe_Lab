@@ -10,6 +10,6 @@ class StaticPagesController < ApplicationController
   end
 
   def home
-    @my_recipes = current_user.recipes.includes(:drinking_log).order(created_at: :desc)
+    @my_recipes = current_user.recipes.includes(:drinking_log, recipe_herbs: :herb).order(created_at: :desc)
   end
 end

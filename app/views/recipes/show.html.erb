@@ -19,13 +19,59 @@
         <% end %>
       </div>
 
+      <%# ハーブ配合 %>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <%# ハーブ配合 %>
         <div>
           <%= render 'recipes/recipe_summary', recipe: @recipe %>
         </div>
       </div>
-    </div>
+
+      <%# 風味・効能・禁忌タグカード %>
+      <% herbs_in_recipe = @recipe.recipe_herbs.map(&:herb).compact %>
+      <% all_flavor_tags     = herbs_in_recipe.flat_map(&:flavor_tags).uniq %>
+      <% all_functional_tags = herbs_in_recipe.flat_map(&:functional_tags).uniq %>
+      <% all_caution_tags    = herbs_in_recipe.flat_map(&:caution_tags).uniq %>
+      <% if all_flavor_tags.any? || all_functional_tags.any? || all_caution_tags.any? %>
+        <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
+          <h2 class="text-sm font-bold text-herb-green-800 mb-4">このブレンドの特徴</h2>
+
+          <% if all_flavor_tags.any? %>
+            <div class="mb-3">
+              <p class="text-xs text-herb-green-700/50 mb-1">風味</p>
+              <div class="flex flex-wrap gap-1">
+                <% all_flavor_tags.each do |tag| %>
+                  <span class="tag-herb"><%= tag.name %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if all_functional_tags.any? %>
+            <div class="mb-3">
+              <p class="text-xs text-herb-green-700/50 mb-1">効能</p>
+              <div class="flex flex-wrap gap-1">
+                <% all_functional_tags.each do |tag| %>
+                  <span class="tag-benefit"><%= tag.name %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if all_caution_tags.any? %>
+            <div class="mb-3">
+              <p class="text-xs text-herb-green-700/50 mb-1">禁忌</p>
+              <div class="flex flex-wrap gap-1">
+                <% all_caution_tags.each do |tag| %>
+                  <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
+                    ⚠ <%= tag.name %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      </div>
 
     <%# 感想カード: DrinkingLog 情報 %>
     <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
@@ -44,7 +90,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <% DrinkingLog::FLAVOR_MAPPING.each do |ja_name, column| %>
               <% value = @recipe.drinking_log.send(column).to_i %>
-              <div class="flex flex-col items-center p-2 bg-gray-50 rounded-lg border border-gray-100">
+              <div class="flex flex-col items-center p-2 border-herb-green-100 rounded-lg border border-herb-green-100">
                 <div class="flex justify-between w-full px-1 mb-1">
                   <span class="text-[10px] text-gray-500"><%= ja_name %></span>
                   <span class="text-[10px] font-bold text-herb-green-600"><%= value %></span>
@@ -59,9 +105,11 @@
           </div>
 
           <%# 感想テキスト %>
-          <div class="bg-herb-green-50/30 rounded-xl p-4 border border-herb-green-100">
-            <p class="text-sm text-herb-green-900 whitespace-pre-wrap"><%= @recipe.drinking_log.impression %></p>
-          </div>
+          <%if @recipe.drinking_log.impression.present? %>
+            <div class="bg-herb-green-50/30 rounded-xl p-4 border border-herb-green-100">
+              <p class="text-sm text-herb-green-900 whitespace-pre-wrap"><%= @recipe.drinking_log.impression %></p>
+            </div>
+          <% end %>
         </div>
       <% else %>
         <div class="text-center py-8">
