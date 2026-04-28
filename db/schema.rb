@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_22_144737) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_28_113630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +127,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_22_144737) do
     t.text "effect_description"
     t.text "caution_description"
     t.text "history"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_herbs_on_user_id"
   end
 
   create_table "recipe_herbs", force: :cascade do |t|
@@ -174,6 +176,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_22_144737) do
   add_foreign_key "herb_flavor_tags", "herbs"
   add_foreign_key "herb_functional_tags", "functional_tags"
   add_foreign_key "herb_functional_tags", "herbs"
+  add_foreign_key "herbs", "users"
   add_foreign_key "recipe_herbs", "herbs"
   add_foreign_key "recipe_herbs", "recipes"
   add_foreign_key "recipes", "users"

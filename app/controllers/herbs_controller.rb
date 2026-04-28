@@ -1,6 +1,8 @@
 class HerbsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_herb, only: [:show, :edit, :update, :destroy]
   before_action :set_tags, only: [:new, :create, :edit, :update]
+  before_action :authorize_herb!, only: [:edit, :update, :destroy]
 
   def index
     @herbs = Herb.all.includes(:flavor_tags, :functional_tags)
@@ -14,7 +16,7 @@ class HerbsController < ApplicationController
   end
 
   def create
-    @herb = Herb.new(herb_params)
+    @herb = current_user.herbs.build(herb_params)
     if @herb.save
       redirect_to @herb, notice: "ハーブを登録しました"
     else
@@ -44,13 +46,15 @@ class HerbsController < ApplicationController
     @herb = Herb.find(params[:id])
   end
 
+  def authorize_herb!
+    redirect_to @herb, alert: "権限がありません" unless @herb.user_id == current_user.id
+  end
+
   def set_tags
     @flavor_tags = FlavorTag.all
     @grouped_functional_tags = FunctionalTag.grouped_by_category
     @grouped_caution_tags = CautionTag.grouped_by_category
   end
-
-  private
 
   def herb_params
     params.require(:herb).permit(
