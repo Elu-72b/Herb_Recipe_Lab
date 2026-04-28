@@ -90,8 +90,8 @@
         <div class="text-center py-8">
           <p class="text-sm text-gray-400 mb-4">まだ感想が記録されていません</p>
           <% if @recipe.user == current_user %>
-            <%= link_to "感想を入力する", new_recipe_drinking_log_path(@recipe), 
-                  class: "inline-block px-6 py-2 bg-herb-green-600 text-white text-sm font-medium rounded-xl hover:bg-herb-green-700 transition-colors shadow-sm" %>
+            <%= link_to "感想を入力する", new_recipe_drinking_log_path(@recipe),
+                  class: "btn-primary-lg w-full justify-center" %>
           <% end %>
         </div>
       <% end %>
@@ -100,7 +100,7 @@
     <%# 戻るリンク %>
     <div class="text-center">
       <%= link_to "← 一覧に戻る", home_path,
-            class: "text-herb-green-500 text-sm hover:text-herb-green-700 transition-colors" %>
+            class: "inline-block border border-herb-green-600 text-herb-green-600 rounded-full px-5 py-2 text-sm hover:bg-herb-green-50 transition" %>
     </div>
   </div>
 

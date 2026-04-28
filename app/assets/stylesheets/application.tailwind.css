@@ -36,7 +36,7 @@
 @layer components {
   /* 共通のカードデザイン */
   .herb-card {
-    @apply bg-herb-green-100/50 rounded-2xl p-5 border border-herb-green-100 
+    @apply bg-herb-green-100/30 rounded-2xl p-5 border border-herb-green-100
            flex items-start space-x-4 shadow-sm;
   }
 
@@ -79,11 +79,6 @@
   /* 非アクティブなタブ */
   .tab-item-inactive {
     @apply flex-1 py-3 text-herb-green-600/60 font-medium italic text-center hover:bg-herb-green-100/30 transition;
-  }
-
-  /* ブレンドカード本体 */
-  .herb-card {
-    @apply bg-herb-green-100/50 rounded-2xl p-5 border border-herb-green-100 flex items-start space-x-4 shadow-sm;
   }
 
   /* ナビゲーションボタン */

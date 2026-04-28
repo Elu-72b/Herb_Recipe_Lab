@@ -50,6 +50,8 @@ class HerbsController < ApplicationController
     @grouped_caution_tags = CautionTag.grouped_by_category
   end
 
+  private
+
   def herb_params
     params.require(:herb).permit(
       :name, :description, :caution, :image,
