@@ -8,8 +8,6 @@ class Recipe < ApplicationRecord
   has_and_belongs_to_many :flavor_tags
   has_and_belongs_to_many :functional_tags
 
-  has_many :bookmarks, dependent: :destroy
-
   accepts_nested_attributes_for :recipe_herbs,
     allow_destroy: true,
     reject_if: :all_blank  # herb_idも量も空の行は無視する
