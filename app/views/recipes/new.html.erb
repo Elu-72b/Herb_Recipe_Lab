@@ -1,5 +1,5 @@
 <%# app/views/recipes/new.html.erb %>
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 to-white flex flex-col items-center p-4 w-full">
+<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
 
   <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
 
@@ -81,7 +81,7 @@
               <%= herb_f.number_field :quantity, step: 0.1, min: 0, placeholder: "量",
                     class: "w-20 rounded-xl px-3 py-2 text-sm" %>
 
-              <%= herb_f.select :unit, [["g", "g"], ["小さじ", "teaspoon"], ["枚", "piece"], ["個", "individual"]], {},
+              <%= herb_f.select :unit, [["小さじ", "teaspoon"], ["大さじ", "tablespoon"], ["g", "g"], ["枚", "piece"], ["個", "individual"]], {},
                     class: "w-24 rounded-xl px-3 py-2 text-sm" %>
 
               <% if herb_f.object.persisted? %>
@@ -186,8 +186,9 @@
 
         <select name="recipe[recipe_herbs_attributes][${herbIndex}][unit]"
           class="w-24 rounded-xl px-3 py-2 text-sm">
-          <option value="g">g</option>
           <option value="teaspoon">小さじ</option>
+          <option value="tablespoon">大さじ</option>
+          <option value="g">g</option>
           <option value="piece">枚</option>
           <option value="individual">個</option>
         </select>

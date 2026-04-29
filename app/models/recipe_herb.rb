@@ -3,7 +3,7 @@ class RecipeHerb < ApplicationRecord
   belongs_to :herb, optional: true
 
   # seeds.rbのunit設計に合わせた定義
-  enum :unit, { g: 0, teaspoon: 1, piece: 2, individual: 3 }
+  enum :unit, { teaspoon: 0, tablespoon: 1, g: 2, piece: 3, individual: 4 }
 
   # "other"をARが0にキャストするため、カスタムハーブ選択時はnilに正規化する
   before_validation :normalize_other_herb_id
