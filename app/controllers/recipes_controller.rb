@@ -26,7 +26,9 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.includes(:user, :drinking_log, recipe_herbs: :herb).find(params[:id])
+    @recipe = Recipe.includes(:user, :drinking_log,
+      recipe_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] }
+    ).find(params[:id])
   end
 
   def edit
@@ -60,7 +62,7 @@ class RecipesController < ApplicationController
       :amount,
       :memo,
       :is_public,
-      recipe_herbs_attributes: [:id, :herb_id, :quantity, :unit, :_destroy]
+      recipe_herbs_attributes: [:id, :herb_id, :quantity, :unit, :_destroy, :custom_herb_name]
     )
   end
 end

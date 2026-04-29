@@ -10,6 +10,7 @@ class DrinkingLogsController < ApplicationController
   def create
     @drinking_log = @recipe.build_drinking_log(drinking_log_params)
     if @drinking_log.save
+      @recipe.update(is_public: params.dig(:recipe, :is_public) == "1")
       redirect_to home_path, notice: "研究記録を完了しました！"
     else
       @flavor_tags = FlavorTag.all
@@ -39,7 +40,7 @@ class DrinkingLogsController < ApplicationController
   private
 
   def set_recipe
-    @recipe = current_user.recipes.find(params[:recipe_id])
+    @recipe = current_user.recipes.includes(recipe_herbs: :herb).find(params[:recipe_id])
   end
 
   def drinking_log_params

@@ -1,0 +1,32 @@
+<div class="mb-6 p-4 bg-herb-green-50 rounded-xl space-y-3">
+  <%# locals: (recipe:) %>
+  <% unit_labels = { "teaspoon" => "小さじ", "tablespoon" => "大さじ", "g" => "g", "piece" => "枚", "individual" => "個" } %>
+
+  <h3 class="text-sm font-bold text-herb-green-700 mb-3 border-b border-herb-green-100 pb-2">🌿 ハーブ配合</h3>
+  <ul class="space-y-2">
+    <% recipe.recipe_herbs.each do |rh| %>
+      <li class="flex justify-between text-sm">
+        <% if rh.herb %>
+          <%= link_to rh.herb.name, herb_path(rh.herb),
+                class: "tag-herb text-xs hover:opacity-70 transition" %>
+        <% else %>
+          <span class="text-herb-green-800 font-medium"><%= rh.custom_herb_name %></span>
+        <% end %>
+        <span class="text-gray-500"><%= rh.quantity %> <%= unit_labels[rh.unit] %></span>
+      </li>
+    <% end %>
+  </ul>
+  <div class="mt-3 pt-3 border-t border-herb-green-100 flex justify-between text-xs text-gray-500">
+    <span>抽出量</span>
+    <span><%= recipe.amount %> ml</span>
+  </div>
+
+<% if @recipe.memo.present? %>
+  <div class="pt-1 border-t border-herb-green-100">
+    <p class="text-xs text-gray-500 font-medium mb-0.5">研究メモ</p>
+      <div class="bg-herb-green-50/30 rounded-xl p-4 border border-herb-green-100">
+        <p class="text-xs text-gray-500 leading-relaxed "><%= @recipe.memo %></p>
+      </div>
+  </div>
+<% end %>
+</div>

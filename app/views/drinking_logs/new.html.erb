@@ -1,30 +1,33 @@
 <%# app/views/drinking_logs/new.html.erb %>
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 to-white flex flex-col items-center p-4 w-full">
+<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
 
   <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
 
     <%# タイトル %>
-    <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20 mb-6 inline-block">
-      <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">
-        STEP 2｜味の感想を記録する
-      </h2>
+    <div class="flex justify-center mb-6">
+      <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+        <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">
+          STEP 2｜味の感想を記録する
+        </h2>
+      </div>
     </div>
 
-    <div class="mb-6 p-4 bg-herb-green-50 rounded-xl">
-      <p class="text-xs text-herb-green-600 font-medium mb-1">今回のレシピ</p>
-      <p class="text-sm font-bold text-herb-green-800"><%= @recipe.title %></p>
+    <div>
+      <p class="text-xl font-bold text-herb-green-800"><%= @recipe.title %></p>
+      <p class="text-xs text-gray-400 mt-0.5">作成日: <%= @recipe.brewed_at %></p>
     </div>
+      <%= render 'recipes/recipe_summary', recipe: @recipe %>
 
     <%= form_with model: [@recipe, @drinking_log], class: "space-y-6" do |f| %>
 
       <%# 総合評価 %>
-      <div>
+      <div class="flex flex-col items-center">
         <%= f.label :rating, "総合評価（5段階）", class: "block text-sm font-medium text-herb-green-700 mb-2" %>
         <div class="flex gap-4">
           <% (1..5).each do |n| %>
             <label class="flex flex-col items-center gap-1 cursor-pointer group">
               <%= f.radio_button :rating, n, class: "sr-only peer", required: true %>
-              <div class="w-10 h-10 flex items-center justify-center rounded-full border border-herb-green-200 
+              <div class="w-10 h-10 flex items-center justify-center rounded-full border border-herb-green-200
                           peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
                           group-hover:border-herb-green-400 transition-all">
                 <%= n %>
@@ -34,16 +37,29 @@
         </div>
       </div>
 
+      <%# 風味記録タイトル %>
+      <%= f.label :rating, "風味記録（任意）", class: "block text-sm font-medium text-herb-green-700 mb-2 flex flex-col items-center" %>
       <%# 味のパラメータ（DBのタグから動的に生成） %>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-4">
         <% @flavor_tags.each do |tag| %>
-          <%# マッピングから対応するカラム名を取得 %>
           <% column_name = DrinkingLog::FLAVOR_MAPPING[tag.name] %>
           <% if column_name %>
-            <div>
-              <%= f.label column_name, tag.name, class: "block text-xs font-medium text-herb-green-600 mb-1" %>
-              <%= f.select column_name, (0..5).to_a, {}, 
-                    class: "w-full border border-herb-green-200 rounded-lg px-3 py-2 text-sm focus:ring-herb-green-400" %>
+            <div data-controller="toggle-radio">
+              <%= f.label column_name, tag.name, class: "block text-xs font-medium text-herb-green-600 mb-2" %>
+              <div class="flex gap-1.5">
+                <% (1..5).each do |n| %>
+                  <label class="flex flex-col items-center gap-1 cursor-pointer group">
+                    <%= f.radio_button column_name, n,
+                          class: "sr-only peer",
+                          data: { "toggle-radio-target": "input", action: "click->toggle-radio#toggle", "was-checked": "false" } %>
+                    <div class="w-9 h-9 flex items-center justify-center rounded-full border border-herb-green-200
+                                peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
+                                group-hover:border-herb-green-400 transition-all text-sm">
+                      <%= n %>
+                    </div>
+                  </label>
+                <% end %>
+              </div>
             </div>
           <% end %>
         <% end %>
@@ -51,15 +67,29 @@
 
       <%# 自由な感想 %>
       <div>
-        <%= f.label :impression, "感想・味のメモ", class: "block text-sm font-medium text-herb-green-700 mb-1" %>
+        <%= f.label :impression, "感想（任意）", class: "block text-sm font-medium text-herb-green-700 mb-1" %>
         <%= f.text_area :impression, rows: 4, placeholder: "飲んでみた感想を自由に記入してください",
-              class: "w-full border border-herb-green-200 rounded-xl px-4 py-3 text-sm focus:ring-herb-green-400 resize-none" %>
+              class: "w-full rounded-xl px-4 py-3 text-sm resize-none" %>
+      </div>
+
+      <%# 公開設定 %>
+      <div class="flex items-center gap-3 bg-herb-green-50 rounded-xl px-4 py-3">
+        <%= hidden_field_tag "recipe[is_public]", "0" %>
+        <%= check_box_tag "recipe[is_public]", "1", @recipe.is_public?,
+              id: "recipe_is_public",
+              class: "w-4 h-4 accent-herb-green-600 rounded" %>
+        <div>
+          <label for="recipe_is_public" class="text-sm font-medium text-herb-green-700">このレシピを公開する</label>
+          <p class="text-xs text-gray-400">オンにすると他のユーザーに表示されます</p>
+        </div>
       </div>
 
       <%# 保存ボタン %>
-      <div class="pt-2">
+      <div class="pt-2 space-y-3">
         <%= f.submit "感想を保存する",
               class: "btn-primary-lg w-full justify-center" %>
+        <%= link_to "ブレンド記録に戻る", edit_recipe_path(@recipe),
+              class: "btn-white-lg w-full justify-center" %>
       </div>
 
     <% end %>
