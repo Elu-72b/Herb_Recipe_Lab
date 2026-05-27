@@ -57,7 +57,8 @@ class TeaReviewsController < ApplicationController
       :sweetness, :acidity, :bitterness, :astringency,
       :fruity, :spicy, :freshness, :flowery, :impression,
       herb_ids: [],
-      custom_herb_names: []
+      custom_herb_names: [],
+      tea_review_herbs_attributes: [:id, :herb_id, :custom_herb_name, :_destroy]
     )
   end
 end
