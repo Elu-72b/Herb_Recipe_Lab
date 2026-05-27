@@ -41,6 +41,21 @@ ja:
       herb:
         name: "ハーブ名"
         image: "画像"
+      tea_review:
+        brand: "メーカー名"
+        name: "商品名"
+        purchase_place: "購入場所"
+        description: "特徴"
+        rating: "総合評価"
+        sweetness: "甘味"
+        acidity: "酸味"
+        bitterness: "苦味"
+        astringency: "渋味"
+        fruity: "フルーティー"
+        spicy: "スパイシー"
+        freshness: "清涼感"
+        flowery: "華やかさ"
+        impression: "感想"
       drinking_log:
         rating: "総合評価"
         sweetness: "甘み"
