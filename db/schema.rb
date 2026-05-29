@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_05_04_093257) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_27_155638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -160,6 +160,40 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_04_093257) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "tea_review_herbs", force: :cascade do |t|
+    t.bigint "tea_review_id", null: false
+    t.bigint "herb_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "quantity"
+    t.string "unit"
+    t.string "custom_herb_name"
+    t.index ["herb_id"], name: "index_tea_review_herbs_on_herb_id"
+    t.index ["tea_review_id"], name: "index_tea_review_herbs_on_tea_review_id"
+  end
+
+  create_table "tea_reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "brand"
+    t.string "name"
+    t.string "purchase_place"
+    t.text "description"
+    t.integer "rating"
+    t.integer "sweetness"
+    t.integer "acidity"
+    t.integer "bitterness"
+    t.integer "astringency"
+    t.integer "fruity"
+    t.integer "spicy"
+    t.integer "freshness"
+    t.integer "flowery"
+    t.text "impression"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "custom_herb_names", default: [], array: true
+    t.index ["user_id"], name: "index_tea_reviews_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -186,4 +220,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_04_093257) do
   add_foreign_key "recipe_herbs", "herbs"
   add_foreign_key "recipe_herbs", "recipes"
   add_foreign_key "recipes", "users"
+  add_foreign_key "tea_review_herbs", "herbs"
+  add_foreign_key "tea_review_herbs", "tea_reviews"
+  add_foreign_key "tea_reviews", "users"
 end

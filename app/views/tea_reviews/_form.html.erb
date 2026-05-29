@@ -1,0 +1,137 @@
+<%# 基本情報セクション %>
+<div class="space-y-4">
+  <h3 class="text-sm font-semibold text-herb-green-700 border-b border-herb-green-200 pb-1">基本情報</h3>
+
+  <% if tea_review.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+      <p class="text-red-600 text-sm font-medium mb-1">入力内容を確認してください</p>
+      <ul class="text-red-500 text-sm space-y-1">
+        <% tea_review.errors.full_messages.each do |msg| %>
+          <li>・<%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :brand, "メーカー名", class: "form-label" %>
+    <%= f.text_field :brand, placeholder: "例: ハーブスタンド", class: "form-input" %>
+  </div>
+
+  <div>
+    <%= f.label :name, "商品名", class: "form-label" %>
+    <%= f.text_field :name, placeholder: "例: カモミールブレンド", class: "form-input" %>
+  </div>
+
+  <div>
+    <%= f.label :purchase_place, "購入した場所", class: "form-label" %>
+    <%= f.text_field :purchase_place, placeholder: "例: オンラインショップ、カルディ", class: "form-input" %>
+  </div>
+
+  <div>
+    <%= f.label :description, "特徴", class: "form-label" %>
+    <%= f.text_area :description, rows: 3, placeholder: "商品の特徴や原材料など", class: "form-textarea" %>
+  </div>
+</div>
+
+<%# 使用ハーブ %>
+<div class="space-y-2" data-controller="add-field">
+  <h3 class="text-sm font-semibold text-herb-green-700 border-b border-herb-green-200 pb-1">使用ハーブ（任意）</h3>
+  <p class="text-xs text-gray-400">ハーブ図鑑に登録されているハーブを選択してください</p>
+  <div class="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto border border-herb-green-100 rounded-xl p-3">
+    <% @herbs.each do |herb| %>
+      <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+        <%= f.check_box :herb_ids, { multiple: true, checked: tea_review.herb_ids.include?(herb.id) }, herb.id, nil %>
+        <span><%= herb.name %></span>
+      </label>
+    <% end %>
+  </div>
+
+  <%# その他（自由入力） %>
+  <div>
+    <div data-add-field-target="container" class="space-y-2">
+      <% Array(tea_review.custom_herb_names).each do |herb_name| %>
+        <div class="flex items-center gap-2" data-add-field-item>
+          <input type="text" name="tea_review[custom_herb_names][]" value="<%= herb_name %>"
+                 placeholder="ハーブ名を入力"
+                 class="form-input flex-1 text-sm" />
+          <button type="button" data-action="add-field#remove"
+                  class="text-gray-400 hover:text-red-400 text-lg leading-none">×</button>
+        </div>
+      <% end %>
+    </div>
+
+    <template data-add-field-target="template">
+      <div class="flex items-center gap-2" data-add-field-item>
+        <input type="text" name="tea_review[custom_herb_names][]"
+               placeholder="ハーブ名を入力"
+               class="form-input flex-1 text-sm" />
+        <button type="button" data-action="add-field#remove"
+                class="text-gray-400 hover:text-red-400 text-lg leading-none">×</button>
+      </div>
+    </template>
+
+    <button type="button" data-action="add-field#add"
+            class="mt-2 flex items-center gap-1 text-sm text-herb-green-600 hover:text-herb-green-800">
+      <span class="text-lg font-bold leading-none">＋</span>
+      <span>その他のハーブを追加</span>
+    </button>
+  </div>
+</div>
+
+<%# 感想セクション %>
+<div class="space-y-4">
+  <h3 class="text-sm font-semibold text-herb-green-700 border-b border-herb-green-200 pb-1">感想</h3>
+
+  <%# 総合評価 %>
+  <div class="flex flex-col items-center">
+    <%= f.label :rating, "総合評価（5段階）", class: "block text-sm font-medium text-herb-green-700 mb-2" %>
+    <div class="flex gap-4">
+      <% (1..5).each do |n| %>
+        <label class="flex flex-col items-center gap-1 cursor-pointer group">
+          <%= f.radio_button :rating, n, class: "sr-only peer" %>
+          <div class="w-10 h-10 flex items-center justify-center rounded-full border border-herb-green-200
+                      peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
+                      group-hover:border-herb-green-400 transition-all">
+            <%= n %>
+          </div>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <%# 風味記録 %>
+  <div>
+    <p class="block text-sm font-medium text-herb-green-700 mb-2 text-center">風味記録（任意）</p>
+    <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+      <% @flavor_tags.each do |tag| %>
+        <% column_name = TeaReview::FLAVOR_MAPPING[tag.name] %>
+        <% if column_name %>
+          <div data-controller="toggle-radio">
+            <%= f.label column_name, tag.name, class: "block text-xs font-medium text-herb-green-600 mb-2" %>
+            <div class="flex gap-1.5">
+              <% (1..5).each do |n| %>
+                <label class="flex flex-col items-center gap-1 cursor-pointer group">
+                  <%= f.radio_button column_name, n,
+                        class: "sr-only peer",
+                        data: { "toggle-radio-target": "input", action: "click->toggle-radio#toggle", "was-checked": "false" } %>
+                  <div class="w-5 h-5 flex items-center justify-center rounded-full border border-herb-green-200
+                              peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
+                              group-hover:border-herb-green-400 transition-all text-sm">
+                    <%= n %>
+                  </div>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# 自由な感想 %>
+  <div>
+    <%= f.label :impression, "感想（任意）", class: "form-label" %>
+    <%= f.text_area :impression, rows: 4, placeholder: "飲んでみた感想を自由に記入してください", class: "form-textarea" %>
+  </div>
+</div>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'static_pages#top'
 
   resources :herbs, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :tea_reviews, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   resources :recipes do
     resources :drinking_logs, only: [:new, :create, :show, :edit, :update]
   end
