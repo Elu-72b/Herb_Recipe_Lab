@@ -30,11 +30,12 @@
                 <% end %>
               </div>
 
+              <%# --- ハーブタグの表示（リンクを削除） --- %>
               <div class="flex flex-wrap gap-1 mb-3">
                 <% recipe.recipe_herbs.each do |rh| %>
                   <% if rh.herb %>
-                    <%= link_to rh.herb.name, herb_path(rh.herb),
-                          class: "tag-herb text-[10px] hover:opacity-70 transition" %>
+                    <%# 【修正】link_to から span タグに変更 %>
+                    <span class="tag-herb text-[10px]"><%= rh.herb.name %></span>
                   <% elsif rh.custom_herb_name.present? %>
                     <span class="tag-herb text-[10px]"><%= rh.custom_herb_name %></span>
                   <% end %>
@@ -60,6 +61,5 @@
       <%= link_to "ブレンド記録を作成する", new_recipe_path, class: "btn-primary-lg" %>
     </div>
   </div>
-
 
 </div>
