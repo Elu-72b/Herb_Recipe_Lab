@@ -16,5 +16,8 @@ class Recipe < ApplicationRecord
   validates :brewed_at, presence: { message: "を入力してください" }
 
   scope :public_recipes, -> { where(is_public: true) }
+  scope :visible_to, ->(user) {
+    where("is_public = ? OR user_id = ?", true, user.id)
+  }
   scope :recent, -> { order(created_at: :desc) }
 end
