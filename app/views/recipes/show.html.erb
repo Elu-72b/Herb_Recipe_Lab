@@ -2,14 +2,22 @@
 <div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
 
   <div class="max-w-2xl w-full space-y-3">
-    <%# レシピの基本情報カード %>
+    <%# レシピの基本情報 %>
     <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
       <%# レシピ名・作成日・投稿者 %>
       <div class="flex justify-between items-start mb-4">
         <div>
           <h1 class="text-2xl font-bold text-herb-green-800"><%= @recipe.title %></h1>
-          <p class="text-xs text-gray-400 mt-1">
-            作成日: <%= @recipe.brewed_at %> | 投稿者: <%= @recipe.user.name %>
+          <p class="text-xs text-herb-green-700/80 mt-1">
+            作成日: <%= @recipe.brewed_at %><br>
+            投稿者: <%= @recipe.user.name %>
+                <% if @recipe.user_id == current_user.id %>
+                  <span class="text-[10px] bg-herb-green-100 text-herb-green-700/80 px-2 py-0.5 rounded-full flex-shrink-0">自分</span>
+                  <%#本リリースで有効化: 非公開バッジ %>
+                  <% unless @recipe.is_public? %>
+                    <span class="text-[10px] bg-white text-herb-green-700/80 px-2 py-0.5 rounded-full flex-shrink-0">非公開</span>
+                  <% end %>
+                <% end %>
           </p>
         </div>
         <% if @recipe.user == current_user %>
@@ -33,7 +41,7 @@
           <h2 class="text-sm font-bold text-herb-green-700 mb-3 border-b border-herb-green-100 pb-2">このブレンドに含まれるハーブの特徴</h2>
             <% if all_flavor_tags.any? %>
               <div class="mb-3">
-                <p class="text-xs text-herb-green-700/50 mb-1">風味</p>
+                <p class="text-xs text-herb-green-700/80 mb-1">風味</p>
                 <div class="flex flex-wrap gap-1">
                   <% all_flavor_tags.each do |tag| %>
                     <span class="tag-herb"><%= tag.name %></span>
@@ -43,7 +51,7 @@
             <% end %>
             <% if all_functional_tags.any? %>
               <div class="mb-3">
-                <p class="text-xs text-herb-green-700/50 mb-1">効能</p>
+                <p class="text-xs text-herb-green-700/80 mb-1">効能</p>
                 <div class="flex flex-wrap gap-1">
                   <% all_functional_tags.each do |tag| %>
                     <span class="tag-benefit"><%= tag.name %></span>
@@ -53,7 +61,7 @@
             <% end %>
             <% if all_caution_tags.any? %>
               <div class="mb-3">
-                <p class="text-xs text-herb-green-700/50 mb-1">禁忌・注意事項</p>
+                <p class="text-xs text-herb-green-700/80 mb-1">禁忌・注意事項</p>
                 <div class="flex flex-wrap gap-1">
                   <% all_caution_tags.each do |tag| %>
                     <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
