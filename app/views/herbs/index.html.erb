@@ -69,6 +69,9 @@
       </div>
     <% end %>       <%# if の end %>
 
+    <%# ページネーション %>
+    <%= paginate @herbs %>
+
     <div class="flex justify-center space-y-3 mt-3 pt-2">
       <%# 管理者権限導入後に if current_user.admin? で制御予定 %>
       <%#= link_to "＋ 新規登録", new_herb_path, class: "btn-primary-lg" %>

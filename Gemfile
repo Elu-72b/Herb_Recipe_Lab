@@ -61,7 +61,7 @@ end
 
 gem "tailwindcss-rails", "~> 4.4"
 gem 'devise'
-
+gem 'kaminari'
 gem "cloudinary"
 gem 'activestorage-cloudinary-service'
 gem 'dotenv-rails', groups: [:development, :test]

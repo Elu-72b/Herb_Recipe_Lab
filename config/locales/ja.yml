@@ -67,3 +67,7 @@ ja:
         freshness: "さわやかさ"
         flowery: "花のような香り"
         impression: "感想"
+  views:
+    pagination:
+      previous: "前へ"
+      next: "次へ"

@@ -7,6 +7,7 @@ class RecipesController < ApplicationController
       .includes(:user, :drinking_log, recipe_herbs: :herb)
       .public_recipes  # ← where(is_public: true) からスコープに変更
       .recent          # ← order(created_at: :desc) からスコープに変更
+      .page(params[:page]).per(10)  # ← ページネーション追加
   end
 
   def new

@@ -4,11 +4,14 @@
 
 import { application } from "./application"
 
+import AddFieldController from "./add_field_controller"
+application.register("add-field", AddFieldController)
+
+import FabController from "./fab_controller"
+application.register("fab", FabController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import ToggleRadioController from "./toggle_radio_controller"
 application.register("toggle-radio", ToggleRadioController)
-
-import AddFieldController from "./add_field_controller"
-application.register("add-field", AddFieldController)
