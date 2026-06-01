@@ -118,9 +118,17 @@
 
     <% end %>
 
-    <div class="pt-4 space-y-3 flex flex-col items-center">
-      <%= link_to "ブレンド記録を作成する", new_recipe_path, class: "btn-primary-lg" %>
-    </div>
-  </div>
+  <%= content_for :fixed_button do %>
+    <%= link_to new_recipe_path,
+          class: "btn-fab",
+          title: "ブレンド記録を作成する",
+          data: { controller: "fab", action: "click->fab#toggle" } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" class="w-7 h-7 flex-shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      <span class="fab-text">ブレンド記録を作成する</span>
+    <% end %>
+  <% end %>
 
 </div>
