@@ -135,4 +135,26 @@
   .nav-icon {
     @apply h-7 w-7 mb-1; /* アイコンを少し小さく、文字との間隔を調整 */
   }
+
+  /* kaminari pagination */
+  .pagination .btn-active {
+    background-color: theme('colors.herb-green-600') !important;
+    border-color: theme('colors.herb-green-600') !important;
+    color: theme('colors.herb-white') !important;
+  }
+
+  .pagination .btn-inactive {
+    background-color: theme('colors.herb-white') !important;
+    border-color: theme('colors.herb-green-600') !important;
+    color: #4b734b !important;
+  }
+
+  .pagination .btn-inactive:hover {
+    background-color: theme('colors.herb-green-100') !important;
+  }
 }
+
+@layer utilities {
+  /* ここにユーティリティクラスを追加できます */
+}
+
