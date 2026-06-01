@@ -3,7 +3,9 @@ class TeaReviewsController < ApplicationController
   before_action :set_tea_review, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tea_reviews = current_user.tea_reviews.includes(:herbs).order(created_at: :desc)
+    @tea_reviews = current_user.tea_reviews
+      .includes(:herbs).order(created_at: :desc)
+      .page(params[:page]).per(10)
   end
 
   def new
