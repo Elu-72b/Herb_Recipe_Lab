@@ -119,12 +119,12 @@
   }
   /* アクティブなタブ */
   .tab-item-active {
-    @apply flex-1 py-3 bg-herb-green-600 text-white font-medium text-center;
+    @apply flex-1 py-1 bg-herb-green-600 text-white font-medium text-center;
   }
 
   /* 非アクティブなタブ */
   .tab-item-inactive {
-    @apply flex-1 py-3 text-herb-green-600/60 font-medium italic text-center hover:bg-herb-green-100/30 transition;
+    @apply flex-1 py-1 text-herb-green-600/80 font-medium text-center hover:bg-herb-green-100/30 transition;
   }
 
   /* ナビゲーションボタン */
@@ -156,5 +156,56 @@
 
 @layer utilities {
   /* ここにユーティリティクラスを追加できます */
+  /* FAB ベース（スマホ: 丸ボタン） */
+  .btn-fab {
+    @apply fixed bottom-20 right-5 z-40
+          h-14 rounded-full
+          bg-herb-green-600 text-white
+          flex items-center justify-center
+          shadow-xl
+          hover:bg-herb-green-700/80 active:scale-95;
+    width: 3.5rem;
+    padding: 0;
+    gap: 0;
+    transition: width 0.3s ease, padding 0.3s ease, gap 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* FABのテキスト（スマホ: 非表示） */
+  .btn-fab .fab-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-width 0.3s ease, opacity 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* スマホ: タップで展開 */
+  .btn-fab.fab-expanded {
+    width: auto;
+    padding: 0 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .btn-fab.fab-expanded .fab-text {
+    max-width: 12rem;
+    opacity: 1;
+  }
+
+  /* PC(md以上): 常に楕円で表示 */
+  @media (min-width: 768px) {
+    .btn-fab {
+      width: auto;
+      padding: 0 1.25rem;
+      gap: 0.5rem;
+    }
+
+    .btn-fab .fab-text {
+      max-width: 12rem;
+      opacity: 1;
+    }
+  }
 }
 
