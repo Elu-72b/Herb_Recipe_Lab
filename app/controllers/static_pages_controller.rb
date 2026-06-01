@@ -10,10 +10,17 @@ class StaticPagesController < ApplicationController
   end
 
   def home
-    # 公開レシピ OR 自分のレシピ（非公開含む）を取得
-    @recipes = Recipe
+    # みんなのブレンド（公開レシピ全件。自分のも含む）
+    @public_recipes = Recipe
       .includes(:user, :drinking_log, recipe_herbs: :herb)
-      .where("is_public = ? OR user_id = ?", true, current_user.id)
+      .public_recipes
       .recent
+      .page(params[:page]).per(10)
+
+    # 自分のブレンド（非公開含む）
+    @my_recipes = current_user.recipes
+      .includes(:drinking_log, recipe_herbs: :herb)
+      .recent
+      .page(params[:my_page]).per(10)
   end
 end
