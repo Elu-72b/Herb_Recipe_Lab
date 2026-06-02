@@ -28,13 +28,13 @@
                   <span class="text-herb-green-700 text-xs select-none">›</span>
                   <div class="flex flex-wrap gap-1">
                     <% trh.herb.flavor_tags.each do |tag| %>
-                      <span class="tag-herb"><%= tag.name %></span>
+                      <span class="tag-flavor"><%= tag.name %></span>
                     <% end %>
                     <% trh.herb.functional_tags.each do |tag| %>
                       <span class="tag-benefit"><%= tag.name %></span>
                     <% end %>
                     <% trh.herb.caution_tags.each do |tag| %>
-                      <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">⚠ <%= tag.name %></span>
+                      <span class="tag-caution">⚠ <%= tag.name %></span>
                     <% end %> </div>
                 <% else %>
                   <span class="text-herb-green-800 font-medium"><%= trh.custom_herb_name %></span>
@@ -62,7 +62,7 @@
       <div class="flex justify-between items-center mb-3">
         <div class="flex items-center gap-3">
           <h3 class="text-lg font-bold text-herb-green-800">総合評価</h3>
-          <div class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-md font-bold">
+          <div class="rate-star">
             ★ <%= @tea_review.rating %> / 5
           </div>
         </div>

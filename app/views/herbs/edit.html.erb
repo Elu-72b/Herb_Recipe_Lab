@@ -50,7 +50,7 @@
               <%= check_box_tag "herb[flavor_tag_ids][]", tag.id,
                   @herb.flavor_tag_ids.include?(tag.id),
                   id: "flavor_tag_#{tag.id}" %>
-              <span class="tag-herb ml-1"><%= tag.name %></span>
+              <span class="tag-flavor ml-1"><%= tag.name %></span>
             </label>
           <% end %>
         </div>
@@ -87,7 +87,7 @@
                 <%= check_box_tag "herb[caution_tag_ids][]", tag.id,
                     @herb.caution_tag_ids.include?(tag.id),
                     id: "caution_tag_#{tag.id}" %>
-                <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full ml-1">
+                <span class="tag-caution ml-1">
                   ⚠ <%= tag.name %>
                 </span>
               </label>
