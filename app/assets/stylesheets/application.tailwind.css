@@ -11,11 +11,15 @@
     --color-herb-green-400: #a7c99a;
     /* 入力フォーカス・追加ボタン */
     --color-herb-green-600: #89bc7b;
-    /* 風味タグ・確定ボタン */
+    /* ハーブタグ・確定ボタン */
     --color-herb-green-700: #3a5b52;
     /* ヘッダー・フッター・メインボタン・文字色 */
     --color-herb-yellow-400: #f6ad49;
+    /* 風味タグ */
+    --color-herb-blue-400: #66cccc;
     /* 効能タグ */
+    --color-herb-red-400: #f56565;
+    /* 禁忌・注意タグ */
     --color-herb-white: #ffffff;
 }
 
@@ -46,14 +50,34 @@
            flex items-start space-x-4 shadow-sm;
   }
 
-  /* ハーブ名タグ（緑） */
+  /* ハーブ名タグ */
   .tag-herb {
     @apply bg-herb-green-600 text-white text-xs px-3 py-1 rounded-full;
   }
 
-  /* 効能タグ（オレンジ） */
-  .tag-benefit {
+  /* 風味タグ（オレンジ） */
+  .tag-flavor {
     @apply bg-herb-yellow-400 text-white text-xs px-3 py-1 rounded-full;
+  }
+
+  /* 効能タグ（ブルー） */
+  .tag-benefit {
+    @apply bg-herb-blue-400 text-white text-xs px-3 py-1 rounded-full;
+  }
+
+  /* 禁忌・注意タグ（レッド） */
+  .tag-caution {
+    @apply bg-red-100 text-red-700 border border-red-400 text-xs px-3 py-1 rounded-full;
+  }
+
+  /* 評価タグ */
+  .rate-star {
+    @apply bg-yellow-100 text-yellow-700 text-sm px-2 py-1 rounded-full font-bold flex-shrink-0 ml-2;
+  }
+
+  /* 自分のブレンドにつけるタグ */
+  .my-blend-tag {
+    @apply text-[10px] bg-herb-green-100 text-herb-green-700/80 px-2 py-0.5 rounded-full flex-shrink-0;
   }
 
   /* メインのアクションボタン（フローティングボタンなど） */
@@ -152,7 +176,7 @@
   .pagination .btn-inactive:hover {
     background-color: theme('colors.herb-green-100') !important;
   }
-}
+} /* end @layer components */
 
 @layer utilities {
   /* ここにユーティリティクラスを追加できます */
