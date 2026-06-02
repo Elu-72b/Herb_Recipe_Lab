@@ -24,7 +24,7 @@
         <p class="text-xs text-herb-green-700/50">風味</p>
         <div class="flex flex-wrap gap-1">
           <% @herb.flavor_tags.each do |tag| %>
-            <span class="flex flex-wrap gap-1 tag-herb"><%= tag.name %></span>
+            <span class="tag-flavor"><%= tag.name %></span>
           <% end %>
         </div>
       <% end %>
@@ -44,9 +44,7 @@
         <p class="text-xs text-herb-green-700/50">禁忌</p>
         <div class="flex flex-wrap gap-1">
           <% @herb.caution_tags.each do |tag| %>
-            <span class="flex flex-wrap gap-1 bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">
-              ⚠ <%= tag.name %>
-            </span>
+            <span class="tag-caution">⚠ <%= tag.name %></span>
           <% end %>
         </div>
       <% end %>
