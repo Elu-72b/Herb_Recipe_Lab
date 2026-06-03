@@ -61,10 +61,11 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.4"
-gem 'devise'
-gem 'kaminari'
-gem "cloudinary"
+gem "devise", "~> 4.9"
+gem "kaminari", "~> 1.2"
+gem "cloudinary", "~> 2.0"
 gem 'activestorage-cloudinary-service'
+
 group :development, :test do
   gem "debug", ...
   gem "brakeman", require: false
