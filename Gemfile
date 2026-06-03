@@ -57,7 +57,7 @@ gem "cloudinary", "~> 2.0"
 gem "activestorage-cloudinary-service"
 
 group :development, :test do
-  gem "debug", ...
+  gem "debug", platforms: %i[ mri mswin mingw x64_mingw ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "dotenv-rails"
