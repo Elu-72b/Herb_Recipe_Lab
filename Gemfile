@@ -65,4 +65,9 @@ gem 'devise'
 gem 'kaminari'
 gem "cloudinary"
 gem 'activestorage-cloudinary-service'
-gem 'dotenv-rails', groups: [:development, :test]
+group :development, :test do
+  gem "debug", ...
+  gem "brakeman", require: false
+  gem "rubocop-rails-omakase", require: false
+  gem "dotenv-rails"
+end
