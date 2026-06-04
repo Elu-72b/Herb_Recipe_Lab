@@ -10,17 +10,19 @@ class StaticPagesController < ApplicationController
   end
 
   def home
-    # みんなのブレンド（公開レシピ全件。自分のも含む）
-    @public_recipes = Recipe
-      .includes(:user, :drinking_log, recipe_herbs: :herb)
-      .public_recipes
-      .recent
-      .page(params[:page]).per(10)
+    @active_tab = params[:tab] == "my" ? "my" : "public"
 
-    # 自分のブレンド（非公開含む）
-    @my_recipes = current_user.recipes
-      .includes(:drinking_log, recipe_herbs: :herb)
-      .recent
-      .page(params[:my_page]).per(10)
+    if @active_tab == "public"
+      @public_recipes = Recipe
+        .includes(:user, :drinking_log, recipe_herbs: :herb)
+        .public_recipes
+        .recent
+        .page(params[:page]).per(10)
+    else
+      @my_recipes = current_user.recipes
+        .includes(:drinking_log, recipe_herbs: :herb)
+        .recent
+        .page(params[:my_page]).per(10)
+    end
   end
 end

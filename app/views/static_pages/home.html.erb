@@ -9,17 +9,15 @@
       </div>
     </div>
 
-    <%# ── 変更①: タブ切り替え ── %>
-    <% active_tab = params[:tab] == "my" ? "my" : "public" %>
     <div class="herb-tab-group mt-4">
       <%= link_to "みんなのブレンド", home_path(tab: "public"),
-            class: active_tab == "public" ? "tab-item-active" : "tab-item-inactive" %>
+            class: @active_tab == "public" ? "tab-item-active" : "tab-item-inactive" %>
       <%= link_to "自分のブレンド", home_path(tab: "my"),
-            class: active_tab == "my" ? "tab-item-active" : "tab-item-inactive" %>
+            class: @active_tab == "my" ? "tab-item-active" : "tab-item-inactive" %>
     </div>
 
     <%# ── 変更②: タブに応じてコンテンツを切り替え ── %>
-    <% if active_tab == "public" %>
+    <% if @active_tab == "public" %>
 
       <%# みんなのブレンド（変更③: @recipes → @public_recipes） %>
       <% if @public_recipes.any? %>
