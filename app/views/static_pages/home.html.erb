@@ -23,6 +23,7 @@
       <% if @public_recipes.any? %>
         <div class="w-full space-y-3 px-4 mt-4">
           <% @public_recipes.each do |recipe| %>
+            <% cache [recipe, recipe.drinking_log, current_user.id] do %>
             <%= link_to recipe_path(recipe), class: "block" do %>
               <div class="bg-herb-green-50/50 rounded-2xl p-5 border border-herb-green-100 shadow-sm hover:opacity-80 transition">
                 <div class="flex justify-between items-start mb-2">
@@ -54,6 +55,7 @@
                   <span class="ml-auto"><%= l recipe.created_at, format: :short %></span>
                 </div>
               </div>
+            <% end %>
             <% end %>
           <% end %>
         </div>
