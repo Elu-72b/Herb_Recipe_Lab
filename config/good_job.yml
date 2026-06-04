@@ -1,0 +1,11 @@
+default: &default
+  queues: "*"
+  max_threads: 5
+  poll_interval: 30
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+  execution_mode: async
