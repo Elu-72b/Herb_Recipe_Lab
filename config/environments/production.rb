@@ -3,6 +3,9 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.hosts << "herb-recipe-lab.com"      # 独自ドメイン
+  config.hosts << "www.herb-recipe-lab.com"  # サブドメイン
+
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
