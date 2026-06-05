@@ -5,6 +5,7 @@ Rails.application.configure do
 
   config.hosts << "herb-recipe-lab.com"      # 独自ドメイン
   config.hosts << "www.herb-recipe-lab.com"  # サブドメイン
+  config.hosts << "herb-recipe-lab.onrender.com" # Renderのデフォルトドメイン
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
