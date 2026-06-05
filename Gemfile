@@ -53,7 +53,6 @@ end
 gem "tailwindcss-rails", "~> 4.4"
 gem "devise", "~> 4.9"
 gem "kaminari", "~> 1.2"
-gem "resend"
 gem "good_job"
 gem "cloudinary", "~> 2.0"
 gem "activestorage-cloudinary-service"
