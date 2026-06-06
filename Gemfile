@@ -28,7 +28,7 @@ gem "cssbundling-rails"
 gem "tailwindcss-rails", "~> 4.4"
 
 # ログイン認証
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 # ページネーション
 gem "kaminari", "~> 1.2"
