@@ -1,65 +1,81 @@
 source "https://rubygems.org"
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+# フレームワーク
 gem "rails", "~> 7.2.3", ">= 7.2.3.1"
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-# Use postgresql as the database for Active Record
+
+# データベース
 gem "pg", "~> 1.1"
-# Use the Puma web server [https://github.com/puma/puma]
+
+# Webサーバー
 gem "puma", ">= 5.0"
-# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+
+# アセットパイプライン
+gem "sprockets-rails"
+
+# JavaScript バンドル
 gem "jsbundling-rails"
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+
+# Hotwire - ページ高速化（Turbo）
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+
+# Hotwire - 軽量 JS フレームワーク（Stimulus）
 gem "stimulus-rails"
-# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+
+# CSS バンドル
 gem "cssbundling-rails"
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
-gem "active_storage_validations"
-
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mswin mingw x64_mingw ], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
-end
-
-group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-  gem "letter_opener_web"
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-end
-
+# TailwindCSS
 gem "tailwindcss-rails", "~> 4.4"
+
+# ログイン認証
 gem "devise", "~> 4.9"
+
+# ページネーション
 gem "kaminari", "~> 1.2"
+
+# 非同期ジョブ（PostgreSQL バックエンド）
 gem "good_job"
+
+# 画像ストレージ（Cloudinary）
 gem "cloudinary", "~> 2.0"
 gem "activestorage-cloudinary-service"
 
+# 画像処理（Active Storage バリアント）
+gem "image_processing", "~> 1.2"
+
+# Active Storage バリデーション
+gem "active_storage_validations"
+
+# 起動時間の短縮キャッシュ
+gem "bootsnap", require: false
+
+# タイムゾーンデータ（Windows 向け）
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+group :development do
+  # デバッグコンソール
+  gem "web-console"
+
+  # 開発環境でのメール確認（ブラウザ表示）
+  gem "letter_opener_web"
+end
+
 group :development, :test do
-  gem "debug", platforms: %i[ mri mswin mingw x64_mingw ], require: "debug/prelude"
+  # デバッガー
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # セキュリティ静的解析
   gem "brakeman", require: false
+
+  # Ruby スタイルガイド（Rails 公式）
   gem "rubocop-rails-omakase", require: false
+
+  # 環境変数管理（.env ファイル読み込み）
   gem "dotenv-rails"
+end
+
+group :test do
+  # システムテスト
+  gem "capybara"
+  gem "selenium-webdriver"
 end
