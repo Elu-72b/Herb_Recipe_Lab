@@ -41,7 +41,7 @@ gem "cloudinary", "~> 2.0"
 gem "activestorage-cloudinary-service"
 
 # 画像処理（Active Storage バリアント）
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.0"
 
 # Active Storage バリデーション
 gem "active_storage_validations"
