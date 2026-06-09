@@ -1,9 +1,63 @@
-<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 w-full">
-  <div class="max-w-sm bg-white rounded-2xl shadow-sm border border-herb-green-100 p-12 flex flex-col items-center space-y-4 text-center">
-    <p class="text-4xl">🌿</p>
-    <p class="text-herb-green-700 font-medium text-lg">この機能はただいま育成中です🌿</p>
-    <br>
-    <p class="text-herb-green-600 text-sm">もうしばらくお待ちください</p>
-    <br>
+<%# app/views/bookmarks/index.html.erb %>
+<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-3 w-full">
+
+  <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5 my-5">
+
+    <%# タイトル %>
+    <div class="flex justify-center mb-6">
+      <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+        <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">保存したレシピ</h2>
+      </div>
+    </div>
+
+    <% if @bookmarks.any? %>
+      <div class="w-full space-y-3 px-4 mt-4">
+        <% @bookmarks.each do |bookmark| %>
+          <% recipe = bookmark.recipe %>
+          <%= link_to recipe_path(recipe), class: "block" do %>
+            <div class="bg-herb-green-50/50 rounded-2xl p-5 border border-herb-green-100 shadow-sm hover:opacity-80 transition">
+              <div class="flex justify-between items-start mb-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <h2 class="text-base font-medium text-herb-green-700 truncate"><%= recipe.title %></h2>
+                </div>
+                <% if recipe.drinking_log %>
+                  <div class="rate-star">
+                    ★ <%= recipe.drinking_log.rating %> / 5
+                  </div>
+                <% end %>
+                <%= render 'bookmarks/button', recipe: recipe, bookmark: bookmark %>
+              </div>
+
+              <div class="flex flex-wrap gap-1 mb-3">
+                <% recipe.recipe_herbs.each do |rh| %>
+                  <% if rh.herb %>
+                    <span class="tag-herb text-[10px]"><%= rh.herb.name %></span>
+                  <% elsif rh.custom_herb_name.present? %>
+                    <span class="tag-herb text-[10px]"><%= rh.custom_herb_name %></span>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <div class="flex justify-between items-center text-[10px] text-herb-green-700/80">
+                <span>by <%= recipe.user.name %></span>
+                <span><%= l recipe.created_at, format: :short %></span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-herb-green-300 text-sm text-center py-8">保存したレシピはまだありません</p>
+    <% end %>
+
+    <%# レシピ探しへの誘導 %>
+    <div class="pt-6 flex flex-col items-center">
+      <%= link_to "みんなのブレンドを見る", recipes_path, class: "btn-primary-lg" %>
+    </div>
+
   </div>
+
+  <%= render 'shared/footer' %>
 </div>
+
+
