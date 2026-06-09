@@ -11,6 +11,8 @@ class StaticPagesController < ApplicationController
 
   def home
     @active_tab = params[:tab] == "my" ? "my" : "public"
+    # bookmarks をオブジェクトごとロードしてビューで find できるようにする
+    @user_bookmarks = current_user.bookmarks.to_a
 
     if @active_tab == "public"
       @public_recipes = Recipe

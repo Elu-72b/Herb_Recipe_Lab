@@ -22,7 +22,8 @@ Rails.application.routes.draw do
 
   get 'home', to: 'static_pages#home'
   get 'profile', to: 'profiles#show'
-  get 'bookmarks', to: 'bookmarks#index'
+
+  resources :bookmarks, only: [:index, :create, :destroy]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

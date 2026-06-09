@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_herbs, dependent: :destroy
   has_many :herbs, through: :recipe_herbs
   has_one :drinking_log, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 
   has_and_belongs_to_many :flavor_tags
   has_and_belongs_to_many :functional_tags

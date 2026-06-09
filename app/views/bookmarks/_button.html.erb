@@ -1,0 +1,25 @@
+<%# locals: (recipe:, bookmark:) %>
+<div id="bookmark_recipe_<%= recipe.id %>">
+  <% if bookmark %>
+    <%= button_to bookmark_path(bookmark),
+          method: :delete,
+          data: { turbo_stream: true },
+          class: "flex items-center gap-1 text-xs text-herb-green-600 bg-herb-green-50 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-herb-green-600" viewBox="0 0 24 24">
+        <path d="M5 3h14a1 1 0 011 1v17.267a.5.5 0 01-.763.429L12 17.764l-7.237 3.932A.5.5 0 014 21.267V4a1 1 0 011-1z"/>
+      </svg>
+      保存済み
+    <% end %>
+  <% else %>
+    <%= button_to bookmarks_path,
+          params: { recipe_id: recipe.id },
+          method: :post,
+          data: { turbo_stream: true },
+          class: "flex items-center gap-1 text-xs text-herb-green-600 bg-white px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-50" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3h14a1 1 0 011 1v17.267a.5.5 0 01-.763.429L12 17.764l-7.237 3.932A.5.5 0 014 21.267V4a1 1 0 011-1z"/>
+      </svg>
+      保存する
+    <% end %>
+  <% end %>
+</div>
