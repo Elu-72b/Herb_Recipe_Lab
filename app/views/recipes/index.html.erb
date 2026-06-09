@@ -25,38 +25,47 @@
                 <% end %>
               </div>
 
-              <div class="flex flex-wrap gap-1 mb-3">
-                <% recipe.recipe_herbs.each do |rh| %>
-                  <% if rh.herb %>
-                    <span class="tag-herb text-[10px]"><%= rh.herb.name %></span>
-                  <% elsif rh.custom_herb_name.present? %>
-                    <span class="tag-herb text-[10px]"><%= rh.custom_herb_name %></span>
-                  <% end %>
-                <% end %>
-              </div>
+    <% @public_recipes.each do |recipe| %>
+      <% bookmark = @user_bookmarks.find { |b| b.recipe_id == recipe.id } %>
+      <%# キャッシュキーにブックマーク状態を含める %>
+      <% cache [recipe, recipe.drinking_log, current_user.id, bookmark&.id] do %>
+        <div class="bg-herb-green-50/50 rounded-2xl p-5 border border-herb-green-100 shadow-sm hover:opacity-80 transition">
+          <div class="flex justify-between items-start mb-2">
+            <%= link_to recipe_path(recipe), class: "flex items-center gap-2 min-w-0 flex-1" do %>
+              <h2 class="text-base font-medium text-herb-green-700 truncate"><%= recipe.title %></h2>
+            <% end %>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <% if recipe.drinking_log %>
+                <div class="rate-star">★ <%= recipe.drinking_log.rating %> / 5</div>
+              <% end %>
+              <%# 他人のレシピにのみブックマークボタンを表示 %>
+              <% if recipe.user != current_user %>
+                <%= render 'bookmarks/button', recipe: recipe, bookmark: bookmark %>
+              <% end %>
+            </div>
+          </div>
 
-              <div class="flex justify-between items-center text-[10px] text-herb-green-700/80">
-                <span>by <%= recipe.user.name %></span>
-                <span><%= l recipe.created_at, format: :short %></span>
-              </div>
+          <%= link_to recipe_path(recipe) do %>
+            <div class="flex flex-wrap gap-1 mb-3">
+              <% recipe.recipe_herbs.each do |rh| %>
+                <% if rh.herb %>
+                  <span class="tag-herb text-[10px]"><%= rh.herb.name %></span>
+                <% elsif rh.custom_herb_name.present? %>
+                  <span class="tag-herb text-[10px]"><%= rh.custom_herb_name %></span>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="flex gap-2 items-center text-[10px] text-herb-green-700/80">
+              <span>by <%= recipe.user.name %></span>
+              <% if recipe.user_id == current_user.id %>
+                <span class="my-blend-tag">自分</span>
+              <% end %>
+              <span class="ml-auto"><%= l recipe.created_at, format: :short %></span>
             </div>
           <% end %>
-        <% end %>
-      </div>
-      <%= paginate @recipes %>
-    <% else %>
-      <p class="text-herb-green-300 text-sm text-center py-8">公開されたブレンドはまだありません</p>
-    <% end %>
-
-    <%# ログイン誘導 %>
-    <div class="pt-6 flex flex-col items-center">
-      <% if user_signed_in? %>
-        <%= link_to "マイブレンドを見る", home_path, class: "btn-primary-lg" %>
-      <% else %>
-        <%= link_to "ログインして記録を始める", new_user_session_path, class: "btn-primary-lg" %>
+        </div>
       <% end %>
-    </div>
-
+    <% end %>
   </div>
 
   <%= render 'shared/footer' %>

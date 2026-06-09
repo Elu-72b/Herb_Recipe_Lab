@@ -6,32 +6,34 @@
     <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
       <%# レシピ名・作成日・投稿者 %>
       <div class="flex justify-between items-start mb-4">
-        <div>
+
+        <%# 左側: タイトル・作成日・投稿者 %>
+        <div class="flex-1 min-w-0">
           <h1 class="text-2xl font-bold text-herb-green-800"><%= @recipe.title %></h1>
           <p class="text-xs text-herb-green-700/80 mt-1">
             作成日: <%= @recipe.brewed_at %><br>
             投稿者: <%= @recipe.user.name %>
                 <% if @recipe.user_id == current_user.id %>
                   <span class="my-blend-tag">自分</span>
-                  <%#本リリースで有効化: 非公開バッジ %>
                   <% unless @recipe.is_public? %>
                     <span class="text-[10px] bg-white text-herb-green-700/80 px-2 py-0.5 rounded-full flex-shrink-0">非公開</span>
                   <% end %>
                 <% end %>
           </p>
         </div>
-        <% if @recipe.user == current_user %>
-          <div class="flex gap-2">
+
+        <%# 右側: ボタン群をまとめて右寄せ %>
+        <div class="flex items-center gap-2 flex-shrink-0 ml-4">
+          <% if user_signed_in? %>
+            <% bookmark = current_user.bookmarks.find_by(recipe: @recipe) %>
+            <%= render 'bookmarks/button', recipe: @recipe, bookmark: bookmark %>
+          <% end %>
+          <% if @recipe.user == current_user %>
             <%= link_to "レシピ編集", edit_recipe_path(@recipe), class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
             <%= link_to "削除", recipe_path(@recipe), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100" %>
-          </div>
-        <% end %>
-        <%# ログイン済み かつ 他人のレシピ のみ表示 %>
-        <% if user_signed_in? && @recipe.user != current_user %>
-          <%# N+1対策: showアクションでは単一レコードのため exists? を1回だけ呼ぶ %>
-          <% bookmark = current_user.bookmarks.find_by(recipe: @recipe) %>
-          <%= render 'bookmarks/button', recipe: @recipe, bookmark: bookmark %>
-        <% end %>
+          <% end %>
+        </div>
+
       </div>
 
     <%# ハーブ配合 & ブレンドの特徴 を横並び %>
