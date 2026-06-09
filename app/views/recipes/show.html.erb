@@ -26,6 +26,12 @@
             <%= link_to "削除", recipe_path(@recipe), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100" %>
           </div>
         <% end %>
+        <%# ログイン済み かつ 他人のレシピ のみ表示 %>
+        <% if user_signed_in? && @recipe.user != current_user %>
+          <%# N+1対策: showアクションでは単一レコードのため exists? を1回だけ呼ぶ %>
+          <% bookmark = current_user.bookmarks.find_by(recipe: @recipe) %>
+          <%= render 'bookmarks/button', recipe: @recipe, bookmark: bookmark %>
+        <% end %>
       </div>
 
     <%# ハーブ配合 & ブレンドの特徴 を横並び %>
