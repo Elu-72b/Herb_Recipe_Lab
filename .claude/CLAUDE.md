@@ -7,10 +7,11 @@ Tech: Ruby 3.4 / Rails 7.2 / PostgreSQL / Docker / TailwindCSS / Stimulus / Turb
 
 ## 2. 参照ファイルの優先順位
 
-1. `.agent/issue.md` — 現在のタスクと完了条件
+1. `.agent/issue_mvp.md` / `.agent/issue_full.md` — 現在のタスクと完了条件
 2. `.agent/skills/GUIDELINE.md` — 開発規約・命名規則
 3. `.agent/er_diagram.md` — テーブル設計
-4. `.claude/commands/` — 各機能の拡張コマンド
+4. `.agent/templates/` — issue・PR・コミットテンプレート
+5. `.claude/commands/` — 各機能の拡張コマンド
 
 判断衝突時: 最新指示 > `issue.md` > `GUIDELINE.md`
 
@@ -41,6 +42,40 @@ Prefix: `feat`, `fix`, `docs`, `style`, `refactor`, `test`
 - `issue_mvp.md`, `issue_full.md` に記載のない新機能の追加
 - `db/seeds.rb` の上書き
 - 既存テストの削除
+
+---
+
+## 6.5 ドキュメント生成ルール（Claude Code）
+
+### テンプレート参照
+
+issue・PRコメント・コミットメッセージを作成する際は、必ず下記テンプレートを参照し、フォーマットに沿って文章を作成すること。
+
+- Issue        : `.agent/templates/issue_template.md`
+- PR コメント  : `.agent/templates/pr_template.md`
+- コミット     : `.agent/templates/commit_template.md`
+
+### 実装提案の保存
+
+実装提案・設計案を作成した場合は `.agent/development_plan/` 配下に保存すること。
+ファイル名形式: `YYYYMMDD_<概要>.md`
+例: `20260610_herb_search_plan.md`
+
+### ログの保存
+
+issue・PRコメント・コミットメッセージを作成した場合は `.agent/development_log/` 配下にも保存すること。
+
+### ストーリーポイント
+
+1 issue あたり **3P 未満**（1P = 2h）を厳守。3P を超える場合は issue を分割すること。
+
+### ファイル修正案の明示ルール
+
+修正案を提示する際は、以下を必ず明記すること。
+
+1. 編集対象ファイルのパス
+2. 編集箇所（行番号、または前後のコードスニペット）
+3. 変更前 → 変更後 の差分形式
 
 ---
 
