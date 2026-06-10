@@ -33,6 +33,9 @@ gem "devise", "~> 4.9"
 # ページネーション
 gem "kaminari", "~> 1.2"
 
+# 検索機能
+gem "ransack"
+
 # 非同期ジョブ（PostgreSQL バックエンド）
 gem "good_job"
 
