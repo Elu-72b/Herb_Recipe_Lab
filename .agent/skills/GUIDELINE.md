@@ -3,7 +3,7 @@
 ## 1. ワークフロー
 
 - 1 Issue = 1 Branch = 1 PR。
-- 常に issue.md の順序に従い、現在のタスクに集中する。
+- 常に issue_mvp.md / issue_full.md の順序に従い、現在のタスクに集中する。
 
 ## 2. Git規約
 

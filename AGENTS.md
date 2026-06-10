@@ -1,21 +1,30 @@
-# CLAUDE.md — Herb Recipe Lab
+# AGENTS.md — Herb Recipe Lab
 
-## 1. プロジェクト概要
+このファイルはリポジトリ全体に適用されます。Gemini CLI・Codex・Claude Code 共通の作業指針です。
+詳細な設計メモ・Issue 管理・AI 向けガイドは `.agent/` 配下を参照してください。
+
+---
+
+## プロジェクト概要
 
 配合（STEP 1）から感想（STEP 2）へ繋がる2段階保存が特徴のハーブティー管理アプリ。
 Tech: Ruby 3.4 / Rails 7.2 / PostgreSQL / Docker / TailwindCSS / Stimulus / Turbo
 
-## 2. 参照ファイルの優先順位
+---
+
+## 参照ファイルの優先順位
 
 1. `.agent/issue_mvp.md` / `.agent/issue_full.md` — 現在のタスクと完了条件
 2. `.agent/skills/GUIDELINE.md` — 開発規約・命名規則
 3. `.agent/er_diagram.md` — テーブル設計
 4. `.agent/templates/` — issue・PR・コミットテンプレート
-5. `.claude/commands/` — 各機能の拡張コマンド
+5. `.agent/AGENTS.md` — `.agent/` 配下の編集ルール詳細
 
-判断衝突時: 最新指示 > `issue.md` > `GUIDELINE.md`
+判断衝突時: 最新指示 > `issue_mvp.md` / `issue_full.md` > `GUIDELINE.md`
 
-## 3. よく使うコマンド
+---
+
+## よく使うコマンド
 
 すべて `docker compose exec web [command]` 経由で実行。
 
@@ -24,19 +33,25 @@ Tech: Ruby 3.4 / Rails 7.2 / PostgreSQL / Docker / TailwindCSS / Stimulus / Turb
 - CSS: `bin/rails tailwindcss:build`
 - Console: `bin/rails console`
 
-## 4. 開発・設計の基本方針
+---
+
+## 開発・設計の基本方針
 
 - **Thin Controller**: ロジックは Service または Model へ。
 - **2-Step Flow**: 配合と感想を別アクションで保存する仕様を厳守。
 - **Unit Logic**: `recipe_herbs.unit` (g/tsp) の管理ロジックを尊重。
 - **N+1 Prevention**: 関連取得時は `includes` 必須。
 
-## 5. Git の作業ルール
+---
+
+## Git の作業ルール
 
 ブランチ: `feature/#[issue_no]-[summary]`
 Prefix: `feat`, `fix`, `docs`, `style`, `refactor`, `test`
 
-## 6. Claude Code への禁止事項
+---
+
+## 禁止事項
 
 - テーブルの削除・カラムの削除を含むマイグレーション（要ユーザー確認）
 - `issue_mvp.md`, `issue_full.md` に記載のない新機能の追加
@@ -45,7 +60,7 @@ Prefix: `feat`, `fix`, `docs`, `style`, `refactor`, `test`
 
 ---
 
-## 6.5 ドキュメント生成ルール（Claude Code）
+## ドキュメント生成ルール（全エージェント共通）
 
 ### テンプレート参照
 
@@ -55,15 +70,11 @@ issue・PRコメント・コミットメッセージを作成する際は、必�
 - PR コメント  : `.agent/templates/pr_template.md`
 - コミット     : `.agent/templates/commit_template.md`
 
-### 実装提案の保存
+### ファイル保存
 
-実装提案・設計案を作成した場合は `.agent/development_plan/` 配下に保存すること。
-ファイル名形式: `YYYYMMDD_<概要>.md`
-例: `20260610_herb_search_plan.md`
-
-### ログの保存
-
-issue・PRコメント・コミットメッセージを作成した場合は `.agent/development_log/` 配下にも保存すること。
+作成したドキュメントは `.agent/development_log/` 配下に保存すること。
+ファイル名形式: `YYYYMMDD_<種別>_<概要>.md`
+例: `20260610_issue_add_herb_search.md`
 
 ### ストーリーポイント
 
@@ -77,14 +88,15 @@ issue・PRコメント・コミットメッセージを作成した場合は `.a
 2. 編集箇所（行番号、または前後のコードスニペット）
 3. 変更前 → 変更後 の差分形式
 
----
-
-## 7. 効率的な動作とトークン節約 (Efficiency & Performance)
-
-エージェントの実行速度向上とトークン消費削減のため、以下の動作を徹底してください。
-
-- **重複アクセスの禁止**: 一度読み込んだファイルの内容は記憶し、変更がない限り短時間に何度も読み直さない。
-- **検索の最適化**: 広い範囲を `read_file` する前に、`grep_search` や `glob` を使用して対象を絞り込む。
-- **ターンの統合**: 関連する調査や編集は、可能な限り1回のツール実行（並列呼び出し）にまとめる。
-- **最小限の出力**: ユーザーから求められない限り、実行結果の長い要約や挨拶を省き、技術的な意図と結果のみを簡潔に伝える。
-- **差分編集の優先**: ファイル全体の上書きよりも、特定の箇所を狙った `replace` を優先し、コンテキスト負荷を下げる。
+例:
+```
+ファイル: app/models/recipe.rb (L45〜L52)
+変更前:
+  def some_method
+    ...
+  end
+変更後:
+  def some_method
+    # 修正内容
+  end
+```
