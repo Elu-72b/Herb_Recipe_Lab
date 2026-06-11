@@ -5,9 +5,11 @@ class HerbsController < ApplicationController
   before_action :authorize_herb!, only: [:edit, :update, :destroy]
 
   def index
-    @herbs = Herb.order(:name)
-                  .includes(:flavor_tags, :functional_tags, :caution_tags)
-                  .page(params[:page]).per(15)
+    @q = Herb.ransack(params[:q])
+    @herbs = @q.result(distinct: true)
+               .includes(:flavor_tags, :functional_tags, :caution_tags)
+               .order(:name)
+               .page(params[:page]).per(15)
   end
 
   def show

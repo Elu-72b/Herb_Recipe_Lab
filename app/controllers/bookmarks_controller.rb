@@ -4,22 +4,29 @@ class BookmarksController < ApplicationController
   def index
     @active_tab = params[:tab] == "my" ? "my" : "public"
 
+    base_scope = Recipe.joins(:bookmarks)
+                       .where(bookmarks: { user_id: current_user.id })
+
     if @active_tab == "public"
       # 他人がブックマークしたレシピ（自分以外のレシピ）
+      @q = base_scope.where.not(user_id: current_user.id).ransack(params[:q])
       @bookmarks = current_user.bookmarks
-                              .joins(:recipe)
-                              .where.not(recipes: { user_id: current_user.id })
-                              .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
-                              .order(created_at: :desc)
-                              .page(params[:page]).per(10)
+                               .joins(:recipe)
+                               .where.not(recipes: { user_id: current_user.id })
+                               .where(recipe_id: @q.result(distinct: true).select(:id))
+                               .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
+                               .order(created_at: :desc)
+                               .page(params[:page]).per(10)
     else
       # 自分のレシピのブックマーク
+      @q = base_scope.where(user_id: current_user.id).ransack(params[:q])
       @bookmarks = current_user.bookmarks
-                              .joins(:recipe)
-                              .where(recipes: { user_id: current_user.id })
-                              .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
-                              .order(created_at: :desc)
-                              .page(params[:my_page]).per(10)
+                               .joins(:recipe)
+                               .where(recipes: { user_id: current_user.id })
+                               .where(recipe_id: @q.result(distinct: true).select(:id))
+                               .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
+                               .order(created_at: :desc)
+                               .page(params[:my_page]).per(10)
     end
   end
 

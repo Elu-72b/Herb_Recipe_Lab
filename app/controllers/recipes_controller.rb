@@ -3,11 +3,11 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @recipes = Recipe
+    @q = Recipe.public_recipes.ransack(params[:q])
+    @recipes = @q.result(distinct: true)
       .includes(:user, :drinking_log, recipe_herbs: :herb)
-      .public_recipes  # ← where(is_public: true) からスコープに変更
-      .recent          # ← order(created_at: :desc) からスコープに変更
-      .page(params[:page]).per(10)  # ← ページネーション追加
+      .recent
+      .page(params[:page]).per(10)
   end
 
   def new
