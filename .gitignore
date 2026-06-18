@@ -40,7 +40,8 @@
 
 /node_modules
 
-echo ".env" >> .gitignore
+# Ignore macOS / OS generated files.
+.DS_Store
 
 # Tools
 .claude/worktrees/
