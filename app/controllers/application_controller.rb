@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
       .any? { |key| Array(params[key]).any?(&:present?) }
   end
 
-  protected
+  private
 
   def require_login_with_alert
     unless user_signed_in?
