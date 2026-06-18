@@ -4,10 +4,12 @@ class RecipesController < ApplicationController
 
   def index
     @q = Recipe.public_recipes.ransack(params[:q])
-    @recipes = @q.result(distinct: true)
+    base = apply_herb_based_filters(Recipe.public_recipes.where(id: @q.result.select(:id)), model: Recipe)
+    @recipes = base
       .includes(:user, :drinking_log, recipe_herbs: :herb)
       .recent
       .page(params[:page]).per(10)
+    @user_bookmarks = user_signed_in? ? current_user.bookmarks.where(recipe: @recipes).to_a : []
   end
 
   def new
