@@ -1,0 +1,25 @@
+<%# locals: (q:, url:, clear_url:, text_fields: [], blocks: []) %>
+<div data-search-toggle-target="form"
+     class="hidden absolute left-0 right-0 top-full z-30 mt-2 p-4 bg-white rounded-2xl border border-herb-green-200 shadow-lg">
+  <%= search_form_for q, url: url, html: { class: "space-y-3" } do |f| %>
+    <% if text_fields.any? %>
+      <div class="grid grid-cols-2 gap-2">
+        <% text_fields.each do |tf| %>
+          <%= f.search_field tf[:attr], placeholder: tf[:placeholder],
+                class: "w-full rounded-xl border border-herb-green-200 bg-herb-green-50 px-3 py-2 text-sm text-herb-green-800 placeholder-herb-green-400 focus:outline-none focus:ring-2 focus:ring-herb-green-400" %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% blocks.each do |block| %>
+      <%= render "shared/search_blocks/#{block[:type]}", **(block[:locals] || {}) %>
+    <% end %>
+
+    <div class="flex gap-2 justify-end">
+      <%= link_to "クリア", clear_url,
+            class: "bg-herb-white text-herb-green-600 hover:bg-herb-green-600/30 hover:text-white text-sm font-medium px-3 py-2 rounded-xl transition cursor-pointer border border-herb-green-300" %>
+      <%= f.submit "検索",
+            class: "bg-herb-green-600 hover:bg-herb-green-600/70 text-white text-sm font-medium px-5 py-2 rounded-xl transition cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

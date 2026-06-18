@@ -1,0 +1,24 @@
+<%# locals: () %>
+<%# 効能（分類 → 個別タグ、複数指定で AND 検索） %>
+<div data-controller="tag-field">
+  <p class="text-xs text-herb-green-700/80 mb-1">効能（複数指定で AND 検索）</p>
+
+  <div data-tag-field-target="fieldList" class="space-y-1">
+    <% categories = Array(params[:functional_categories]) %>
+    <% names      = Array(params[:functional_names]) %>
+    <% pairs = categories.zip(names).reject { |c, n| c.blank? && n.blank? }.presence || [[nil, nil]] %>
+    <% pairs.each do |category, name| %>
+      <%= render 'shared/functional_field', category: category, name: name %>
+    <% end %>
+  </div>
+
+  <template data-tag-field-target="template">
+    <%= render 'shared/functional_field', category: nil, name: nil %>
+  </template>
+
+  <button type="button"
+          data-action="tag-field#addField"
+          class="mt-1 text-xs text-herb-green-600 hover:text-herb-green-800 transition">
+    ＋ 効能を追加
+  </button>
+</div>

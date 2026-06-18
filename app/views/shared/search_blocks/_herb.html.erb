@@ -1,0 +1,22 @@
+<%# locals: () %>
+<%# ハーブ複数検索 %>
+<div data-controller="herb-search" data-action="keydown->herb-search#keydown">
+  <p class="text-xs text-herb-green-700/80 mb-1">ハーブ（複数指定で AND 検索）</p>
+
+  <div data-herb-search-target="fieldList" class="space-y-1">
+    <% herb_names = Array(params[:herb_names]).reject(&:blank?).presence || [""] %>
+    <% herb_names.each do |name| %>
+      <%= render 'shared/herb_field', name: name %>
+    <% end %>
+  </div>
+
+  <template data-herb-search-target="template">
+    <%= render 'shared/herb_field', name: "" %>
+  </template>
+
+  <button type="button"
+          data-action="herb-search#addField"
+          class="mt-1 text-xs text-herb-green-600 hover:text-herb-green-800 transition">
+    ＋ ハーブを追加
+  </button>
+</div>

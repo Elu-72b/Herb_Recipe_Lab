@@ -1,0 +1,14 @@
+<%# app/views/recipes/_search_form.html.erb %>
+<%= render "shared/search_form",
+      q: q, url: recipes_path, clear_url: recipes_path,
+      text_fields: [
+        { attr: :title_cont,     placeholder: "レシピ名" },
+        { attr: :user_name_cont, placeholder: "ユーザー名" }
+      ],
+      blocks: [
+        { type: "functional" },
+        { type: "flavor" },
+        { type: "herb" },
+        { type: "caution_exclude" },
+        { type: "rating", locals: { param_prefix: "drinking_log_rating", id_prefix: "rec" } }
+      ] %>

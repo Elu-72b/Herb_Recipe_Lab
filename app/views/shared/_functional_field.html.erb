@@ -1,0 +1,25 @@
+<%# locals: (category: "", name: "") %>
+<div class="tag-field flex gap-2"
+     data-controller="functional-category"
+     data-functional-category-categories-value="<%= FunctionalTag::CATEGORIES.to_json %>">
+  <select name="functional_categories[]"
+          data-functional-category-target="category"
+          data-action="functional-category#change"
+          class="flex-1 rounded-xl border border-herb-green-200 bg-herb-green-50 px-3 py-2 text-sm text-herb-green-800 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+    <option value="">分類を選択</option>
+    <% FunctionalTag::CATEGORIES.each_key do |c| %>
+      <option value="<%= c %>" <%= "selected" if c == category %>><%= c %></option>
+    <% end %>
+  </select>
+  <select name="functional_names[]"
+          data-functional-category-target="name"
+          class="flex-1 rounded-xl border border-herb-green-200 bg-herb-green-50 px-3 py-2 text-sm text-herb-green-800 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+    <option value="">指定なし（分類全体）</option>
+    <% (FunctionalTag::CATEGORIES[category] || []).each do |n| %>
+      <option value="<%= n %>" <%= "selected" if n == name %>><%= n %></option>
+    <% end %>
+  </select>
+  <button type="button"
+          data-action="tag-field#removeField"
+          class="text-herb-green-400 hover:text-herb-green-700 px-2 text-lg leading-none flex-shrink-0">✕</button>
+</div>
