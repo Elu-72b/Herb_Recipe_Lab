@@ -2,11 +2,18 @@
 
   <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5">
 
-    <%# タイトル %>
-    <div class="flex justify-center">
-      <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
-        <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">ブレンド一覧</h2>
+    <%# タイトル + 検索トグル %>
+    <div data-controller="search-toggle" class="relative">
+      <div class="relative flex justify-center items-center mb-2">
+        <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+          <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">ブレンド一覧</h2>
+        </div>
+        <div class="absolute right-0">
+          <%= render 'shared/search_button' %>
+        </div>
       </div>
+      <%= render 'recipes/search_form', q: @q %>
+      <%= render 'shared/active_filters', q_params: params[:q], labels: {} %>
     </div>
 
     <div class="herb-tab-group mt-4">
