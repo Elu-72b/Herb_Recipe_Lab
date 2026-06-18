@@ -7,6 +7,10 @@ class CautionTag < ApplicationRecord
     "相互作用"       => ["薬剤服用中注意", "抗凝固薬注意", "過剰摂取注意"]
   }.freeze
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
   def self.grouped_by_category
     all_tags = all.index_by(&:name)
     CATEGORIES.transform_values do |names|

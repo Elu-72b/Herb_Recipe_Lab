@@ -8,6 +8,10 @@ class FunctionalTag < ApplicationRecord
     "活力・疲労"   => ["疲労回復", "眼精疲労サポート", "滋養補給"]
   }.freeze
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
   def self.grouped_by_category
     all_tags = all.index_by(&:name)
     CATEGORIES.transform_values do |names|
