@@ -15,3 +15,18 @@ application.register("hello", HelloController)
 
 import ToggleRadioController from "./toggle_radio_controller"
 application.register("toggle-radio", ToggleRadioController)
+
+import SeachToggleController from "./seach_toggle_controller"
+application.register("search-toggle", SeachToggleController)
+
+import HerbSearchController from "./herb_search_controller"
+application.register("herb-search", HerbSearchController)
+
+import TagFieldController from "./tag_field_controller"
+application.register("tag-field", TagFieldController)
+
+import CheckboxLimitController from "./checkbox_limit_controller"
+application.register("checkbox-limit", CheckboxLimitController)
+
+import FunctionalCategoryController from "./functional_category_controller"
+application.register("functional-category", FunctionalCategoryController)
