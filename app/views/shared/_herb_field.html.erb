@@ -1,0 +1,24 @@
+<%# locals: (name: "") %>
+<div class="herb-field relative flex gap-1">
+  <%# 入力欄ラッパー（▼ボタンを右内側に配置） %>
+  <div class="relative flex-1">
+    <input type="text"
+           name="herb_names[]"
+           value="<%= name %>"
+           placeholder="ハーブ名を入力"
+           autocomplete="off"
+           data-action="input->herb-search#suggest blur->herb-search#blur"
+           class="w-full rounded-xl border border-herb-green-200 bg-herb-green-50 pl-3 pr-8 py-2 text-sm text-herb-green-800 placeholder-herb-green-400 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+    <%# ▼ ドロップダウンボタン（ネイティブ select のシェブロンに合わせる） %>
+    <button type="button"
+            data-action="mousedown->herb-search#showAll"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-herb-green-800 text-[10px] leading-none pointer-events-auto"
+            title="一覧から選ぶ">▼</button>
+    <%# 候補リスト %>
+    <ul class="herb-suggestions hidden absolute left-0 top-full z-50 w-full bg-herb-green-600 border border-herb-green-700 rounded-xl shadow-lg mt-0.5 overflow-hidden max-h-48 overflow-y-auto"></ul>
+  </div>
+  <%# ✕ 削除ボタン %>
+  <button type="button"
+          data-action="herb-search#removeField"
+          class="text-herb-green-400 hover:text-herb-green-700 px-2 text-lg leading-none flex-shrink-0">✕</button>
+</div>

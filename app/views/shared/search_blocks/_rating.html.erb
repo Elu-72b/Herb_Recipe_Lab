@@ -1,0 +1,20 @@
+<%# locals: (param_prefix:, id_prefix:) %>
+<%# 評価レンジ（最低〜最高） %>
+<div>
+  <p class="text-xs text-herb-green-600 mb-1">評価</p>
+  <div class="flex items-end gap-2">
+    <div class="flex flex-col items-center">
+      <span class="text-[11px] text-herb-green-500 mb-0.5">Min.</span>
+      <%= render 'shared/star_range_field',
+            name: "q[#{param_prefix}_gteq]", id_prefix: "#{id_prefix}_min",
+            current: params.dig(:q, :"#{param_prefix}_gteq"), default: 1 %>
+    </div>
+    <span class="text-herb-green-500 pb-1">〜</span>
+    <div class="flex flex-col items-center">
+      <span class="text-[11px] text-herb-green-500 mb-0.5">Max</span>
+      <%= render 'shared/star_range_field',
+            name: "q[#{param_prefix}_lteq]", id_prefix: "#{id_prefix}_max",
+            current: params.dig(:q, :"#{param_prefix}_lteq"), default: 5 %>
+    </div>
+  </div>
+</div>

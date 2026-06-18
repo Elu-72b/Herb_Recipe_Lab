@@ -1,0 +1,11 @@
+<%# app/views/herbs/_search_form.html.erb %>
+<%= render "shared/search_form",
+      q: q, url: herbs_path, clear_url: herbs_path,
+      text_fields: [
+        { attr: :name_cont, placeholder: "ハーブ名" }
+      ],
+      blocks: [
+        { type: "functional" },
+        { type: "flavor" },
+        { type: "caution_exclude" }
+      ] %>

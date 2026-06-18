@@ -45,3 +45,4 @@ echo ".env" >> .gitignore
 # Tools
 .claude/worktrees/
 .agent/development_log/
+.agent/development_plan/

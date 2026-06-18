@@ -3,8 +3,10 @@ class TeaReviewsController < ApplicationController
   before_action :set_tea_review, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tea_reviews = current_user.tea_reviews
-      .includes(:herbs).order(created_at: :desc)
+    @q = current_user.tea_reviews.ransack(params[:q])
+    base = apply_herb_based_filters(current_user.tea_reviews.where(id: @q.result.select(:id)), model: TeaReview)
+    @tea_reviews = base
+      .includes(:herbs, :user).order(created_at: :desc)
       .page(params[:page]).per(10)
   end
 

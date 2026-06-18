@@ -4,10 +4,23 @@ class HerbsController < ApplicationController
   before_action :set_tags, only: [:new, :create, :edit, :update]
   before_action :authorize_herb!, only: [:edit, :update, :destroy]
 
+  def autocomplete
+    query      = params[:q].to_s
+    normalized = query.tr('ぁ-ん', 'ァ-ン')  # ひらがな→カタカナに変換
+    herbs = if normalized.blank?
+      Herb.order(:name).limit(50)
+    else
+      Herb.where("name ILIKE ?", "%#{normalized}%").order(:name).limit(10)
+    end
+    render json: herbs.pluck(:name)
+  end
+
   def index
-    @herbs = Herb.order(:name)
-                  .includes(:flavor_tags, :functional_tags, :caution_tags)
-                  .page(params[:page]).per(15)
+    @q = Herb.ransack(params[:q])
+    @herbs = apply_herb_self_filters(Herb.where(id: @q.result.select(:id)))
+                 .includes(:flavor_tags, :functional_tags, :caution_tags)
+                 .order(:name)
+                 .page(params[:page]).per(15)
   end
 
   def show

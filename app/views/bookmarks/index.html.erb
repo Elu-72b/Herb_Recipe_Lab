@@ -4,10 +4,17 @@
   <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5 my-5">
 
     <%# タイトル %>
-    <div class="flex justify-center mb-4">
-      <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
-        <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">保存したレシピ</h2>
+    <div data-controller="search-toggle" class="relative">
+      <div class="relative flex justify-center items-center mb-2">
+        <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+          <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">保存したレシピ</h2>
+        </div>
+        <div class="absolute right-0">
+          <%= render 'shared/search_button' %>
+        </div>
       </div>
+      <%= render 'bookmarks/search_form', q: @q, active_tab: @active_tab %>
+      <%= render 'shared/active_filters', q_params: params[:q], labels: {} %>
     </div>
 
     <%# タブ %>
@@ -66,7 +73,13 @@
       <% end %>
 
     <% else %>
-      <p class="text-herb-green-300 text-sm text-center py-8">保存したレシピはまだありません</p>
+      <p class="text-herb-green-300 text-sm text-center py-8">
+        <% if search_active? %>
+          該当するレシピが見つかりませんでした
+        <% else %>
+          保存したレシピはまだありません
+        <% end %>
+      </p>
     <% end %>
 
   </div>

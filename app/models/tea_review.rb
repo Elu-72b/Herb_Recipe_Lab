@@ -18,6 +18,14 @@ class TeaReview < ApplicationRecord
     "華やかさ" => :flowery
   }.freeze
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name brand rating created_at]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[herbs user]
+  end
+
   before_validation :normalize_zero_flavors, :compact_custom_herb_names
 
   validates :brand, presence: true

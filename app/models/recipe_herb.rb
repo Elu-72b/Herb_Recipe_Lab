@@ -2,6 +2,14 @@ class RecipeHerb < ApplicationRecord
   belongs_to :recipe
   belongs_to :herb, optional: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[custom_herb_name]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[herb]
+  end
+
   # seeds.rbのunit設計に合わせた定義
   enum :unit, { teaspoon: 0, tablespoon: 1, g: 2, piece: 3, individual: 4 }
 

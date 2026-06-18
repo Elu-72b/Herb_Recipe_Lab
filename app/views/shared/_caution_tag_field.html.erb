@@ -1,0 +1,13 @@
+<%# locals: (name: "") %>
+<div class="tag-field flex gap-1">
+  <select name="exclude_caution_tags[]"
+          class="flex-1 rounded-xl border border-herb-green-200 bg-herb-green-50 px-3 py-2 text-sm text-herb-green-800 focus:outline-none focus:ring-2 focus:ring-herb-green-400">
+    <option value="">選択しない</option>
+    <% CautionTag.order(:name).each do |tag| %>
+      <option value="<%= tag.name %>" <%= "selected" if tag.name == name %>><%= tag.name %></option>
+    <% end %>
+  </select>
+  <button type="button"
+          data-action="tag-field#removeField"
+          class="text-herb-green-400 hover:text-herb-green-700 px-2 text-lg leading-none flex-shrink-0">✕</button>
+</div>

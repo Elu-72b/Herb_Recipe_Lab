@@ -11,20 +11,24 @@ class StaticPagesController < ApplicationController
 
   def home
     @active_tab = params[:tab] == "my" ? "my" : "public"
-    # bookmarks をオブジェクトごとロードしてビューで find できるようにする
-    @user_bookmarks = current_user.bookmarks.to_a
 
     if @active_tab == "public"
-      @public_recipes = Recipe
+      @q = Recipe.public_recipes.ransack(params[:q])
+      base = apply_herb_based_filters(Recipe.public_recipes.where(id: @q.result.select(:id)), model: Recipe)
+      @public_recipes = base
         .includes(:user, :drinking_log, recipe_herbs: :herb)
-        .public_recipes
         .recent
         .page(params[:page]).per(10)
     else
-      @my_recipes = current_user.recipes
-        .includes(:drinking_log, recipe_herbs: :herb)
+      @q = current_user.recipes.ransack(params[:q])
+      base = apply_herb_based_filters(current_user.recipes.where(id: @q.result.select(:id)), model: Recipe)
+      @my_recipes = base
+        .includes(:user, :drinking_log, recipe_herbs: :herb)
         .recent
         .page(params[:my_page]).per(10)
     end
+
+    loaded_recipes = @public_recipes || @my_recipes || []
+    @user_bookmarks = current_user.bookmarks.where(recipe: loaded_recipes).to_a
   end
 end

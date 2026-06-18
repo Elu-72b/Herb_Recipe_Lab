@@ -15,6 +15,14 @@ class Herb < ApplicationRecord
 
   ACCEPTED_CONTENT_TYPES = %w[image/jpeg image/png image/gif image/webp].freeze
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[flavor_tags functional_tags caution_tags recipe_herbs]
+  end
+
   validates :name, presence: true, uniqueness: true
   validates :image,
     content_type: ACCEPTED_CONTENT_TYPES,

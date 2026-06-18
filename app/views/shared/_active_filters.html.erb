@@ -1,0 +1,134 @@
+<%# locals: (q_params:, labels:) %>
+<%
+  label_map = {
+    "title_cont"                    => "レシピ名",
+    "recipe_herbs_herb_name_cont"   => "ハーブ名",
+    "user_name_cont"                => "ユーザー名",
+    "drinking_log_rating_in"        => "評価",
+    "drinking_log_rating_gteq"      => "評価(最低)",
+    "drinking_log_rating_lteq"      => "評価(最高)",
+    "name_cont"                     => labels&.fetch("name_cont", "名前"),
+    "brand_cont"                    => "ブランド名",
+    "herbs_name_cont"               => "ハーブ名",
+    "rating_in"                     => "評価",
+    "rating_gteq"                   => "評価(最低)",
+    "rating_lteq"                   => "評価(最高)",
+    "caution_tags_name_cont"        => "禁忌",
+  }
+
+  q_hash = q_params.respond_to?(:to_unsafe_h) ? q_params.to_unsafe_h : q_params.to_h
+  q_hash = q_hash.reject do |k, v|
+    val = Array(v).first.to_s
+    (k.end_with?("_gteq") && val == "1") || (k.end_with?("_lteq") && val == "5")
+  end
+  active_filters = q_hash.select { |_k, v| Array(v).any?(&:present?) }
+
+  # herb_names[] は q の外にある独立パラメーター
+  herb_names_active = Array(params[:herb_names]).select(&:present?)
+
+  # flavor_names[] も q の外にある独立パラメーター
+  flavor_names_active = Array(params[:flavor_names]).select(&:present?)
+
+  # exclude_caution_tags[] も q の外にある独立パラメーター
+  excluded_tags_active = Array(params[:exclude_caution_tags]).select(&:present?)
+
+  # functional_categories[] / functional_names[] も q の外にある独立パラメーター（ペアで AND 検索）
+  functional_pairs_active = Array(params[:functional_categories]).zip(Array(params[:functional_names]))
+                                                                  .reject { |c, n| c.blank? && n.blank? }
+
+  has_any = active_filters.any? || herb_names_active.any? || flavor_names_active.any? ||
+            excluded_tags_active.any? || functional_pairs_active.any?
+%>
+
+<% if has_any %>
+  <div class="flex flex-wrap items-center gap-1 px-1 mt-3">
+
+    <%# q[] 由来のフィルター %>
+    <% active_filters.each do |key, value| %>
+      <%
+        label       = label_map[key] || key
+        values      = Array(value).select(&:present?)
+        display_val = if key.end_with?("_in")
+          values.map { |v| "★#{v}" }.join(" / ")
+        elsif key.end_with?("_gteq") || key.end_with?("_lteq")
+          "★#{values.first}"
+        else
+          values.first
+        end
+        new_q       = active_filters.except(key).presence
+        remove_url  = url_for(request.query_parameters.merge("q" => new_q).except("page", "my_page"))
+      %>
+      <span class="inline-flex items-center gap-1 bg-herb-green-100 text-herb-green-700 text-[11px] px-2 py-0.5 rounded-full border border-herb-green-300">
+        <span><%= label %>: <%= display_val %></span>
+        <%= link_to remove_url,
+              class: "text-herb-green-500 hover:text-herb-green-800 leading-none font-bold ml-0.5",
+              title: "この条件を外す" do %>✕<% end %>
+      </span>
+    <% end %>
+
+    <%# herb_names[] 由来のフィルター（1件ずつタグ表示） %>
+    <% herb_names_active.each do |herb_name| %>
+      <%
+        remaining  = herb_names_active.reject { |n| n == herb_name }
+        remove_url = url_for(request.query_parameters.merge("herb_names" => remaining.presence).except("page", "my_page"))
+      %>
+      <span class="inline-flex items-center gap-1 bg-herb-green-100 text-herb-green-700 text-[11px] px-2 py-0.5 rounded-full border border-herb-green-300">
+        <span>ハーブ: <%= herb_name %></span>
+        <%= link_to remove_url,
+              class: "text-herb-green-500 hover:text-herb-green-800 leading-none font-bold ml-0.5",
+              title: "この条件を外す" do %>✕<% end %>
+      </span>
+    <% end %>
+
+    <%# flavor_names[] 由来のフィルター（1件ずつタグ表示） %>
+    <% flavor_names_active.each do |flavor_name| %>
+      <%
+        remaining  = flavor_names_active.reject { |n| n == flavor_name }
+        remove_url = url_for(request.query_parameters.merge("flavor_names" => remaining.presence).except("page", "my_page"))
+      %>
+      <span class="inline-flex items-center gap-1 bg-herb-green-100 text-herb-green-700 text-[11px] px-2 py-0.5 rounded-full border border-herb-green-300">
+        <span>風味: <%= flavor_name %></span>
+        <%= link_to remove_url,
+              class: "text-herb-green-500 hover:text-herb-green-800 leading-none font-bold ml-0.5",
+              title: "この条件を外す" do %>✕<% end %>
+      </span>
+    <% end %>
+
+    <%# functional_categories[] / functional_names[] 由来のフィルター（ペアごとに1件ずつ表示） %>
+    <% functional_pairs_active.each do |category, name| %>
+      <%
+        remaining = functional_pairs_active.reject { |c, n| c == category && n == name }
+        remove_url = url_for(request.query_parameters.merge(
+          "functional_categories" => remaining.map(&:first).presence,
+          "functional_names"      => remaining.map(&:last).presence
+        ).except("page", "my_page"))
+        label_text = name.presence ? "効能: #{name}" : "効能分類: #{category}"
+      %>
+      <span class="inline-flex items-center gap-1 bg-herb-green-100 text-herb-green-700 text-[11px] px-2 py-0.5 rounded-full border border-herb-green-300">
+        <span><%= label_text %></span>
+        <%= link_to remove_url,
+              class: "text-herb-green-500 hover:text-herb-green-800 leading-none font-bold ml-0.5",
+              title: "この条件を外す" do %>✕<% end %>
+      </span>
+    <% end %>
+
+    <%# exclude_caution_tags[] 由来のフィルター（1件ずつタグ表示） %>
+    <% excluded_tags_active.each do |tag_name| %>
+      <%
+        remaining  = excluded_tags_active.reject { |n| n == tag_name }
+        remove_url = url_for(request.query_parameters.merge("exclude_caution_tags" => remaining.presence).except("page", "my_page"))
+      %>
+      <span class="inline-flex items-center gap-1 bg-herb-green-100 text-herb-green-700 text-[11px] px-2 py-0.5 rounded-full border border-herb-green-300">
+        <span>禁忌除外: <%= tag_name %></span>
+        <%= link_to remove_url,
+              class: "text-herb-green-500 hover:text-herb-green-800 leading-none font-bold ml-0.5",
+              title: "この条件を外す" do %>✕<% end %>
+      </span>
+    <% end %>
+
+    <%= link_to url_for(request.query_parameters.except("q", "herb_names", "flavor_names", "exclude_caution_tags", "functional_categories", "functional_names", "page", "my_page")),
+          class: "text-[11px] text-herb-green-500 underline hover:text-herb-green-700 ml-1" do %>
+      すべてクリア
+    <% end %>
+  </div>
+<% end %>

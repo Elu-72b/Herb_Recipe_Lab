@@ -1,0 +1,22 @@
+<%# locals: () %>
+<%# 禁忌タグ除外検索 %>
+<div data-controller="tag-field">
+  <p class="text-xs text-herb-green-700/80 mb-1">禁忌タグを除外（複数指定で除外）</p>
+
+  <div data-tag-field-target="fieldList" class="space-y-1">
+    <% excluded_tags = Array(params[:exclude_caution_tags]).reject(&:blank?).presence || [""] %>
+    <% excluded_tags.each do |name| %>
+      <%= render 'shared/caution_tag_field', name: name %>
+    <% end %>
+  </div>
+
+  <template data-tag-field-target="template">
+    <%= render 'shared/caution_tag_field', name: "" %>
+  </template>
+
+  <button type="button"
+          data-action="tag-field#addField"
+          class="mt-1 text-xs text-herb-green-600 hover:text-herb-green-800 transition">
+    ＋ 除外タグを追加
+  </button>
+</div>
