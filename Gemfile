@@ -25,7 +25,7 @@ gem "stimulus-rails"
 gem "cssbundling-rails"
 
 # TailwindCSS
-gem "tailwindcss-rails", "~> 4.4"
+gem "tailwindcss-rails", "~> 4.6"
 
 # ログイン認証
 gem "devise", "~> 4.9"
