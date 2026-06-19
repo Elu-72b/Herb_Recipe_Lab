@@ -1,18 +1,13 @@
 <%# 総合評価 %>
 <div class="flex flex-col items-center">
   <%= f.label :rating, "総合評価（5段階）", class: "block text-sm font-medium text-herb-green-700 mb-2" %>
-  <div class="flex gap-4">
-    <% (1..5).each do |n| %>
-      <label class="flex flex-col items-center gap-1 cursor-pointer group">
-        <%= f.radio_button :rating, n, class: "sr-only peer", required: true %>
-        <div class="w-10 h-10 flex items-center justify-center rounded-full border border-herb-green-200
-                    peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
-                    group-hover:border-herb-green-400 transition-all">
-          <%= n %>
-        </div>
-      </label>
-    <% end %>
-  </div>
+    <div class="flex flex-row-reverse justify-center gap-1">
+      <% [5, 4, 3, 2, 1].each do |n| %>
+        <%= f.radio_button :rating, n, class: "peer sr-only", required: true %>
+        <%= f.label :rating, "★", value: n,
+              class: "cursor-pointer text-4xl sm:text-5xl text-gray-300 peer-checked:text-herb-green-600 transition-colors" %>
+      <% end %>
+    </div>
 </div>
 
 <%# 風味記録 %>
@@ -23,13 +18,13 @@
     <% if column_name %>
       <div data-controller="toggle-radio">
         <%= f.label column_name, tag.name, class: "block text-xs font-medium text-herb-green-600 mb-2" %>
-        <div class="flex gap-1.5">
+        <div class="flex flex-wrap gap-1 min-w-0">
           <% (1..5).each do |n| %>
             <label class="flex flex-col items-center gap-1 cursor-pointer group">
               <%= f.radio_button column_name, n,
                     class: "sr-only peer",
                     data: { "toggle-radio-target": "input", action: "click->toggle-radio#toggle", "was-checked": "false" } %>
-              <div class="w-5 h-5 flex items-center justify-center rounded-full border border-herb-green-200
+              <div class="w-5 h-5 sm:w-8 sm:h-8 flex items-center justify-center rounded-full border border-herb-green-200
                           peer-checked:bg-herb-green-600 peer-checked:text-white peer-checked:border-herb-green-600
                           group-hover:border-herb-green-400 transition-all text-sm">
                 <%= n %>
