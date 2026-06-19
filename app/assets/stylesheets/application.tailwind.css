@@ -109,7 +109,7 @@
 
   /* 全幅テキスト・日付・数値入力 */
   .form-input {
-    @apply w-full border border-herb-green-300 rounded-xl px-4 py-2 text-sm
+    @apply min-w-0 max-w-full w-full border border-herb-green-300 rounded-xl px-4 py-2 text-sm
            focus:outline-none focus:ring-2 focus:ring-herb-green-400;
   }
 
@@ -117,6 +117,15 @@
   .form-textarea {
     @apply w-full border border-herb-green-300 rounded-xl px-4 py-2 text-sm
            focus:outline-none focus:ring-2 focus:ring-herb-green-400 resize-none;
+  }
+  /* iOS Safari の date/time input がカード幅を超えるのを防ぐ */
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    max-width: 100%;
   }
 
   /* ハーブ配合行: ハーブ選択・カスタム名入力（flex-1） */
