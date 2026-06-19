@@ -1,6 +1,6 @@
 <%# locals: (name:, id_prefix:, current:, default:) %>
 <% selected = current.presence&.to_i || default %>
-<div class="flex flex-row-reverse gap-0.5">
+<div class="flex flex-row-reverse gap-0.5 min-w-0">
   <% [5, 4, 3, 2, 1].each do |v| %>
     <% id = "#{id_prefix}_#{v}" %>
     <%= radio_button_tag name, v, selected == v, id: id, class: "peer sr-only" %>
