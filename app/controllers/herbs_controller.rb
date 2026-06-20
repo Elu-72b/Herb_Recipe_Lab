@@ -19,6 +19,7 @@ class HerbsController < ApplicationController
     @q = Herb.ransack(params[:q])
     @herbs = apply_herb_self_filters(Herb.where(id: @q.result.select(:id)))
                  .includes(:flavor_tags, :functional_tags, :caution_tags)
+                 .with_attached_image
                  .order(:name)
                  .page(params[:page]).per(15)
   end
