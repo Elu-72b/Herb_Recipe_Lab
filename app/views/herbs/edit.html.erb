@@ -104,18 +104,18 @@
               class: "form-textarea" %>
       </div>
 
-      <%# 画像（Cloudinary連携時に有効化） %>
+      <%# 画像 %>
       <%# herb_params に :image は許可済み。form_with は file_field 追加時に自動で multipart になる %>
-      <%# <div> %>
-      <%#   <p class="form-label">ハーブ画像</p> %>
-      <%#   現在の画像を表示（既存画像がある場合） %>
-      <%#   <% if @herb.image.present? %>
-      <%#     <%= image_tag @herb.image, class: "w-24 h-24 object-cover rounded-xl mb-2" %>
-      <%#   <% end %>
-      <%#   <%= form.file_field :image, accept: Herb::ACCEPTED_CONTENT_TYPES.join(","), %>
-      <%#         class: "w-full text-sm text-gray-400" %>
-      <%#   <p class="text-xs text-herb-green-700/60 mt-1">JPEG・PNG・GIF・WebP形式、5MB以下</p> %>
-      <%# </div> %>
+      <div>
+        <p class="form-label">ハーブ画像</p>
+        <%# 現在の画像を表示（既存画像がある場合） %>
+        <% if @herb.image.attached? %>
+          <%= image_tag @herb.image, class: "w-24 h-24 object-cover rounded-xl mb-2" %>
+        <% end %>
+        <%= form.file_field :image, accept: Herb::ACCEPTED_CONTENT_TYPES.join(","),
+              class: "w-full text-sm text-gray-400" %>
+        <p class="text-xs text-herb-green-700/60 mt-1">JPEG・PNG・GIF・WebP形式、5MB以下</p>
+      </div>
 
       <%# 保存ボタン %>
       <div class="pt-2 space-y-3 flex flex-col items-center">
