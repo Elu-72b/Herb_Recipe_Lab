@@ -1,12 +1,12 @@
 <%# app/views/recipes/edit.html.erb %>
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-3 w-full">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
 
-  <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
+  <div class="max-w-4xl w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
 
     <%# タイトル %>
     <div class="flex justify-center mb-6">
       <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
-        <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">
+        <h2 class="text-lg md:text-xl text-herb-green-700 font-medium tracking-wide">
           STEP 1｜ブレンドを修正する
         </h2>
       </div>
@@ -59,7 +59,7 @@
         <div class="space-y-3" id="recipe-herbs-fields">
           <%= f.fields_for :recipe_herbs do |herb_f| %>
             <% is_custom = herb_f.object.herb_id.nil? && herb_f.object.custom_herb_name.present? %>
-            <div class="flex gap-1 items-center recipe-herb-row">
+            <div class="flex gap-1 flex-wrap items-center recipe-herb-row">
               <%= herb_f.select :herb_id,
                     options_from_collection_for_select(@herbs, :id, :name, is_custom ? nil : herb_f.object.herb_id) +
                     options_for_select([["その他", "other"]], is_custom ? "other" : nil),
@@ -81,7 +81,7 @@
               <%= herb_f.hidden_field :id %>
               <%= herb_f.check_box :_destroy, class: "hidden" %>
               <button type="button" onclick="this.closest('.recipe-herb-row').remove()"
-                class="text-red-400 hover:text-red-600 text-lg font-bold px-1 leading-none">
+                class="text-red-400 hover:text-red-600 text-2xl font-bold px-1 leading-none">
                 ×
               </button>
             </div>
@@ -107,9 +107,9 @@
       </div>
 
       <%# 更新・戻るボタン %>
-      <div class="pt-2 space-y-3 flex flex-col items-center">
-        <%= f.submit "記録を更新する", class: "btn-primary-lg" %>
+      <div class="flex justify-between items-center mt-6">
         <%= link_to "一覧に戻る", home_path, class: "btn-list-back" %>
+        <%= f.submit "記録を更新する", class: "btn-primary-lg" %>
       </div>
 
     <% end %>
@@ -152,7 +152,7 @@
       const herbIndex = container.querySelectorAll(".recipe-herb-row").length;
 
       const row = document.createElement("div");
-      row.className = "flex gap-1 items-center recipe-herb-row";
+      row.className = "flex gap-1 flex-wrap items-center recipe-herb-row";
       row.innerHTML = `
         <select name="recipe[recipe_herbs_attributes][${herbIndex}][herb_id]"
           class="herb-row-select"
@@ -182,7 +182,7 @@
 
         <button type="button"
           onclick="this.closest('.recipe-herb-row').remove()"
-          class="text-red-400 hover:text-red-600 text-lg font-bold px-1 leading-none">
+          class="text-red-400 hover:text-red-600 text-2xl font-bold px-1 leading-none">
           ×
         </button>
       `;

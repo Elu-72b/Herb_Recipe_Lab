@@ -3,9 +3,12 @@ class TeaReview < ApplicationRecord
   belongs_to :herb, optional: true
   has_many :tea_review_herbs, dependent: :destroy
   has_many :herbs, through: :tea_review_herbs
+  has_one_attached :image
   accepts_nested_attributes_for :tea_review_herbs,
     allow_destroy: true,
     reject_if: :all_blank
+
+  ACCEPTED_CONTENT_TYPES = %w[image/jpeg image/png image/gif image/webp].freeze
 
   FLAVOR_MAPPING = {
     "甘味" => :sweetness,
@@ -31,6 +34,10 @@ class TeaReview < ApplicationRecord
   validates :brand, presence: true
   validates :name, presence: true
   validates :rating, presence: true, inclusion: { in: 1..5 }
+  validates :image,
+    content_type: ACCEPTED_CONTENT_TYPES,
+    size: { less_than_or_equal_to: 5.megabytes },
+    allow_blank: true
 
   FLAVOR_MAPPING.values.each do |column|
     validates column, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
