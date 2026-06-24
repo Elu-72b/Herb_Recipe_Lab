@@ -1,8 +1,5 @@
 <%# 画面全体を中央寄せにするコンテナ %>
-<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-4 space-y-6 w-full">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
     <%= render 'devise/shared/login_form' %>
-    <div class="mt-4 text-center text-sm">
-        <%= link_to "パスワードをお忘れですか？", new_user_password_path, class: "text-green-600 hover:text-green-500" %>
-    </div>
 
 </div>

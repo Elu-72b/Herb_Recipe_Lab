@@ -1,11 +1,11 @@
 <%# app/views/recipes/show.html.erb %>
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
 
-  <div class="max-w-2xl w-full space-y-3">
+  <div class="max-w-4xl w-full space-y-3">
     <%# レシピの基本情報 %>
     <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
       <%# レシピ名・作成日・投稿者 %>
-      <div class="flex justify-between items-start mb-4">
+      <div class="flex flex-row justify-between items-start mb-4">
 
         <%# 左側: タイトル・作成日・投稿者 %>
         <div class="flex-1 min-w-0">
@@ -23,14 +23,16 @@
         </div>
 
         <%# 右側: ボタン群をまとめて右寄せ %>
-        <div class="flex items-center gap-2 flex-shrink-0 ml-4">
+        <div class="flex flex-col items-end gap-2 flex-shrink-0 ml-4">
           <% if user_signed_in? %>
             <% bookmark = current_user.bookmarks.find_by(recipe: @recipe) %>
             <%= render 'bookmarks/button', recipe: @recipe, bookmark: bookmark %>
           <% end %>
           <% if @recipe.user == current_user %>
-            <%= link_to "レシピ編集", edit_recipe_path(@recipe), class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
-            <%= link_to "削除", recipe_path(@recipe), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100" %>
+            <div class="flex flex-col items-end gap-2 md:flex-row md:items-center">
+              <%= link_to "レシピ編集", edit_recipe_path(@recipe), class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
+              <%= link_to "削除", recipe_path(@recipe), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100" %>
+            </div>
           <% end %>
         </div>
 
@@ -79,27 +81,31 @@
             <% end %>
           </div>
         </div>
-  </div>
-    <%# 感想カード: DrinkingLog 情報 %>
-    <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex items-center gap-3">
+    <%# 仕切り線: 研究結果の感想セクション %>
+    <hr class="border-herb-green-100 my-6">
+
+      <div>
+        <%# 1行目: タイトルと編集ボタン %>
+        <div class="flex justify-between items-center">
           <h2 class="text-xl font-bold text-herb-green-800">研究結果の感想</h2>
-          <% if @recipe.drinking_log %>
-            <div class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-md font-bold">
-              ★ <%= @recipe.drinking_log.rating %> / 5
-            </div>
+          <% if @recipe.drinking_log && @recipe.user == current_user %>
+            <%= link_to "感想を編集", edit_recipe_drinking_log_path(@recipe, @recipe.drinking_log),
+                  class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
           <% end %>
         </div>
-        <% if @recipe.drinking_log && @recipe.user == current_user %>
-          <%= link_to "感想を編集", edit_recipe_drinking_log_path(@recipe, @recipe.drinking_log),
-                class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
+        <%# 2行目: 総合評価（星表示） %>
+        <% if @recipe.drinking_log %>
+          <% rating = @recipe.drinking_log.rating.to_i %>
+          <p class="mt-2 mb-1 text-lg text-herb-green-700">
+            総合評価：<span class="text-yellow-500 font-normal"><%= "★" * rating %><%= "☆" * (5 - rating) %></span>
+          </p>
         <% end %>
       </div>
 
       <% if @recipe.drinking_log %>
-        <div class="space-y-6">
+        <div class="space-y-3 mb-4">
           <%# 味のパラメータ表示 %>
+          <h2 class="text-lg text-herb-green-700 mb-2 border-herb-green-100">風味評価</h2>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <% DrinkingLog::FLAVOR_MAPPING.each do |ja_name, column| %>
               <% value = @recipe.drinking_log.send(column).to_i %>
@@ -134,12 +140,14 @@
           <% end %>
         </div>
       <% end %>
+
+      <%# 戻るリンク %>
+      <div class="mt-6">
+        <%= link_to "一覧に戻る", user_signed_in? ? home_path : recipes_path, class: "btn-list-back" %>
+      </div>
     </div>
 
-    <%# 戻るリンク %>
-    <div class="text-center">
-      <%= link_to "一覧に戻る", user_signed_in? ? home_path : recipes_path, class: "btn-list-back" %>
-    </div>
+
   </div>
 
   <%= render 'shared/footer' %>
