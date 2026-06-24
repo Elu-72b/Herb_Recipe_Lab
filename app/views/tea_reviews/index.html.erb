@@ -1,11 +1,11 @@
-<div class="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-3 space-y-3 w-full">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
 
-  <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5">
+  <div class="max-w-4xl w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5">
 
     <%# タイトル + 検索トグル %>
     <div data-controller="search-toggle" class="relative">
       <div class="relative flex justify-center items-center mb-2">
-        <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+        <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
           <h2 class="text-2xl text-herb-green-700 font-medium tracking-wide">既製品レビュー</h2>
         </div>
         <div class="absolute right-0">
@@ -21,27 +21,36 @@
         <% @tea_reviews.each do |review| %>
           <%= link_to tea_review_path(review), class: "block" do %>
             <div class="bg-herb-green-50/50 rounded-2xl p-5 border border-herb-green-100 shadow-sm hover:opacity-80 transition">
-              <div class="flex items-start justify-between">
-                <div>
-                  <p class="text-xs text-herb-green-700/80"><%= review.brand %></p>
-                  <p class="text-base font-bold text-herb-green-800"><%= review.name %></p>
-                </div>
-                <div class="rate-star">
-                  ★ <%= review.rating %> / 5
-                </div>
-              </div>
+              <div class="flex gap-3">
+                <%# 商品画像（添付がある時のみ・左端） %>
+                <% if review.image.attached? %>
+                  <%= image_tag review.image, class: "w-14 h-14 md:w-24 md:h-24 object-cover rounded-lg flex-shrink-0", alt: review.name %>
+                <% end %>
 
-              <% if review.herbs.any? %>
-                <div class="mt-2 flex flex-wrap gap-1 mb-3">
-                  <% review.herbs.each do |herb| %>
-                    <span class="tag-herb text-[10px]"><%= herb.name %></span>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs text-herb-green-700/80 line-clamp-2 md:line-clamp-1"><%= review.brand %></p>
+                      <p class="text-base font-bold text-herb-green-800 line-clamp-2 md:line-clamp-1"><%= review.name %></p>
+                    </div>
+                    <div class="rate-star self-end md:self-auto">
+                      ★ <%= review.rating %> / 5
+                    </div>
+                  </div>
+
+                  <% if review.herbs.any? %>
+                    <div class="mt-2 flex flex-wrap gap-1 mb-3">
+                      <% review.herbs.each do |herb| %>
+                        <span class="tag-herb text-[10px]"><%= herb.name %></span>
+                      <% end %>
+                    </div>
                   <% end %>
-                </div>
-              <% end %>
 
-              <div class="flex gap-2 items-center text-[10px] text-herb-green-700/80">
-                <span>by <%= review.user.name %></span>
-                <span class="ml-auto"><%= l review.created_at, format: :short %></span>
+                  <div class="flex gap-2 items-center text-[10px] text-herb-green-700/80">
+                    <span>by <%= review.user.name %></span>
+                    <span class="ml-auto"><%= l review.created_at, format: :short %></span>
+                  </div>
+                </div>
               </div>
             </div>
           <% end %>

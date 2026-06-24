@@ -6,7 +6,7 @@ class TeaReviewsController < ApplicationController
     @q = current_user.tea_reviews.ransack(params[:q])
     base = apply_herb_based_filters(current_user.tea_reviews.where(id: @q.result.select(:id)), model: TeaReview)
     @tea_reviews = base
-      .includes(:herbs, :user).order(created_at: :desc)
+      .includes(:herbs, :user).with_attached_image.order(created_at: :desc)
       .page(params[:page]).per(10)
   end
 
@@ -57,7 +57,7 @@ class TeaReviewsController < ApplicationController
 
   def tea_review_params
     params.require(:tea_review).permit(
-      :brand, :name, :purchase_place, :description, :rating,
+      :brand, :name, :purchase_place, :description, :rating, :image,
       :sweetness, :acidity, :bitterness, :astringency,
       :fruity, :spicy, :freshness, :flowery, :impression,
       herb_ids: [],

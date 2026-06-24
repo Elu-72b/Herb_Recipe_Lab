@@ -2,31 +2,34 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "./application";
 
-import AddFieldController from "./add_field_controller"
-application.register("add-field", AddFieldController)
+import AddFieldController from "./add_field_controller";
+application.register("add-field", AddFieldController);
 
-import FabController from "./fab_controller"
-application.register("fab", FabController)
+import FabController from "./fab_controller";
+application.register("fab", FabController);
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import HelloController from "./hello_controller";
+application.register("hello", HelloController);
 
-import ToggleRadioController from "./toggle_radio_controller"
-application.register("toggle-radio", ToggleRadioController)
+import ToggleRadioController from "./toggle_radio_controller";
+application.register("toggle-radio", ToggleRadioController);
 
-import SeachToggleController from "./seach_toggle_controller"
-application.register("search-toggle", SeachToggleController)
+import SeachToggleController from "./seach_toggle_controller";
+application.register("search-toggle", SeachToggleController);
 
-import HerbSearchController from "./herb_search_controller"
-application.register("herb-search", HerbSearchController)
+import HerbSearchController from "./herb_search_controller";
+application.register("herb-search", HerbSearchController);
 
-import TagFieldController from "./tag_field_controller"
-application.register("tag-field", TagFieldController)
+import TagFieldController from "./tag_field_controller";
+application.register("tag-field", TagFieldController);
 
-import CheckboxLimitController from "./checkbox_limit_controller"
-application.register("checkbox-limit", CheckboxLimitController)
+import CheckboxLimitController from "./checkbox_limit_controller";
+application.register("checkbox-limit", CheckboxLimitController);
 
-import FunctionalCategoryController from "./functional_category_controller"
-application.register("functional-category", FunctionalCategoryController)
+import FunctionalCategoryController from "./functional_category_controller";
+application.register("functional-category", FunctionalCategoryController);
+
+import ImagePreviewController from "./image_preview_controller";
+application.register("image-preview", ImagePreviewController);

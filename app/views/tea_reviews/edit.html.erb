@@ -1,5 +1,5 @@
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
-  <div class="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
+  <div class="max-w-4xl w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-10 my-8">
 
     <div class="flex justify-center mb-6">
       <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
@@ -32,6 +32,19 @@
         <%= f.text_field :purchase_place, placeholder: "例）オンラインショップ、カルディなど", class: "form-input" %>
         <%= f.label :description, "特徴", class: "form-label" %>
         <%= f.text_area :description, rows: 3, placeholder: "商品の特徴や原材料など", class: "form-textarea" %>
+
+        <%# 商品画像 %>
+        <div data-controller="image-preview">
+          <%= f.label :image, "商品画像（任意）", class: "form-label" %>
+          <img data-image-preview-target="preview"
+              <% if @tea_review.image.attached? %>src="<%= url_for(@tea_review.image) %>"<% end %>
+              class="<%= 'hidden' unless @tea_review.image.attached? %> w-24 h-24 object-cover rounded-xl mt-2 mb-2"
+              alt="プレビュー">
+          <%= f.file_field :image, accept: TeaReview::ACCEPTED_CONTENT_TYPES.join(","),
+                data: { image_preview_target: "input", action: "change->image-preview#preview" },
+                class: "w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-herb-green-100 file:text-herb-green-700 hover:file:bg-herb-green-200 file:cursor-pointer" %>
+          <p class="text-xs text-herb-green-700/60 mt-1">JPEG・PNG・GIF・WebP形式、5MB以下</p>
+        </div>
       </div>
 
       <%# ハーブ配合 %>
@@ -59,7 +72,7 @@
                 <%= herb_f.check_box :_destroy, class: "hidden" %>
               <% end %>
               <button type="button" onclick="this.closest('.recipe-herb-row').remove()"
-                class="text-red-400 hover:text-red-600 text-lg font-bold px-1 leading-none">
+                class="text-red-400 hover:text-red-600 text-2xl font-bold px-1 leading-none">
                 ×
               </button>
             </div>
@@ -82,9 +95,9 @@
         flavor_tags: @flavor_tags,
         flavor_mapping: TeaReview::FLAVOR_MAPPING %>
 
-      <div class="pt-2 space-y-3 flex flex-col items-center">
+      <div class="flex justify-between items-center mt-6">
+        <%= link_to "一覧に戻る", tea_reviews_path, class: "btn-list-back" %>
         <%= f.submit "レビューを更新する", class: "btn-primary-lg" %>
-        <%= link_to "一覧に戻る", tea_reviews_path, class: "btn-white-lg" %>
       </div>
     <% end %>
 
@@ -141,7 +154,7 @@
 
         <button type="button"
           onclick="this.closest('.recipe-herb-row').remove()"
-          class="text-red-400 hover:text-red-600 text-lg font-bold px-1 leading-none">
+          class="text-red-400 hover:text-red-600 text-2xl font-bold px-1 leading-none">
           ×
         </button>
       `;

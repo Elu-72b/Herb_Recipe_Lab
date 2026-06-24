@@ -1,51 +1,64 @@
 <%# app/views/tea_reviews/show.html.erb %>
-<div class="min-h-screen bg-gradient-to-br from-herb-green-50 flex flex-col items-center p-4 w-full">
-  <div class="max-w-2xl w-full space-y-3">
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
+  <div class="max-w-4xl w-full space-y-3">
 
     <div class="bg-white rounded-2xl shadow-sm border border-herb-green-100 p-6 md:p-8">
 
       <%# --- 1. 商品情報セクション --- %>
-      <div class="flex justify-between items-start mb-4">
-        <div>
+      <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
+        <%# 左: タイトル・投稿日 %>
+        <div class="flex-1 min-w-0">
           <h2 class="text-xl font-bold text-herb-green-600 mb-3">商品情報</h2>
-          <p class="text-xs text-gray-400"><%= @tea_review.brand %></p>
-          <h1 class="text-2xl font-bold text-herb-green-800"><%= @tea_review.name %></h1>
+          <p class="text-sm text-herb-green-800 mb-1">ブランド名：<%= @tea_review.brand %></p>
+          <h1 class="text-xl font-bold text-herb-green-800 mb-1">商品名：<%= @tea_review.name %></h1>
+          <p class="text-xs text-gray-400">投稿日：<%= @tea_review.created_at.strftime("%Y年%m月%d日") %></p>
           <% if @tea_review.purchase_place.present? %>
             <p class="text-xs text-gray-400 mt-1">購入場所: <%= @tea_review.purchase_place %></p>
           <% end %>
         </div>
+
+        <%# 右: 商品画像（添付がある時のみ。画面が広い時は右、狭い時は下） %>
+        <% if @tea_review.image.attached? %>
+          <div class="w-2/3 md:w-48 md:flex-shrink-0">
+            <%= image_tag @tea_review.image,
+                  class: "w-full aspect-square object-cover rounded-2xl border border-herb-green-100",
+                  alt: @tea_review.name %>
+          </div>
+        <% end %>
       </div>
 
       <%# ハーブ配合 %>
-      <h3 class="text-sm font-bold text-herb-green-700 border-herb-green-100 pb-2">🌿 ハーブ配合</h3>
-      <% if @tea_review.tea_review_herbs.any? %>
-        <ul class="space-y-1 mb-2">
-          <% @tea_review.tea_review_herbs.each do |trh| %>
-            <li class="flex justify-between items-start gap-2 text-sm">
-              <div class="flex flex-wrap items-center gap-1 mb-1">
-                <% if trh.herb %>
-                  <%= link_to trh.herb.name, herb_path(trh.herb), class: "tag-herb text-xs hover:opacity-70 transition" %>
-                  <span class="text-herb-green-700 text-xs select-none">›</span>
-                  <div class="flex flex-wrap gap-1">
-                    <% trh.herb.flavor_tags.each do |tag| %>
-                      <span class="tag-flavor"><%= tag.name %></span>
-                    <% end %>
-                    <% trh.herb.functional_tags.each do |tag| %>
-                      <span class="tag-benefit"><%= tag.name %></span>
-                    <% end %>
-                    <% trh.herb.caution_tags.each do |tag| %>
-                      <span class="tag-caution">⚠ <%= tag.name %></span>
-                    <% end %> </div>
-                <% else %>
-                  <span class="text-herb-green-800 font-medium"><%= trh.custom_herb_name %></span>
-                <% end %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="text-xs text-gray-400">ハーブ配合の記録なし</p>
-      <% end %>
+      <div class="bg-herb-green-50/30 rounded-xl p-4 border border-herb-green-100 mb-6">
+        <h3 class="text-sm font-bold text-herb-green-700 border-herb-green-100 pb-2">🌿 ハーブ配合</h3>
+        <% if @tea_review.tea_review_herbs.any? %>
+          <ul class="space-y-1">
+            <% @tea_review.tea_review_herbs.each do |trh| %>
+              <li class="flex justify-between items-start gap-2 text-sm">
+                <div class="flex flex-wrap items-center gap-1 mb-1">
+                  <% if trh.herb %>
+                    <%= link_to trh.herb.name, herb_path(trh.herb), class: "tag-herb text-xs hover:opacity-70 transition" %>
+                    <span class="text-herb-green-700 text-xs select-none">›</span>
+                    <div class="flex flex-wrap gap-1">
+                      <% trh.herb.flavor_tags.each do |tag| %>
+                        <span class="tag-flavor"><%= tag.name %></span>
+                      <% end %>
+                      <% trh.herb.functional_tags.each do |tag| %>
+                        <span class="tag-benefit"><%= tag.name %></span>
+                      <% end %>
+                      <% trh.herb.caution_tags.each do |tag| %>
+                        <span class="tag-caution">⚠ <%= tag.name %></span>
+                      <% end %> </div>
+                  <% else %>
+                    <span class="text-herb-green-800 font-medium"><%= trh.custom_herb_name %></span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-xs text-gray-400">ハーブ配合の記録なし</p>
+        <% end %>
+      </div>
 
       <%# 商品の特徴 %>
       <% if @tea_review.description.present? %>
@@ -59,18 +72,14 @@
 
       <%# --- 2. レビュー内容セクション --- %>
       <h2 class="text-xl font-bold text-herb-green-600 mb-3">レビュー内容</h2>
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex items-center gap-3">
-          <h3 class="text-lg font-bold text-herb-green-800">総合評価</h3>
-          <div class="rate-star">
-            ★ <%= @tea_review.rating %> / 5
-          </div>
-        </div>
-      </div>
+      <% rating = @tea_review.rating.to_i %>
+      <p class="mb-1 text-lg text-herb-green-700">
+        総合評価：<span class="text-yellow-500 font-normal"><%= "★" * rating %><%= "☆" * (5 - rating) %></span>
+      </p>
 
       <div class="space-y-3 mb-4">
         <%# 風味パラメータ %>
-        <h2 class="text-sm font-bold text-herb-green-700 mb-2 border-herb-green-100 pb-2">風味評価</h2>
+        <h2 class="text-lg text-herb-green-700 mb-2 border-herb-green-100">風味評価</h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <% TeaReview::FLAVOR_MAPPING.each do |ja_name, column| %>
             <% value = @tea_review.send(column).to_i %>
@@ -105,10 +114,10 @@
 
         <% if @tea_review.user == current_user %>
           <%= link_to "編集", edit_tea_review_path(@tea_review),
-                class: "text-xs bg-herb-green-50 text-herb-green-600 px-3 py-1 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
+                class: "text-lg bg-herb-green-50 text-herb-green-600 px-4 py-2 rounded-full border border-herb-green-200 hover:bg-herb-green-100" %>
           <%= link_to "削除", tea_review_path(@tea_review),
                 data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-                class: "text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100" %>
+                class: "text-lg bg-red-50 text-red-600 px-4 py-2 rounded-full border border-red-200 hover:bg-red-100" %>
         <% end %>
       </div>
 
