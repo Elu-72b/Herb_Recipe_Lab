@@ -5,7 +5,7 @@
     <div class="flex justify-center mb-6">
       <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
         <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">
-          ユーザー情報
+          プロフィール
         </h2>
       </div>
     </div>
@@ -19,6 +19,20 @@
         <p class="text-xs text-herb-green-700/70 mb-1">メールアドレス：</p>
         <p class="text-herb-green-700"><%= current_user.email %></p>
       </div>
+    </div>
+
+    <%# 利用規約・プライバシーポリシーへのリンク %>
+    <div class="border-t border-herb-green-100 pt-4 space-y-2">
+      <%= link_to terms_path,
+          class: "flex items-center justify-between text-herb-green-700 hover:opacity-70 transition-opacity" do %>
+        <span class="text-sm">利用規約</span>
+        <span aria-hidden="true">›</span>
+      <% end %>
+      <%= link_to privacy_path,
+          class: "flex items-center justify-between text-herb-green-700 hover:opacity-70 transition-opacity" do %>
+        <span class="text-sm">プライバシーポリシー</span>
+        <span aria-hidden="true">›</span>
+      <% end %>
     </div>
 
     <%# ログアウトボタン（中央配置） %>
