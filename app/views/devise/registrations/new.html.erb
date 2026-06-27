@@ -9,7 +9,8 @@
         </div>
       </div>
       <%# Deviseのフォーム開始 %>
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+            html: { class: "space-y-6", data: { controller: "terms-agreement" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <%# ユーザー名（ER図に合わせて追加している場合） %>
@@ -36,9 +37,26 @@
           <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "もう一度入力してください", class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 focus:border-transparent outline-none text-lg" %>
         </div>
 
+        <%# 利用規約への同意 %>
+        <div class="flex items-start gap-2">
+          <%= check_box_tag :terms_agreement, "1", false,
+                required: true,
+                id: "terms_agreement",
+                class: "mt-1 h-5 w-5 rounded border-herb-green-300 text-herb-green-600 focus:ring-herb-green-600",
+                data: { terms_agreement_target: "checkbox", action: "change->terms-agreement#toggle" } %>
+          <label for="terms_agreement" class="text-sm text-herb-green-700 leading-relaxed">
+            <%= link_to "利用規約", terms_path, target: "_blank", class: "underline font-medium" %>
+            および
+            <%= link_to "プライバシーポリシー", privacy_path, target: "_blank", class: "underline font-medium" %>
+            に同意します
+          </label>
+        </div>
+
         <%# 登録ボタン %>
-        <div class="pt-4">
-          <%= f.submit "アカウントを作成", class: "btn-primary-lg" %>
+        <div class="pt-4 items-center flex flex-col space-y-3">
+          <%= f.submit "アカウントを作成",
+                class: "btn-primary-lg disabled:opacity-50 disabled:cursor-not-allowed",
+                data: { terms_agreement_target: "submit" } %>
         </div>
 
         <div class="text-center pt-2">

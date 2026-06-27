@@ -23,13 +23,6 @@
       <%# 評価 %>
       <%= render 'shared/rating_form', f: f, flavor_tags: @flavor_tags, flavor_mapping: DrinkingLog::FLAVOR_MAPPING %>
 
-      <%# 自由な感想 %>
-      <div>
-        <%= f.label :impression, "感想（任意）", class: "form-label" %>
-        <%= f.text_area :impression, rows: 4, placeholder: "飲んでみた感想を自由に記入してください",
-              class: "form-textarea" %>
-      </div>
-
       <%# 公開設定 デフォルト: 非公開 %>
       <div class="flex items-center gap-3 bg-herb-green-50 rounded-xl px-4 py-3">
         <%= hidden_field_tag "recipe[is_public]", "0" %>

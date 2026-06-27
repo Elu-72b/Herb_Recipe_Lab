@@ -9,6 +9,14 @@ class StaticPagesController < ApplicationController
     # 新規登録画面用
   end
 
+  # 利用規約（未ログインでも閲覧可。authenticate_user! の対象外）
+  def terms
+  end
+
+  # プライバシーポリシー（未ログインでも閲覧可）
+  def privacy
+  end
+
   def home
     @active_tab = params[:tab] == "my" ? "my" : "public"
 

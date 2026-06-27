@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   get 'home', to: 'static_pages#home'
   get 'profile', to: 'profiles#show'
 
+  # 利用規約・プライバシーポリシー（未ログインでも閲覧可）
+  get 'terms',   to: 'static_pages#terms'
+  get 'privacy', to: 'static_pages#privacy'
+
   resources :bookmarks, only: [:index, :create, :destroy]
 
   get "up" => "rails/health#show", as: :rails_health_check
