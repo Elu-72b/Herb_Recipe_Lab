@@ -185,7 +185,7 @@
 
   /* ナビゲーションボタン */
   .nav-item {
-    @apply flex flex-col items-center space-y-1 text-[10px] transition-opacity;
+    @apply flex flex-1 flex-col items-center space-y-1 text-[10px] transition-opacity;
   }
 
   .nav-icon {
