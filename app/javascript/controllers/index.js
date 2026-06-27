@@ -2,34 +2,40 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application";
+import { application } from "./application"
 
-import AddFieldController from "./add_field_controller";
-application.register("add-field", AddFieldController);
+import AddFieldController from "./add_field_controller"
+application.register("add-field", AddFieldController)
 
-import FabController from "./fab_controller";
-application.register("fab", FabController);
+import CheckboxLimitController from "./checkbox_limit_controller"
+application.register("checkbox-limit", CheckboxLimitController)
 
-import HelloController from "./hello_controller";
-application.register("hello", HelloController);
+import FabController from "./fab_controller"
+application.register("fab", FabController)
 
-import ToggleRadioController from "./toggle_radio_controller";
-application.register("toggle-radio", ToggleRadioController);
+import FunctionalCategoryController from "./functional_category_controller"
+application.register("functional-category", FunctionalCategoryController)
 
-import SeachToggleController from "./seach_toggle_controller";
-application.register("search-toggle", SeachToggleController);
+import HelloController from "./hello_controller"
+application.register("hello", HelloController)
 
-import HerbSearchController from "./herb_search_controller";
-application.register("herb-search", HerbSearchController);
+import HerbSearchController from "./herb_search_controller"
+application.register("herb-search", HerbSearchController)
 
-import TagFieldController from "./tag_field_controller";
-application.register("tag-field", TagFieldController);
+import ImagePreviewController from "./image_preview_controller"
+application.register("image-preview", ImagePreviewController)
 
-import CheckboxLimitController from "./checkbox_limit_controller";
-application.register("checkbox-limit", CheckboxLimitController);
+import ScrollTopController from "./scroll_top_controller"
+application.register("scroll-top", ScrollTopController)
 
-import FunctionalCategoryController from "./functional_category_controller";
-application.register("functional-category", FunctionalCategoryController);
+import SearchToggleController from "./search_toggle_controller"
+application.register("search-toggle", SearchToggleController)
 
-import ImagePreviewController from "./image_preview_controller";
-application.register("image-preview", ImagePreviewController);
+import TagFieldController from "./tag_field_controller"
+application.register("tag-field", TagFieldController)
+
+import TermsAgreementController from "./terms_agreement_controller"
+application.register("terms-agreement", TermsAgreementController)
+
+import ToggleRadioController from "./toggle_radio_controller"
+application.register("toggle-radio", ToggleRadioController)
