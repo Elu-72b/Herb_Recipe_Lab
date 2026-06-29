@@ -263,5 +263,27 @@
       opacity: 1;
     }
   }
+  /* フラッシュメッセージ: 5秒後にフェードアウトして消去 */
+  @keyframes flash-fade-out {
+    0%, 90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  .flash-message {
+    animation: flash-fade-out 5s ease-in forwards;
+  }
+
+  /* アクセシビリティ: アニメーション抑制設定時は即座に消す */
+  @media (prefers-reduced-motion: reduce) {
+    .flash-message {
+      animation: none;
+      /* 表示自体は維持（手動でページ遷移時に消える） */
+    }
+  }
 }
 
