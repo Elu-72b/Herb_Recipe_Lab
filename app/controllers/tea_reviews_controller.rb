@@ -1,10 +1,11 @@
 class TeaReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tea_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_tea_review, only: [:show] # 閲覧は全件
+  before_action :set_own_tea_review, only: [:edit, :update, :destroy] # 編集系は所有者限定
 
   def index
-    @q = current_user.tea_reviews.ransack(params[:q])
-    base = apply_herb_based_filters(current_user.tea_reviews.where(id: @q.result.select(:id)), model: TeaReview)
+    @q = TeaReview.ransack(params[:q])
+    base = apply_herb_based_filters(TeaReview.where(id: @q.result.select(:id)), model: TeaReview)
     @tea_reviews = base
       .includes(:herbs, :user).with_attached_image.order(created_at: :desc)
       .page(params[:page]).per(10)
@@ -52,6 +53,10 @@ class TeaReviewsController < ApplicationController
   private
 
   def set_tea_review
+    @tea_review = TeaReview.find(params[:id])
+  end
+
+  def set_own_tea_review
     @tea_review = current_user.tea_reviews.find(params[:id])
   end
 

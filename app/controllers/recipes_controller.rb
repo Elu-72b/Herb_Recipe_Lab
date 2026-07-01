@@ -32,9 +32,14 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.includes(:user, :drinking_log,
-      recipe_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] }
-    ).find(params[:id])
+    scope = Recipe.includes(:user, :drinking_log,
+      recipe_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] })
+    @recipe =
+      if user_signed_in?
+        scope.visible_to(current_user).find(params[:id])   # 公開 or 自分のもの
+      else
+        scope.public_recipes.find(params[:id])             # 未ログインは公開のみ
+      end
   end
 
   def edit
