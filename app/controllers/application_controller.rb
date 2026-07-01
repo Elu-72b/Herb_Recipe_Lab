@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActiveRecord::RecordNotFound do
+    respond_to do |format|
+      format.html { render file: Rails.public_path.join("404.html"), status: :not_found, layout: false }
+      format.any  { head :not_found }
+    end
+  end
+
   helper_method :search_active?
 
   # 検索条件（ransack の q[] もしくは独立パラメーター）が1つでも指定されているか
