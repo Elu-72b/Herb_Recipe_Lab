@@ -30,6 +30,12 @@ gem "tailwindcss-rails", "~> 4.4"
 # ログイン認証
 gem "devise", "~> 4.9"
 
+# OAuth2 認証（Google）
+gem "omniauth-google-oauth2"
+
+# OmniAuth の CSRF 対策（POST リクエスト化に必須）
+gem "omniauth-rails_csrf_protection"
+
 # ページネーション
 gem "kaminari", "~> 1.2"
 
