@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   end
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   # 未ログインなら static_pages#top（ログインフォーム付き）を表示し、
   # ログイン済みなら Controller 側で home へリダイレクトさせます。
