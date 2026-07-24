@@ -55,6 +55,10 @@ gem "image_processing", "~> 1.2"
 # Active Storage バリデーション
 gem "active_storage_validations"
 
+# HTTP クライアント（Gemini API 連携で使用）
+# cloudinary 経由の間接依存だったものを明示的な直接依存に切り出す
+gem "faraday", "~> 2.0"
+
 # 起動時間の短縮キャッシュ
 gem "bootsnap", require: false
 

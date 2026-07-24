@@ -452,6 +452,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dotenv-rails
+  faraday (~> 2.0)
   good_job
   image_processing (~> 1.2)
   jsbundling-rails
