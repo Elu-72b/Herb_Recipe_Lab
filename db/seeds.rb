@@ -76,3 +76,8 @@ end
 # ハーブマスタ
 # -------------------------
 load Rails.root.join("db/seeds/herbs.rb")
+
+# -------------------------
+# 開発・検証用のレシピ（本番では投入しない）
+# -------------------------
+load Rails.root.join("db/seeds/dev_recipes.rb") if Rails.env.development?
