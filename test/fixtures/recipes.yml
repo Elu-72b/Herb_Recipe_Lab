@@ -1,11 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+#
+# Finder の検証パターン（睡眠サポート × 甘味 × 妊娠中注意除外）に対応。
+#   public_sleep_safe   : 条件を満たし禁忌なし        → ヒットすべき
+#   public_sleep_caution: 条件を満たすが妊娠中注意あり → 除外されるべき
+#   private_sleep_safe  : 条件を満たすが非公開        → 除外されるべき
+#   public_skin_care    : 別系統（美肌ケア）
 
-one:
-  user: one
-  title: MyString
-  content: MyText
+public_sleep_safe:
+  user: alice
+  title: おやすみ前のまろやかブレンド
+  brewed_at: 2026-07-01
+  is_public: true
 
-two:
-  user: two
-  title: MyString
-  content: MyText
+public_sleep_caution:
+  user: alice
+  title: カモミールの安眠ブレンド
+  brewed_at: 2026-07-02
+  is_public: true
+
+private_sleep_safe:
+  user: bob
+  title: 試作おやすみリンデン
+  brewed_at: 2026-07-03
+  is_public: false
+
+public_skin_care:
+  user: bob
+  title: うるおい美肌ブレンド
+  brewed_at: 2026-07-04
+  is_public: true

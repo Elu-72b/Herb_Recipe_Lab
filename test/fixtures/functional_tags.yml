@@ -1,7 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+sleep_support:
+  name: 睡眠サポート
 
-two:
-  name: MyString
+relax:
+  name: リラックス（鎮静）
+
+skin_care:
+  name: 美肌ケア
