@@ -71,3 +71,8 @@ caution_categories = {
 caution_categories.each_value do |names|
   names.each { |name| CautionTag.find_or_create_by!(name: name) }
 end
+
+# -------------------------
+# ハーブマスタ
+# -------------------------
+load Rails.root.join("db/seeds/herbs.rb")
