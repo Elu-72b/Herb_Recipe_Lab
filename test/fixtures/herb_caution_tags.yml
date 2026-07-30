@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  herb: one
-  caution_tag: one
+chamomile_pregnancy:
+  herb: chamomile
+  caution_tag: pregnancy
 
-two:
-  herb: two
-  caution_tag: two
+chamomile_allergy:
+  herb: chamomile
+  caution_tag: allergy

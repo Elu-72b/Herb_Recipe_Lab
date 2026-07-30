@@ -1,7 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+sweet:
+  name: 甘味
 
-two:
-  name: MyString
+mellow:
+  name: まろやかさ
+
+sour:
+  name: 酸味

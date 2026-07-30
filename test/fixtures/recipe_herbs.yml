@@ -1,13 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  recipe: one
-  herb: one
-  quantity: 1.5
-  unit: 1
+sleep_safe_linden:
+  recipe: public_sleep_safe
+  herb: linden
+  quantity: 3.0
+  unit: 2
 
-two:
-  recipe: two
-  herb: two
-  quantity: 1.5
-  unit: 1
+sleep_caution_chamomile:
+  recipe: public_sleep_caution
+  herb: chamomile
+  quantity: 3.0
+  unit: 2
+
+sleep_caution_linden:
+  recipe: public_sleep_caution
+  herb: linden
+  quantity: 2.0
+  unit: 2
+
+private_sleep_linden:
+  recipe: private_sleep_safe
+  herb: linden
+  quantity: 3.0
+  unit: 2
+
+skin_care_rosehip:
+  recipe: public_skin_care
+  herb: rosehip
+  quantity: 3.0
+  unit: 2

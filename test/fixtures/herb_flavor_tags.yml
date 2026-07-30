@@ -1,9 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  herb: one
-  flavor_tag: one
+linden_sweet:
+  herb: linden
+  flavor_tag: sweet
 
-two:
-  herb: two
-  flavor_tag: two
+linden_mellow:
+  herb: linden
+  flavor_tag: mellow
+
+chamomile_sweet:
+  herb: chamomile
+  flavor_tag: sweet
+
+rosehip_sour:
+  herb: rosehip
+  flavor_tag: sour
