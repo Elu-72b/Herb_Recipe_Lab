@@ -1,27 +1,29 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+#
+# Recipe has_one :drinking_log のため、1レシピにつき1件まで。
 
-one:
-  recipe: one
-  rating: 1
-  sweetness: 1
+sleep_safe_log:
+  recipe: public_sleep_safe
+  rating: 5
+  sweetness: 4
   bitterness: 1
   astringency: 1
-  freshness: 1
-  savory: 1
+  freshness: 2
   spicy: 1
-  fruity: 1
+  fruity: 2
   acidity: 1
-  impression: MyText
+  flowery: 3
+  impression: 寝る前にちょうどよい甘さだった。
 
-two:
-  recipe: two
-  rating: 1
-  sweetness: 1
+skin_care_log:
+  recipe: public_skin_care
+  rating: 4
+  sweetness: 2
   bitterness: 1
-  astringency: 1
-  freshness: 1
-  savory: 1
+  astringency: 2
+  freshness: 3
   spicy: 1
-  fruity: 1
-  acidity: 1
-  impression: MyText
+  fruity: 5
+  acidity: 5
+  flowery: 2
+  impression: 酸味が強いので蜂蜜を足したい。

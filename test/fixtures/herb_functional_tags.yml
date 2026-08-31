@@ -1,9 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  herb: one
-  functional_tag: one
+linden_sleep:
+  herb: linden
+  functional_tag: sleep_support
 
-two:
-  herb: two
-  functional_tag: two
+linden_relax:
+  herb: linden
+  functional_tag: relax
+
+chamomile_sleep:
+  herb: chamomile
+  functional_tag: sleep_support
+
+chamomile_relax:
+  herb: chamomile
+  functional_tag: relax
+
+rosehip_skin:
+  herb: rosehip
+  functional_tag: skin_care

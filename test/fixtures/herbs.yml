@@ -1,13 +1,18 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+#
+# 提案機能の検証で使う最小構成。
+#   linden      : 睡眠サポート・リラックス / 甘味・まろやかさ / 禁忌なし
+#   chamomile   : 睡眠サポート・リラックス / 甘味          / 妊娠中注意（除外テスト用）
+#   rosehip     : 美肌ケア                / 酸味          / 禁忌なし
 
-one:
-  name: MyString
-  description: MyText
-  image: MyString
-  caution: MyText
+linden:
+  name: リンデン
+  description: ほんのり甘くまろやか。就寝前のブレンドのベースに向く。
 
-two:
-  name: MyString
-  description: MyText
-  image: MyString
-  caution: MyText
+chamomile:
+  name: カモミールジャーマン
+  description: りんごのような甘い香り。妊娠中は避ける。
+
+rosehip:
+  name: ローズヒップ
+  description: ビタミンCが豊富で酸味が強い。
