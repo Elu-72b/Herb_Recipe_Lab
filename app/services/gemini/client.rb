@@ -10,13 +10,16 @@ module Gemini
     class Error < StandardError; end
 
     ENDPOINT     = "https://generativelanguage.googleapis.com/v1beta".freeze
-    # 既定モデル。2026-09-02 に実APIで疎通を確認したものを指定する。
-    # 使用不可を確認済み:
-    #   gemini-2.0-flash  … 提供終了(404)
-    #   gemini-2.5-flash  … 新規ユーザーには未提供(404)
-    #   gemini-flash-latest … 恒常的に高負荷(503)
-    DEFAULT_MODEL = "gemini-flash-lite-latest".freeze
-    TIMEOUT      = 20
+    # 既定モデル。実サイズのプロンプト（ハーブ14件のJSON・約1,760文字）で応答時間を実測して選定した。
+    #   gemini-2.0-flash         … 提供終了(404)
+    #   gemini-2.5-flash         … 新規ユーザーには未提供(404)
+    #   gemini-flash-latest      … 高負荷で503が頻発
+    #   gemini-flash-lite-latest … 実サイズで503が頻発
+    #   gemini-3-flash-preview   … 16〜26秒。TIMEOUT を超えることがあり不採用
+    #   gemini-3.1-flash-lite    … 3〜4秒で安定 ← 採用
+    DEFAULT_MODEL = "gemini-3.1-flash-lite".freeze
+    # 実測 3〜4 秒に対し十分な余裕を取る。モデルを変える場合は応答時間も測り直すこと。
+    TIMEOUT      = 30
     OPEN_TIMEOUT = 5
 
     def self.configured?
