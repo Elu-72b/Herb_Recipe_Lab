@@ -19,7 +19,7 @@ module Gemini
 
     test "既定モデルは提供終了したものを指さない" do
       assert_not_equal "gemini-2.0-flash", Client::DEFAULT_MODEL
-      assert_equal "gemini-flash-lite-latest", Client::DEFAULT_MODEL
+      assert_equal "gemini-3.1-flash-lite", Client::DEFAULT_MODEL
     end
 
     test "既定モデルでリクエストする" do
