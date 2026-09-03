@@ -5,27 +5,35 @@
 #   public_sleep_caution: 条件を満たすが妊娠中注意あり → 除外されるべき
 #   private_sleep_safe  : 条件を満たすが非公開        → 除外されるべき
 #   public_skin_care    : 別系統（美肌ケア）
+#
+# created_at は明示すること。省略すると全件が同一時刻になり、
+# Recipe.recent（order(created_at: :desc)）の並びが不定になってテストが不安定になる。
+# 新しい順は public_skin_care → private_sleep_safe → public_sleep_caution → public_sleep_safe。
 
 public_sleep_safe:
   user: alice
   title: おやすみ前のまろやかブレンド
   brewed_at: 2026-07-01
   is_public: true
+  created_at: 2026-07-01 10:00:00
 
 public_sleep_caution:
   user: alice
   title: カモミールの安眠ブレンド
   brewed_at: 2026-07-02
   is_public: true
+  created_at: 2026-07-02 10:00:00
 
 private_sleep_safe:
   user: bob
   title: 試作おやすみリンデン
   brewed_at: 2026-07-03
   is_public: false
+  created_at: 2026-07-03 10:00:00
 
 public_skin_care:
   user: bob
   title: うるおい美肌ブレンド
   brewed_at: 2026-07-04
   is_public: true
+  created_at: 2026-07-04 10:00:00
