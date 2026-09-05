@@ -1,0 +1,38 @@
+<%# locals: (proposal:) %>
+<%# AI 提案のカード。まだ保存されていないため Recipe レコードではないが、 %>
+<%# 見た目は recipes/_card（ブレンド一覧）と揃える。 %>
+<%# 評価・ブックマークの枠には代わりに「AI提案」バッジを置き、 %>
+<%# by ○○・日時の枠には理由・効果・風味を置いている。 %>
+<div class="bg-herb-green-50/50 rounded-2xl p-5 border border-herb-green-100 shadow-sm">
+  <div class="flex flex-col gap-1 md:flex-row md:justify-between md:items-start mb-2">
+    <h2 class="text-base font-medium text-herb-green-700 line-clamp-2 md:line-clamp-1 min-w-0 flex-1">
+      <%= proposal["title"] %>
+    </h2>
+    <div class="flex items-center gap-2 flex-shrink-0 self-end md:self-auto">
+      <%# 「自分」バッジ（my-blend-tag）と同じ形だが、一覧のバッジより一回り大きくする %>
+      <span class="text-sm bg-herb-green-100 text-herb-green-700 px-3 py-1 rounded-full flex-shrink-0">
+        AI提案
+      </span>
+    </div>
+  </div>
+
+  <%# 分量は一律「抽出量 200ml あたりの小さじ杯数」。比率ではなく実分量として出す %>
+  <p class="text-xs text-herb-green-700/70 mb-1">
+    抽出量 <%= RecipeSuggestion::PromptBuilder::BREW_AMOUNT_ML %>ml あたり
+  </p>
+  <div class="flex flex-wrap gap-1 mb-3">
+    <% proposal["herbs"].each do |herb| %>
+      <span class="tag-herb"><%= herb["name"] %>：小さじ<%= herb["parts"] %></span>
+    <% end %>
+  </div>
+
+  <dl class="space-y-1 text-sm text-herb-green-700/80">
+    <% { "理由" => "reason", "効果" => "effect", "風味" => "flavor" }.each do |label, key| %>
+      <% next if proposal[key].blank? %>
+      <div class="flex gap-2">
+        <dt class="flex-shrink-0 w-8 font-medium"><%= label %></dt>
+        <dd class="min-w-0"><%= proposal[key] %></dd>
+      </div>
+    <% end %>
+  </dl>
+</div>
