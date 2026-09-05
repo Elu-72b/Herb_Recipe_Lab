@@ -1,0 +1,40 @@
+<%# locals: () %>
+<%# 提案結果。カードはブレンド一覧（recipes/_card）と同じデザインを使う。 %>
+<%# Turbo Stream 化は E-1、「このレシピで作る」プレフィル導線は E-2 で追加する。 %>
+<div class="mt-8 space-y-8">
+
+  <%# ① 条件に合う既存の公開レシピ（Gemini 非依存） %>
+  <section>
+    <h2 class="text-base font-medium text-herb-green-700 mb-2">条件に合う公開レシピ</h2>
+    <% if @existing_recipes.any? %>
+      <div class="space-y-3">
+        <% @existing_recipes.each do |recipe| %>
+          <%= render 'recipes/card', recipe: recipe,
+                bookmark: @user_bookmarks.find { |b| b.recipe_id == recipe.id } %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-herb-green-300 text-sm text-center py-8">
+        条件に合う公開レシピは見つかりませんでした
+      </p>
+    <% end %>
+  </section>
+
+  <%# ② AI からの新しい提案。Gemini が落ちても①は残る。 %>
+  <section>
+    <h2 class="text-base font-medium text-herb-green-700 mb-2">AI からの新しい提案</h2>
+    <% if @ai_error.present? %>
+      <p class="text-sm text-red-600 text-center py-8"><%= @ai_error %></p>
+    <% elsif @proposals.present? %>
+      <div class="space-y-3">
+        <% @proposals.each do |proposal| %>
+          <%= render 'proposal_card', proposal: proposal %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-herb-green-300 text-sm text-center py-8">
+        新しい提案はありませんでした
+      </p>
+    <% end %>
+  </section>
+</div>
