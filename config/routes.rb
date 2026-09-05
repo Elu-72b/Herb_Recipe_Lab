@@ -22,6 +22,10 @@ Rails.application.routes.draw do
     resources :drinking_logs, only: [:new, :create, :show, :edit, :update]
   end
 
+  # AI ブレンド提案（チャット形式の聞き取り → 提案）
+  # 単一リソース（ユーザーごとに1つの聞き取り画面）のため resource（単数形）を使う。
+  resource :recipe_suggestion, only: [ :show, :create ], controller: :recipe_suggestions
+
   devise_scope :user do
     get '/signup', to: 'devise/registrations#new'
   end

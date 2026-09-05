@@ -1,0 +1,11 @@
+<%# locals: (field:, value:) %>
+<%# 検索フォーム（shared/search_blocks/_flavor）と同じチップ表現を踏襲。 %>
+<%# 送信後の再描画でも選択状態が残るよう params から checked を復元する。 %>
+<label class="cursor-pointer px-3 py-1 rounded-full text-sm border transition
+              bg-white text-herb-green-700/80 border-herb-green-300
+              hover:bg-herb-green-50
+              has-[:checked]:bg-herb-green-600 has-[:checked]:text-white has-[:checked]:border-herb-green-600">
+  <% checked = Array(params[field.delete_suffix("[]")]).include?(value) %>
+  <%= check_box_tag field, value, checked, id: nil, class: "sr-only" %>
+  <%= value %>
+</label>
