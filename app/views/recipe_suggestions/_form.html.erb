@@ -1,0 +1,56 @@
+<%# locals: () %>
+<%# 聞き取りフォーム。チップの name は既存検索と同名にしてあり、 %>
+<%# Finder / Generator がそのまま受け取れる。 %>
+<%# チップ選択でメッセージ欄を自動補填する Stimulus は B-2 で追加する。 %>
+<%= form_with url: recipe_suggestion_path, method: :post,
+      data: { turbo_frame: "suggestion_result" } do |f| %>
+
+  <%# ① 求める効果・お悩み %>
+  <fieldset class="mb-5">
+    <legend class="text-sm font-bold text-herb-green-700 mb-1">求める効果・お悩み</legend>
+    <% @functional_categories.each do |category, tags| %>
+      <% next if tags.empty? %>
+      <p class="text-xs text-herb-green-700/80 mt-2"><%= category %></p>
+      <div class="flex flex-wrap gap-1">
+        <% tags.each do |tag| %>
+          <%= render "chip", field: "functional_names[]", value: tag.name %>
+        <% end %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <%# ② 好みの風味 %>
+  <fieldset class="mb-5">
+    <legend class="text-sm font-bold text-herb-green-700 mb-1">好みの風味</legend>
+    <div class="flex flex-wrap gap-1">
+      <% @flavor_tags.each do |tag| %>
+        <%= render "chip", field: "flavor_names[]", value: tag.name %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <%# ③ 避けたい条件（任意） %>
+  <fieldset class="mb-5">
+    <legend class="text-sm font-bold text-herb-green-700 mb-1">避けたい条件（任意）</legend>
+    <% @caution_categories.each do |category, tags| %>
+      <% next if tags.empty? %>
+      <p class="text-xs text-herb-green-700/80 mt-2"><%= category %></p>
+      <div class="flex flex-wrap gap-1">
+        <% tags.each do |tag| %>
+          <%= render "chip", field: "exclude_caution_tags[]", value: tag.name %>
+        <% end %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <%# 自由メモ（B-2 でチップ選択により自動補填される） %>
+  <div class="mb-3">
+    <label for="free_text" class="text-sm font-bold text-herb-green-700">メッセージ</label>
+    <%= text_area_tag :free_text, params[:free_text], rows: 3,
+          class: "mt-1 text-sm",
+          placeholder: "例）寝る前にリラックスできる、甘めのお茶がいいです" %>
+  </div>
+
+  <%= f.submit "この条件で提案してもらう",
+        class: "w-full bg-herb-green-700 text-white rounded-xl py-2 cursor-pointer hover:opacity-80 transition" %>
+<% end %>

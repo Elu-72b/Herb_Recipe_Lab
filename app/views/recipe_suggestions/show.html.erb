@@ -1,0 +1,25 @@
+<div class="min-h-screen flex flex-col items-center w-full">
+  <div class="max-w-2xl w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5 my-5">
+
+    <div class="flex justify-center mb-4">
+      <div class="bg-herb-green-100 px-8 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+        <h1 class="text-2xl text-herb-green-700 font-medium tracking-wide">AI ブレンド提案</h1>
+      </div>
+    </div>
+
+    <%# AI 側の吹き出し（質問） %>
+    <p class="bg-herb-green-50 rounded-2xl p-4 text-sm mb-6">
+      こんにちは！あなたにぴったりのハーブティーを探します🌿<br>
+      気になるキーワードを選んで、メッセージを送ってください。
+    </p>
+
+    <%= render "form" %>
+
+    <%# 提案結果の差し込み先。create から再描画されたときだけ中身が入る。 %>
+    <%# target: "_top" はフレーム内のリンク（レシピ詳細など）をページ全体の遷移にするため。 %>
+    <%# 付けないとフレーム内ナビゲーションになり遷移先が空になる（仕様書 §4 Fix-3b）。 %>
+    <%= turbo_frame_tag "suggestion_result", target: "_top" do %>
+      <%= render "result" if @existing_recipes %>
+    <% end %>
+  </div>
+</div>

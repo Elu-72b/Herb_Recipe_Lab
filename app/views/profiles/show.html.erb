@@ -21,6 +21,20 @@
       </div>
     </div>
 
+    <%# ブックマーク一覧（フッターから AI提案 に差し替えたため、導線をここに置く） %>
+    <div class="border-t border-herb-green-100 pt-4">
+      <%= link_to bookmarks_path,
+          class: "flex items-center justify-between text-herb-green-700 hover:opacity-70 transition-opacity" do %>
+        <span class="flex items-center gap-2 text-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+          </svg>
+          ブックマーク一覧
+        </span>
+        <span aria-hidden="true">›</span>
+      <% end %>
+    </div>
+
     <%# 利用規約・プライバシーポリシーへのリンク %>
     <div class="border-t border-herb-green-100 pt-4 space-y-2">
       <%= link_to terms_path,
