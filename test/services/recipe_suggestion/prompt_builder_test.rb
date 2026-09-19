@@ -87,6 +87,14 @@ module RecipeSuggestion
       assert_equal %w[name parts], item[:properties][:herbs][:items][:required]
     end
 
+    # 合計杯数の制約により2種類に偏る問題への対策（2026-09-19 実測で確認）
+    test "ハーブの種類数を散らすよう指示する" do
+      prompt = build(HERBS)
+
+      assert_includes prompt, "ハーブの種類数をできるだけ散らす"
+    end
+
+
     private
 
     def build(herbs, **params)

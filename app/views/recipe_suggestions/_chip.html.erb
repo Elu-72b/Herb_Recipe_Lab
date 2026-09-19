@@ -1,11 +1,11 @@
-<%# locals: (field:, value:) %>
-<%# 検索フォーム（shared/search_blocks/_flavor）と同じチップ表現を踏襲。 %>
+<%# locals: (field:, value:, variant:) %>
+<%# ハーブ図鑑と同じタグカラーを使う（application.tailwind.css の .tag-toggle*）。 %>
+<%# variant: "flavor"（オレンジ）/ "benefit"（ブルー）/ "caution"（レッド） %>
+<%# CSS 側が .peer:checked ~ .tag-toggle-* の兄弟セレクタなので、 %>
+<%# checkbox は span の直前に置き、class に peer を付ける必要がある。 %>
 <%# 送信後の再描画でも選択状態が残るよう params から checked を復元する。 %>
-<label class="cursor-pointer px-3 py-1 rounded-full text-sm border transition
-              bg-white text-herb-green-700/80 border-herb-green-300
-              hover:bg-herb-green-50
-              has-[:checked]:bg-herb-green-600 has-[:checked]:text-white has-[:checked]:border-herb-green-600">
+<label class="cursor-pointer">
   <% checked = Array(params[field.delete_suffix("[]")]).include?(value) %>
-  <%= check_box_tag field, value, checked, id: nil, class: "sr-only" %>
-  <%= value %>
+  <%= check_box_tag field, value, checked, id: nil, class: "peer sr-only" %>
+  <span class="tag-toggle tag-toggle-<%= variant %>"><%= value %></span>
 </label>
