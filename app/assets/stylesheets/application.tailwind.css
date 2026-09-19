@@ -16,8 +16,13 @@
     /* ヘッダー・フッター・メインボタン・文字色 */
     --color-herb-yellow-400: #f6ad49;
     /* 風味タグ */
+    --color-herb-yellow-700: #bb4d00;
+    /* 風味タグ（選択トグルの未選択時の文字色） */
+
     --color-herb-blue-400: #66cccc;
     /* 効能タグ */
+    --color-herb-blue-700: #00786f;
+    /* 効能タグ（選択トグルの未選択時の文字色） */
     --color-herb-red-400: #f56565;
     /* 禁忌・注意タグ */
     --color-herb-white: #ffffff;
@@ -75,8 +80,8 @@
       @apply inline-block text-xs px-3 py-1 rounded-full border bg-transparent
             cursor-pointer select-none transition;
     }
-    .tag-toggle-flavor  { @apply border-herb-yellow-400 text-herb-yellow-400; }
-    .tag-toggle-benefit { @apply border-herb-blue-400 text-herb-blue-400; }
+    .tag-toggle-flavor  { @apply border-herb-yellow-400 text-herb-yellow-700; }
+    .tag-toggle-benefit { @apply border-herb-blue-400 text-herb-blue-700; }
     .tag-toggle-caution { @apply border-red-400 text-red-600; }
 
     /* hover で塗りを軽くプレビュー（任意の補助。未選択時のみ効く） */
