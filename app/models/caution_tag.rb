@@ -1,4 +1,6 @@
 class CautionTag < ApplicationRecord
+  include TagCacheable
+
   CATEGORIES = {
     "ライフステージ" => ["妊娠中注意", "授乳中注意", "小児使用注意", "高齢者注意"],
     "既往症・体質"   => ["高血圧注意", "低血圧注意", "糖尿病注意", "アレルギー注意"],
