@@ -21,7 +21,7 @@ class HerbsController < ApplicationController
                  .includes(:flavor_tags, :functional_tags, :caution_tags)
                  .with_attached_image
                  .order(:name)
-                 .page(params[:page]).per(15)
+                 .page(params[:page]).per(15).load
   end
 
   def show

@@ -8,7 +8,7 @@ class TeaReviewsController < ApplicationController
     base = apply_herb_based_filters(TeaReview.where(id: @q.result.select(:id)), model: TeaReview)
     @tea_reviews = base
       .includes(:herbs, :user).with_attached_image.order(created_at: :desc)
-      .page(params[:page]).per(10)
+      .page(params[:page]).per(10).load
   end
 
   def new
@@ -53,7 +53,10 @@ class TeaReviewsController < ApplicationController
   private
 
   def set_tea_review
-    @tea_review = TeaReview.find(params[:id])
+    @tea_review = TeaReview
+      .includes(:user, tea_review_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] })
+      .with_attached_image
+      .find(params[:id])
   end
 
   def set_own_tea_review
