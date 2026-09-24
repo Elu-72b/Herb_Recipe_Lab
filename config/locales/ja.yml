@@ -41,6 +41,14 @@ ja:
       herb:
         name: "ハーブ名"
         image: "画像"
+      tea_review/tea_review_herbs:
+        herb: "ハーブ"
+        herb_id: "ハーブ"
+        custom_herb_name: "ハーブ名"
+      tea_review_herb:
+        herb: "ハーブ"
+        herb_id: "ハーブ"
+        custom_herb_name: "ハーブ名"
       tea_review:
         brand: "メーカー名"
         name: "商品名"
