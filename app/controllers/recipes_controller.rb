@@ -40,6 +40,7 @@ class RecipesController < ApplicationController
       else
         scope.public_recipes.find(params[:id])             # 未ログインは公開のみ
       end
+    @bookmark = current_user.bookmarks.find_by(recipe_id: @recipe.id) if user_signed_in?
   end
 
   def edit
