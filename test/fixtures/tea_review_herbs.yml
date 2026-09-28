@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+#
+# custom は herb_id を持たない自由入力行（#195 で null 許容にした）。
+
+sleep_blend_linden:
+  tea_review: alice_sleep_blend
+  herb: linden
+
+sleep_blend_chamomile:
+  tea_review: alice_sleep_blend
+  herb: chamomile
+
+sleep_blend_custom:
+  tea_review: alice_sleep_blend
+  custom_herb_name: 自家製レモングラス

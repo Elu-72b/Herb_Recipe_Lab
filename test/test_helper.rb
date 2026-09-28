@@ -1,6 +1,11 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "active_record/testing/query_assertions"
+
+class ActiveSupport::TestCase
+  include ActiveRecord::Assertions::QueryAssertions
+end
 
 module ActiveSupport
   class TestCase
