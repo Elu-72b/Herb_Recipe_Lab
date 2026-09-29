@@ -1,4 +1,5 @@
 class FunctionalTag < ApplicationRecord
+  include TagCacheable
   CATEGORIES = {
     "心・自律神経" => ["リラックス（鎮静）", "睡眠サポート", "ストレス緩和", "集中力向上", "気分リフレッシュ"],
     "消化・代謝"   => ["消化促進", "胃腸ケア", "食欲調整", "デトックス", "利尿作用", "整腸作用", "血糖値サポート"],

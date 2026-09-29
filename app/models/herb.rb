@@ -23,6 +23,21 @@ class Herb < ApplicationRecord
     %w[flavor_tags functional_tags caution_tags recipe_herbs]
   end
 
+  # 表示用。中間テーブルだけ preload し、マスタは TagCacheable のキャッシュから引く。
+  # 検索は従来どおり flavor_tags / functional_tags / caution_tags の association（SQL join）を使う。
+  # View が any? と each で2回呼ぶため、インスタンス単位でメモ化する。
+  def cached_flavor_tags
+    @cached_flavor_tags ||= FlavorTag.find_cached(herb_flavor_tags.map(&:flavor_tag_id))
+  end
+
+  def cached_functional_tags
+    @cached_functional_tags ||= FunctionalTag.find_cached(herb_functional_tags.map(&:functional_tag_id))
+  end
+
+  def cached_caution_tags
+    @cached_caution_tags ||= CautionTag.find_cached(herb_caution_tags.map(&:caution_tag_id))
+  end
+
   validates :name, presence: true, uniqueness: true
   validates :image,
     content_type: ACCEPTED_CONTENT_TYPES,

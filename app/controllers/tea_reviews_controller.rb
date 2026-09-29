@@ -54,7 +54,7 @@ class TeaReviewsController < ApplicationController
 
   def set_tea_review
     @tea_review = TeaReview
-      .includes(:user, tea_review_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] })
+      .includes(:user, tea_review_herbs: { herb: [:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags] })
       .with_attached_image
       .find(params[:id])
   end

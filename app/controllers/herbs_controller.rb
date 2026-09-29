@@ -18,7 +18,7 @@ class HerbsController < ApplicationController
   def index
     @q = Herb.ransack(params[:q])
     @herbs = apply_herb_self_filters(Herb.where(id: @q.result.select(:id)))
-                 .includes(:flavor_tags, :functional_tags, :caution_tags)
+                 .includes(:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags)
                  .with_attached_image
                  .order(:name)
                  .page(params[:page]).per(15).load
@@ -59,7 +59,8 @@ class HerbsController < ApplicationController
   private
 
   def set_herb
-    @herb = Herb.find(params[:id])
+    @herb = Herb.includes(:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags)
+                .find(params[:id])
   end
 
   def authorize_herb!

@@ -39,13 +39,13 @@
                     <%= link_to trh.herb.name, herb_path(trh.herb), class: "tag-herb text-xs hover:opacity-70 transition" %>
                     <span class="text-herb-green-700 text-xs select-none">›</span>
                     <div class="flex flex-wrap gap-1">
-                      <% trh.herb.flavor_tags.each do |tag| %>
+                      <% trh.herb.cached_flavor_tags.each do |tag| %>
                         <span class="tag-flavor"><%= tag.name %></span>
                       <% end %>
-                      <% trh.herb.functional_tags.each do |tag| %>
+                      <% trh.herb.cached_functional_tags.each do |tag| %>
                         <span class="tag-benefit"><%= tag.name %></span>
                       <% end %>
-                      <% trh.herb.caution_tags.each do |tag| %>
+                      <% trh.herb.cached_caution_tags.each do |tag| %>
                         <span class="tag-caution">⚠ <%= tag.name %></span>
                       <% end %> </div>
                   <% else %>

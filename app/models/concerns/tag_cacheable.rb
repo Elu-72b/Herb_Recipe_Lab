@@ -25,6 +25,24 @@ module TagCacheable
       "#{model_name.cache_key}/#{suffix}"
     end
 
+    # 指定 id のタグをキャッシュから引く。表示用。
+    # キャッシュ生成後に追加されたタグは取りこぼすため、その分だけ DB で補う
+    # （黙って欠落させない）。返り値は ordered_cached と同じ name 昇順。
+    def find_cached(ids)
+      ids = Array(ids).compact.uniq
+      return [] if ids.empty?
+
+      wanted = ids.to_set
+      tags   = ordered_cached.select { |tag| wanted.include?(tag.id) }
+      missing = ids - tags.map(&:id)
+      return tags if missing.empty?
+
+      fallback = where(id: missing).to_a
+      # キャッシュが古いことが判明したので破棄し、次回は作り直させる
+      clear_tag_cache if fallback.any?
+      (tags + fallback).sort_by(&:name)
+    end
+
     def clear_tag_cache
       Rails.cache.delete(cache_key_for(:ordered_by_name))
     end

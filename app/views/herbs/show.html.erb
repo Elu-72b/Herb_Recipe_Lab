@@ -20,30 +20,30 @@
 
     <div class="flex flex-col gap-3 w-full">
       <%# 風味タグ %>
-      <% if @herb.flavor_tags.any? %>
+      <% if @herb.cached_flavor_tags.any? %>
         <p class="text-xs text-herb-green-700/50">風味</p>
         <div class="flex flex-wrap gap-1">
-          <% @herb.flavor_tags.each do |tag| %>
+          <% @herb.cached_flavor_tags.each do |tag| %>
             <span class="tag-flavor"><%= tag.name %></span>
           <% end %>
         </div>
       <% end %>
 
       <%# 効能タグ %>
-      <% if @herb.functional_tags.any? %>
+      <% if @herb.cached_functional_tags.any? %>
         <p class="text-xs text-herb-green-700/50">効能</p>
         <div class="flex flex-wrap gap-1">
-          <% @herb.functional_tags.each do |tag| %>
+          <% @herb.cached_functional_tags.each do |tag| %>
             <span class="flex flex-wrap gap-1 tag-benefit"><%= tag.name %></span>
           <% end %>
         </div>
       <% end %>
 
       <%# 禁忌タグ %>
-      <% if @herb.caution_tags.any? %>
+      <% if @herb.cached_caution_tags.any? %>
         <p class="text-xs text-herb-green-700/50">禁忌</p>
         <div class="flex flex-wrap gap-1">
-          <% @herb.caution_tags.each do |tag| %>
+          <% @herb.cached_caution_tags.each do |tag| %>
             <span class="tag-caution">⚠ <%= tag.name %></span>
           <% end %>
         </div>
