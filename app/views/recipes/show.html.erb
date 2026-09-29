@@ -40,9 +40,9 @@
     <%# ハーブ配合 & ブレンドの特徴 を横並び %>
     <% herbs_in_recipe = @recipe.recipe_herbs.map(&:herb).compact %>
       <%# ハーブのタグ情報を取得、重複しないようにuniq %>
-      <% all_flavor_tags     = herbs_in_recipe.flat_map(&:flavor_tags).uniq %>
-      <% all_functional_tags = herbs_in_recipe.flat_map(&:functional_tags).uniq %>
-      <% all_caution_tags    = herbs_in_recipe.flat_map(&:caution_tags).uniq %>
+      <% all_flavor_tags     = herbs_in_recipe.flat_map(&:cached_flavor_tags).uniq %>
+      <% all_functional_tags = herbs_in_recipe.flat_map(&:cached_functional_tags).uniq %>
+      <% all_caution_tags    = herbs_in_recipe.flat_map(&:cached_caution_tags).uniq %>
       <% has_tags = all_flavor_tags.any? || all_functional_tags.any? || all_caution_tags.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
           <%= render 'recipes/recipe_summary', recipe: @recipe %>

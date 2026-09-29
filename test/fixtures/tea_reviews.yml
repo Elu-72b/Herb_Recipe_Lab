@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+#
+# クエリ本数テスト用。ハーブ3行（うち1行は herb_id なしの自由入力）を持たせ、
+# preload が効いていれば行数に比例して本数が増えないことを検証できるようにする。
+
+alice_sleep_blend:
+  user: alice
+  brand: ルピシア
+  name: おやすみブレンド
+  purchase_place: オンラインショップ
+  description: リンデンとカモミールのやさしい甘さ。
+  rating: 4
+  impression: 就寝前に飲むとちょうどよい。
+  created_at: 2026-07-01 10:00:00

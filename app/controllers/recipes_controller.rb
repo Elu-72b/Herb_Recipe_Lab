@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
 
   def show
     scope = Recipe.includes(:user, :drinking_log,
-      recipe_herbs: { herb: [:flavor_tags, :functional_tags, :caution_tags] })
+      recipe_herbs: { herb: [:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags] })
     @recipe =
       if user_signed_in?
         scope.visible_to(current_user).find(params[:id])   # 公開 or 自分のもの
