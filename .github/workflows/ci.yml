@@ -92,3 +92,6 @@ jobs:
 
       - name: Run tests
         run: bin/rails db:test:prepare test
+
+      - name: Run RSpec
+        run: bundle exec rspec

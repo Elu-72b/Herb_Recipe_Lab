@@ -86,6 +86,11 @@ group :development, :test do
   # Minitest 用 RuboCop 拡張
   gem "rubocop-minitest", require: false
 
+  # テストフレームワーク(新規テストは spec/ に RSpec で書く)
+  gem "rspec-rails", "~> 8.0"
+  gem "factory_bot_rails"
+  gem "faker"
+
   # 環境変数管理（.env ファイル読み込み）
   gem "dotenv-rails"
 end
