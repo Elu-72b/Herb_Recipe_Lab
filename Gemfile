@@ -83,6 +83,9 @@ group :development, :test do
   # Ruby スタイルガイド（Rails 公式）
   gem "rubocop-rails-omakase", require: false
 
+  # Minitest 用 RuboCop 拡張
+  gem "rubocop-minitest", require: false
+
   # 環境変数管理（.env ファイル読み込み）
   gem "dotenv-rails"
 end
