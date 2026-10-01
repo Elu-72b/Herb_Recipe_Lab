@@ -1,7 +1,7 @@
 class TeaReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tea_review, only: [:show] # 閲覧は全件
-  before_action :set_own_tea_review, only: [:edit, :update, :destroy] # 編集系は所有者限定
+  before_action :set_tea_review, only: [ :show ] # 閲覧は全件
+  before_action :set_own_tea_review, only: [ :edit, :update, :destroy ] # 編集系は所有者限定
 
   def index
     @q = TeaReview.ransack(params[:q])
@@ -54,7 +54,7 @@ class TeaReviewsController < ApplicationController
 
   def set_tea_review
     @tea_review = TeaReview
-      .includes(:user, tea_review_herbs: { herb: [:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags] })
+      .includes(:user, tea_review_herbs: { herb: [ :herb_flavor_tags, :herb_functional_tags, :herb_caution_tags ] })
       .with_attached_image
       .find(params[:id])
   end
@@ -70,7 +70,7 @@ class TeaReviewsController < ApplicationController
       :fruity, :spicy, :freshness, :flowery, :impression,
       herb_ids: [],
       custom_herb_names: [],
-      tea_review_herbs_attributes: [:id, :herb_id, :custom_herb_name, :_destroy]
+      tea_review_herbs_attributes: [ :id, :herb_id, :custom_herb_name, :_destroy ]
     )
   end
 end

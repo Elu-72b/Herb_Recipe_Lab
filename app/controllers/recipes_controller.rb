@@ -1,6 +1,6 @@
 # app/controllers/recipes_controller.rb
 class RecipesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
     @q = Recipe.public_recipes.ransack(params[:q])
@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
 
   def show
     scope = Recipe.includes(:user, :drinking_log,
-      recipe_herbs: { herb: [:herb_flavor_tags, :herb_functional_tags, :herb_caution_tags] })
+      recipe_herbs: { herb: [ :herb_flavor_tags, :herb_functional_tags, :herb_caution_tags ] })
     @recipe =
       if user_signed_in?
         scope.visible_to(current_user).find(params[:id])   # 公開 or 自分のもの
@@ -74,7 +74,7 @@ class RecipesController < ApplicationController
       :amount,
       :memo,
       :is_public,
-      recipe_herbs_attributes: [:id, :herb_id, :quantity, :unit, :_destroy, :custom_herb_name]
+      recipe_herbs_attributes: [ :id, :herb_id, :quantity, :unit, :_destroy, :custom_herb_name ]
     )
   end
 end

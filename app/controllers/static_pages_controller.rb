@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  before_action :authenticate_user!, only: [:home]
+  before_action :authenticate_user!, only: [ :home ]
   def top
     # ログイン済みなら home へリダイレクト
     redirect_to home_path if user_signed_in?
