@@ -49,4 +49,12 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
+
+  describe "関連の削除" do
+    it "ユーザーを削除するとレシピも削除される" do
+      user = create(:user)
+      create(:recipe, user: user)
+      expect { user.destroy }.to change(Recipe, :count).by(-1)
+    end
+  end
 end
