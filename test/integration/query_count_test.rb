@@ -23,7 +23,7 @@ class QueryCountTest < ActionDispatch::IntegrationTest
   setup do
     @original_cache = Rails.cache
     Rails.cache = ActiveSupport::Cache::MemoryStore.new
-    [FlavorTag, FunctionalTag, CautionTag].each(&:ordered_cached)
+    [ FlavorTag, FunctionalTag, CautionTag ].each(&:ordered_cached)
   end
 
   teardown do

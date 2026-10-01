@@ -14,7 +14,7 @@ class BookmarksController < ApplicationController
                                .joins(:recipe)
                                .where.not(recipes: { user_id: current_user.id })
                                .where(recipe_id: filtered_ids)
-                               .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
+                               .includes(recipe: [ :drinking_log, :user, recipe_herbs: :herb ])
                                .order(created_at: :desc)
                                .page(params[:page]).per(10)
     else
@@ -24,7 +24,7 @@ class BookmarksController < ApplicationController
                                .joins(:recipe)
                                .where(recipes: { user_id: current_user.id })
                                .where(recipe_id: filtered_ids)
-                               .includes(recipe: [:drinking_log, :user, recipe_herbs: :herb])
+                               .includes(recipe: [ :drinking_log, :user, recipe_herbs: :herb ])
                                .order(created_at: :desc)
                                .page(params[:my_page]).per(10)
     end

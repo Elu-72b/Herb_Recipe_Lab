@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # サインアップ時に name カラムの保存を許可する
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
   end
 
   # ── リッチ絞り込みのまとめ適用 ──────────────────────────────
@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
       name     = names[i].to_s.strip
       next if category.blank? && name.blank?
 
-      tag_names = name.present? ? [name] : (FunctionalTag::CATEGORIES[category] || [])
+      tag_names = name.present? ? [ name ] : (FunctionalTag::CATEGORIES[category] || [])
       ids = model.joins(tag_join).where(functional_tags: { name: tag_names }).select(:id)
       scope = scope.where(id: ids)
     end
