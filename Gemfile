@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # フレームワーク
-gem "rails", "~> 7.2.3", ">= 7.2.3.1"
+gem "rails", "~> 8.0.0", ">= 8.0.5.1"
 
 # データベース
 gem "pg", "~> 1.1"
