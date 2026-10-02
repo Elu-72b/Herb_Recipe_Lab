@@ -99,4 +99,7 @@ group :test do
   # システムテスト
   gem "capybara"
   gem "selenium-webdriver"
+
+  # テストカバレッジ計測
+  gem "simplecov", require: false
 end
