@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # フレームワーク
-gem "rails", "~> 8.0.0", ">= 8.0.5.1"
+gem "rails", "~> 8.1.0", ">= 8.1.4"
 
 # データベース
 gem "pg", "~> 1.1"
@@ -28,7 +28,7 @@ gem "cssbundling-rails"
 gem "tailwindcss-rails", "~> 4.4"
 
 # ログイン認証
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 
 # OAuth2 認証（Google）
 gem "omniauth-google-oauth2"
