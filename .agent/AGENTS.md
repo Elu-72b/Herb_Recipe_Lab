@@ -26,7 +26,7 @@
 
 ## このリポジトリの前提
 
-- 現在のアプリは初期段階の Rails 7.2 / PostgreSQL 構成。
+- 現在のアプリは初期段階の Rails 8.1 / PostgreSQL 構成。
 - `compose.yml` に `web` と `db` の定義がある。
 - `Gemfile` は最小構成で、Rails 本体の導入直後に近い状態。
 - `.agent/` には MVP Issue、ER 図、AI 補助ガイドが既に存在する。
