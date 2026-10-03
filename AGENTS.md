@@ -8,7 +8,7 @@
 ## プロジェクト概要
 
 配合（STEP 1）から感想（STEP 2）へ繋がる2段階保存が特徴のハーブティー管理アプリ。
-Tech: Ruby 3.4 / Rails 7.2 / PostgreSQL / Docker / TailwindCSS / Stimulus / Turbo
+Tech: Ruby 3.4 / Rails 8.1 / PostgreSQL / Docker / TailwindCSS / Stimulus / Turbo
 
 ---
 

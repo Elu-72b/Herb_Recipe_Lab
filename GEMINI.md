@@ -4,7 +4,7 @@
 
 # ENVIRONMENT
 
-- Ruby 3.4.x / Rails 7.2.x / PostgreSQL
+- Ruby 3.4.x / Rails 8.1.x / PostgreSQL
 - Docker環境 / TailwindCSS
 - ストレージ: Cloudinary (Active Storage経由)
 
