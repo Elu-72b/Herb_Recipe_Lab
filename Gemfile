@@ -42,6 +42,15 @@ gem "kaminari", "~> 1.2"
 # 検索機能
 gem "ransack"
 
+# 管理画面
+gem "rails_admin", "~> 3.3"
+
+# rails_admin の認可（モデルごとの権限差を Ability で宣言する）
+gem "cancancan"
+
+# rails_admin の SCSS を sprockets でコンパイルするため
+gem "sassc-rails"
+
 # 非同期ジョブ（PostgreSQL バックエンド）
 gem "good_job"
 
@@ -103,3 +112,4 @@ group :test do
   # テストカバレッジ計測
   gem "simplecov", require: false
 end
+

@@ -58,6 +58,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (8.1.4)
       activesupport (= 8.1.4)
+    activemodel-serializers-xml (1.0.3)
+      activemodel (>= 5.0.0.a)
+      activesupport (>= 5.0.0.a)
+      builder (~> 3.1)
     activerecord (8.1.4)
       activemodel (= 8.1.4)
       activesupport (= 8.1.4)
@@ -98,6 +102,7 @@ GEM
     brakeman (8.1.0)
       racc
     builder (3.3.0)
+    cancancan (3.6.1)
     capybara (3.40.0)
       addressable
       matrix
@@ -119,6 +124,7 @@ GEM
     crass (1.0.7)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    csv (3.3.6)
     date (3.5.1)
     debug (1.11.1)
       irb (~> 1.10)
@@ -233,6 +239,7 @@ GEM
     multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
     multipart-post (2.4.1)
+    nested_form (0.3.2)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.7)
@@ -325,6 +332,13 @@ GEM
     rails-html-sanitizer (1.7.1)
       loofah (~> 2.25, >= 2.25.2)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails_admin (3.3.0)
+      activemodel-serializers-xml (>= 1.0)
+      csv
+      kaminari (>= 0.14, < 2.0)
+      nested_form (~> 0.3)
+      rails (>= 6.0, < 9)
+      turbo-rails (>= 1.0, < 3)
     railties (8.1.4)
       actionpack (= 8.1.4)
       activesupport (= 8.1.4)
@@ -410,6 +424,14 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.2.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     securerandom (0.4.1)
     selenium-webdriver (4.42.0)
       base64 (~> 0.2)
@@ -437,6 +459,7 @@ GEM
     tailwindcss-ruby (4.2.2-aarch64-linux-gnu)
     tailwindcss-ruby (4.2.2-x86_64-linux-gnu)
     thor (1.5.0)
+    tilt (2.9.0)
     timeout (0.6.1)
     tsort (0.2.0)
     turbo-rails (2.0.23)
@@ -475,6 +498,7 @@ DEPENDENCIES
   activestorage-cloudinary-service
   bootsnap
   brakeman
+  cancancan
   capybara
   cloudinary (~> 2.0)
   cssbundling-rails
@@ -494,10 +518,12 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 8.1.0, >= 8.1.4)
+  rails_admin (~> 3.3)
   ransack
   rspec-rails (~> 8.0)
   rubocop-minitest
   rubocop-rails-omakase
+  sassc-rails
   selenium-webdriver
   simplecov
   sprockets-rails
