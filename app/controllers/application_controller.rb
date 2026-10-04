@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from CanCan::AccessDenied do
+    # rails_admin（エンジン）内でも本体のルートを指すよう main_app を明示する
+    redirect_to main_app.root_path, alert: "管理者権限が必要です"
+  end
+
   helper_method :search_active?
 
   # 検索条件（ransack の q[] もしくは独立パラメーター）が1つでも指定されているか
@@ -29,6 +34,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # サインアップ時に name カラムの保存を許可する
+    # :admin は権限昇格に直結するため sign_up / account_update いずれにも含めない
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
   end
 
