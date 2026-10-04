@@ -57,4 +57,10 @@ RSpec.describe User, type: :model do
       expect { user.destroy }.to change(Recipe, :count).by(-1)
     end
   end
+
+  describe "admin フラグ" do
+    it "既定値は false" do
+      expect(create(:user).admin).to be false
+    end
+  end
 end
