@@ -112,4 +112,3 @@ group :test do
   # テストカバレッジ計測
   gem "simplecov", require: false
 end
-
