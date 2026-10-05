@@ -1,6 +1,9 @@
 RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
+  # 画面上部とブラウザのタブに表示するアプリ名
+  config.main_app_name = [ "Herb Recipe Lab", "Admin" ]
+
   # ApplicationController を継承させ、rescue_from CanCan::AccessDenied を /admin にも効かせる
   config.parent_controller = "::ApplicationController"
 
@@ -117,6 +120,8 @@ RailsAdmin.config do |config|
         filterable false
         searchable false
       end
+      field :created_at
+      field :updated_at
     end
   end
 end

@@ -1,0 +1,26 @@
+// ログアウト（ナビゲーション内の badge bg-danger）だけを緑系にする。
+// $danger を変えると削除ボタンまで緑になるため、変数ではなくこの要素だけ上書きする
+.navbar .nav-link .badge.bg-danger {
+  background-color: $herb-green-700 !important;
+}
+// サイドバー（マスタ管理など）の選択中・ホバー中の項目の文字を白にする。
+// rails_admin の既定（styles/base/theming.scss）と同じセレクタにして、後から読み込まれるこちらを優先させる
+body.rails_admin .sidebar.btn-toggle-nav .btn-toggle-nav > li > a {
+  &.active,
+  &:hover {
+    color: $white;
+  }
+}
+
+// 更新（btn-primary）・絞り込み解除×とエクスポート（btn-info）の文字とアイコンを白にする
+.btn-primary,
+.btn-info {
+  &,
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  &:disabled {
+    color: $white;
+  }
+}

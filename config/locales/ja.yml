@@ -3,7 +3,7 @@ ja:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
       short: "%m/%d %H:%M"
-      long: "%Y年%m月%d日 %H時%M分%S秒 %z"
+      long: "%Y年%m月%d日 %H時%M分%S秒"
   date:
     formats:
       default: "%Y/%m/%d"
@@ -11,6 +11,9 @@ ja:
       long: "%Y年%m月%d日"
   errors:
     format: "%{attribute}%{message}"
+  attributes:
+    created_at: "作成日時"
+    updated_at: "更新日時"
   activerecord:
     errors:
       messages:
@@ -58,8 +61,6 @@ ja:
         functional_tags: "効能"
         caution_tags: "禁忌"
         user: "登録者"
-        created_at: "作成日時"
-        updated_at: "更新日時"
       flavor_tag:
         name: "タグ名"
       functional_tag:
