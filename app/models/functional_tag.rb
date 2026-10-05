@@ -19,4 +19,8 @@ class FunctionalTag < ApplicationRecord
       names.filter_map { |name| all_tags[name] }
     end
   end
+
+  def category
+    CATEGORIES.find { |category, names| names.include? (name) }&.first
+  end
 end

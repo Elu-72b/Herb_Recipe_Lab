@@ -19,6 +19,11 @@ ja:
         confirmation: "と%{attribute}が一致しません"
     models:
       user: "ユーザー"
+      herb: "ハーブ"
+      recipe: "レシピ"
+      flavor_tag: "風味タグ"
+      functional_tag: "効能タグ"
+      caution_tag: "禁忌タグ"
     attributes:
       user:
         email: "メールアドレス"
@@ -41,6 +46,27 @@ ja:
       herb:
         name: "ハーブ名"
         image: "画像"
+        alias_name: "別名"
+        description: "説明"
+        active_ingredients: "有効成分"
+        flavor_description: "風味の説明"
+        effect_description: "効能の説明"
+        caution_description: "禁忌の説明"
+        caution: "禁忌・注意事項"
+        history: "歴史"
+        flavor_tags: "風味"
+        functional_tags: "効能"
+        caution_tags: "禁忌"
+        user: "登録者"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      flavor_tag:
+        name: "タグ名"
+      functional_tag:
+        name: "タグ名"
+        category: "分類"
+      caution_tag:
+        name: "タグ名"
       tea_review/tea_review_herbs:
         herb: "ハーブ"
         herb_id: "ハーブ"

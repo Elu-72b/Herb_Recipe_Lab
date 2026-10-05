@@ -1,4 +1,8 @@
 class Herb < ApplicationRecord
+  # 旧 string 列 image は has_one_attached :image と名前が衝突し、
+  # rails_admin が添付ではなく空のカラム値を読んでしまうため無視する（カラム削除は別 Issue）
+  self.ignored_columns += [ "image" ]
+
   belongs_to :user, optional: true
   has_one_attached :image
 
