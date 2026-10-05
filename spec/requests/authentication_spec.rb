@@ -72,15 +72,16 @@ RSpec.describe "未ログイン時のアクセス制限", type: :request do
     end
   end
 
-  describe "ハーブ図鑑" do
-    describe "GET /herbs/new" do
-      subject { get new_herb_path }
+  # ハーブ図鑑の編集は管理画面に集約したため、管理画面で確認する
+  describe "ハーブ図鑑（管理画面）" do
+    describe "GET /admin/herb/new" do
+      subject { get rails_admin.new_path(model_name: "herb") }
 
       it_behaves_like "ログイン画面へリダイレクトする"
     end
 
-    describe "POST /herbs" do
-      subject { post herbs_path, params: { herb: { name: "テストハーブ" } } }
+    describe "POST /admin/herb/new" do
+      subject { post rails_admin.new_path(model_name: "herb"), params: { herb: { name: "テストハーブ" } } }
 
       it_behaves_like "ログイン画面へリダイレクトする"
 
@@ -89,14 +90,14 @@ RSpec.describe "未ログイン時のアクセス制限", type: :request do
       end
     end
 
-    describe "GET /herbs/:id/edit" do
-      subject { get edit_herb_path(herb) }
+    describe "GET /admin/herb/:id/edit" do
+      subject { get rails_admin.edit_path(model_name: "herb", id: herb.id) }
 
       it_behaves_like "ログイン画面へリダイレクトする"
     end
 
-    describe "DELETE /herbs/:id" do
-      subject { delete herb_path(herb) }
+    describe "DELETE /admin/herb/:id/delete" do
+      subject { delete rails_admin.delete_path(model_name: "herb", id: herb.id) }
 
       it_behaves_like "ログイン画面へリダイレクトする"
 
