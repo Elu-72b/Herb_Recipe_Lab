@@ -1,0 +1,13 @@
+// アプリ本体（application.tailwind.css）の herb-green に合わせる
+$herb-green-50: #e9f1e3;
+$herb-green-400: #a7c99a;
+$herb-green-600: #89bc7b;
+$herb-green-700: #3a5b52;
+
+// Bootstrap の主要な色を上書きする（ヘッダー・ボタン・リンクなど）
+$primary: $herb-green-600;
+$success: $herb-green-600;
+
+// 絞り込み解除（×）・エクスポートなどの補助ボタン（btn-info）
+$info: $herb-green-400;
+$link-color: $herb-green-700;
