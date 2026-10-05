@@ -49,59 +49,31 @@ RSpec.describe "Herbs", type: :request do
     end
   end
 
-  describe "GET /herbs/new" do
-    it "ログイン済みなら登録画面が表示される" do
-      sign_in user
-      get new_herb_path
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe "POST /herbs" do
-    before { sign_in user }
-
-    it "ハーブを登録し、詳細画面へリダイレクトする" do
-      expect {
-        post herbs_path, params: { herb: { name: "レモンバーム" } }
-      }.to change(Herb, :count).by(1)
-
-      herb = Herb.find_by!(name: "レモンバーム")
-      expect(herb.user).to eq user
-      expect(response).to redirect_to(herb_path(herb))
-    end
-
-    it "name がないと登録されず、フォームを再表示する" do
-      expect {
-        post herbs_path, params: { herb: { name: "" } }
-      }.not_to change(Herb, :count)
-
-      expect(response).to have_http_status(422)
-    end
-  end
-
-  describe "自分が登録したハーブ" do
+  # ハーブの登録・編集・削除は管理画面に一本化したため、一般画面からは行えない
+  # （管理者による操作は spec/requests/admin/herbs_spec.rb で確認する）
+  describe "一般画面からのハーブ編集" do
     let!(:herb) { create(:herb, user: user, name: "レモンバーム") }
 
     before { sign_in user }
 
-    it "編集画面が表示される" do
-      get edit_herb_path(herb)
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "更新すると詳細画面へリダイレクトする" do
-      patch herb_path(herb), params: { herb: { description: "レモンの香り" } }
-
-      expect(response).to redirect_to(herb_path(herb))
-      expect(herb.reload.description).to eq "レモンの香り"
-    end
-
-    it "削除すると一覧へリダイレクトする" do
+    it "POST /herbs のルートがなく、ハーブは登録されない" do
       expect {
-        delete herb_path(herb)
-      }.to change(Herb, :count).by(-1)
+        post "/herbs", params: { herb: { name: "ペパーミント" } }
+      }.not_to change(Herb, :count)
+      expect(response).to have_http_status(:not_found)
+    end
 
-      expect(response).to redirect_to(herbs_path)
+    it "PATCH /herbs/:id のルートがなく、ハーブは更新されない" do
+      patch "/herbs/#{herb.id}", params: { herb: { description: "レモンの香り" } }
+      expect(response).to have_http_status(:not_found)
+      expect(herb.reload.description).to be_nil
+    end
+
+    it "DELETE /herbs/:id のルートがなく、ハーブは削除されない" do
+      expect {
+        delete "/herbs/#{herb.id}"
+      }.not_to change(Herb, :count)
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

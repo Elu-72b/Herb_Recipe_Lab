@@ -6,6 +6,7 @@ class Ability
 
     can :access, :rails_admin
     can :read, :dashboard
-    # モデルごとの権限は #102 / #103 で追記する
+    # ハーブ図鑑・タグマスタ: 管理画面のみでフル CRUD
+    can :manage, [ Herb, FlavorTag, FunctionalTag, CautionTag ]
   end
 end

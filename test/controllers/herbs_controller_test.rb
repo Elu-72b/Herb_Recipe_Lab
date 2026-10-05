@@ -3,7 +3,7 @@ require "test_helper"
 class HerbsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  # fixtures のハーブは user を持たないため、編集・削除の検証用に alice 所有のハーブを作る
+  # 一般画面から編集できないことの検証用に、alice 所有のハーブを作る
   setup do
     @own_herb = Herb.create!(name: "レモンバーム", user: users(:alice))
   end
@@ -18,43 +18,47 @@ class HerbsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ログイン済みならハーブ登録画面が表示される" do
+  # ハーブの登録・編集・削除は管理画面に一本化したため、一般画面からは行えない
+  test "一般画面の POST /herbs はルートがなく、ハーブは登録されない" do
     sign_in users(:alice)
-    get new_herb_url
-    assert_response :success
+
+    assert_no_difference "Herb.count" do
+      post "/herbs", params: { herb: { name: "ペパーミント" } }
+    end
+    assert_response :not_found
   end
 
-  test "ハーブを登録すると詳細画面へリダイレクトする" do
+  test "一般画面の PATCH /herbs/:id はルートがなく、ハーブは更新されない" do
+    sign_in users(:alice)
+    patch "/herbs/#{@own_herb.id}", params: { herb: { description: "レモンの香り" } }
+
+    assert_response :not_found
+    assert_nil @own_herb.reload.description
+  end
+
+  test "一般画面の DELETE /herbs/:id はルートがなく、ハーブは削除されない" do
+    sign_in users(:alice)
+
+    assert_no_difference "Herb.count" do
+      delete "/herbs/#{@own_herb.id}"
+    end
+    assert_response :not_found
+  end
+
+  test "管理者は管理画面でハーブを登録できる" do
+    users(:alice).update!(admin: true)
     sign_in users(:alice)
 
     assert_difference "Herb.count", 1 do
-      post herbs_url, params: { herb: { name: "ペパーミント" } }
+      post rails_admin.new_path(model_name: "herb"), params: { herb: { name: "ペパーミント" } }
     end
-
-    assert_redirected_to herb_path(Herb.find_by!(name: "ペパーミント"))
   end
 
-  test "自分が登録したハーブの編集画面が表示される" do
-    sign_in users(:alice)
-    get edit_herb_url(@own_herb)
-    assert_response :success
-  end
-
-  test "自分が登録したハーブを更新すると詳細画面へリダイレクトする" do
-    sign_in users(:alice)
-    patch herb_url(@own_herb), params: { herb: { description: "レモンの香り" } }
-
-    assert_redirected_to herb_path(@own_herb)
-    assert_equal "レモンの香り", @own_herb.reload.description
-  end
-
-  test "自分が登録したハーブを削除すると一覧へリダイレクトする" do
+  test "一般ユーザーは管理画面でハーブを登録できない" do
     sign_in users(:alice)
 
-    assert_difference "Herb.count", -1 do
-      delete herb_url(@own_herb)
+    assert_no_difference "Herb.count" do
+      post rails_admin.new_path(model_name: "herb"), params: { herb: { name: "ペパーミント" } }
     end
-
-    assert_redirected_to herbs_path
   end
 end

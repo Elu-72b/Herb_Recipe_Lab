@@ -1,8 +1,5 @@
 class HerbsController < ApplicationController
-  before_action :require_login_with_alert, only: [ :new, :create, :edit, :update, :destroy ]
-  before_action :set_herb, only: [ :show, :edit, :update, :destroy ]
-  before_action :set_tags, only: [ :new, :create, :edit, :update ]
-  before_action :authorize_herb!, only: [ :edit, :update, :destroy ]
+  before_action :set_herb, only: [ :show ]
 
   def autocomplete
     query      = params[:q].to_s
