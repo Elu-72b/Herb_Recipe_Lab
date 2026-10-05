@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # ログイン済みなら Controller 側で home へリダイレクトさせます。
   root "static_pages#top"
 
-  resources :herbs, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
+  resources :herbs, only: [ :index, :show ] do
     collection do
       get :autocomplete
     end
