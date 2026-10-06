@@ -24,11 +24,16 @@ ja:
       user: "ユーザー"
       herb: "ハーブ"
       recipe: "レシピ"
+      tea_review: "既製ブレンド"
       flavor_tag: "風味タグ"
       functional_tag: "効能タグ"
       caution_tag: "禁忌タグ"
     attributes:
       user:
+        admin: "管理者"
+        provider: "ログイン方法"
+        recipes: "レシピ"
+        tea_reviews: "既製ブレンド"
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認用）"
@@ -36,6 +41,10 @@ ja:
       recipe:
         title: "レシピ名"
         brewed_at: "作成日"
+        is_public: "公開設定"
+        user: "登録者"
+        herbs: "配合ハーブ"
+        memo: "メモ"
       recipe/recipe_herbs:
         quantity: "配合量"
         herb: "ハーブ"
@@ -77,6 +86,9 @@ ja:
         herb_id: "ハーブ"
         custom_herb_name: "ハーブ名"
       tea_review:
+        user: "登録者"
+        herbs: "配合ハーブ"
+        image: "画像"
         brand: "メーカー名"
         name: "商品名"
         purchase_place: "購入場所"

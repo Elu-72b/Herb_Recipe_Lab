@@ -54,8 +54,8 @@ RailsAdmin.config do |config|
     end
 
     list do
-      field :id
-      field :name
+      field(:id) { sticky true }
+      field(:name) { sticky true }
       field :alias_name
       field :image
       field :image_filename
@@ -105,14 +105,20 @@ RailsAdmin.config do |config|
   %w[FlavorTag CautionTag].each do |model_name|
     config.model model_name do
       navigation_label "マスタ管理"
+      list do
+        field(:id) { sticky true }
+        field(:name) { sticky true }
+        field :created_at
+        field :updated_at
+      end
     end
   end
 
   config.model "FunctionalTag" do
     navigation_label "マスタ管理"
     list do
-      field :id
-      field :name
+      field(:id) { sticky true }
+      field(:name) { sticky true }
       # カラムではなくメソッドのため、並べ替え・絞り込み・検索の対象外にする
       field :category, :string do
         label "分類"
@@ -122,6 +128,98 @@ RailsAdmin.config do |config|
       end
       field :created_at
       field :updated_at
+    end
+  end
+
+  config.model "User" do
+    navigation_label "ユーザー管理"
+      list do
+        field(:id) { sticky true }
+        field(:name) { sticky true }
+        field(:email) { sticky true }
+        field :admin
+        field :created_at
+        field :updated_at
+    end
+    show do
+      field :id
+      field :name
+      field :email
+      field :admin
+      field :provider
+      field :created_at
+      field :recipes
+      field :tea_reviews
+    end
+    edit do
+      field :admin   # メール・パスワード・名前は編集させない
+    end
+    export do
+      field :id
+      field :name
+      field :admin
+      field :created_at   # email・認証系カラムは出力しない
+    end
+  end
+
+  config.model "Recipe" do
+    navigation_label "投稿管理"
+    label "公開ブレンドレシピ"
+    list do
+      field(:id) { sticky true }
+      field(:title) { sticky true }
+      field :user
+      field :is_public
+      field :created_at
+      field :updated_at
+    end
+    show do
+      field :title
+      field :user
+      field :brewed_at
+      field :herbs   # RecipeHerb は管理対象外のため、配合ハーブ名を表示する
+      field :memo
+      field :is_public
+    end
+    edit do
+      field :is_public   # 非公開化のみ
+    end
+  end
+
+  config.model "TeaReview" do
+    navigation_label "投稿管理"
+    label "既製ブレンド"
+    # belongs_to :herb は対応する herb_id カラムが無く、自動検出されるとエラーになるため隠す
+    configure :herb do
+      hide
+    end
+    # 配列カラムは rails_admin で正しく表示できないため隠す
+    configure :custom_herb_names do
+      hide
+    end
+    list do
+      field(:id) { sticky true }
+      field(:name) { sticky true }
+      field :brand
+      field :user
+      field :rating
+      field :created_at
+      field :updated_at
+    end
+    edit do
+      field :user do
+        visible { bindings[:object].new_record? }   # 新規作成時のみ投稿者を選択可能にする
+      end
+      field :rating do
+        visible { bindings[:object].new_record? }   # 必須項目のため新規作成時のみ入力させる
+      end
+      field :brand
+      field :name
+      field :purchase_place
+      field :description
+      field :image   # tea_reviews には旧 string 列が無いため型の明示は不要（自動で active_storage と判定される）
+      field :herbs
+      # impression / rating / 味覚チャート系は投稿者の感想なので編集させない
     end
   end
 end

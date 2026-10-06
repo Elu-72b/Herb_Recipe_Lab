@@ -24,3 +24,11 @@ body.rails_admin .sidebar.btn-toggle-nav .btn-toggle-nav > li > a {
     color: $white;
   }
 }
+
+// 一覧表のセルを「...」で省略せず全文表示する。
+// 表が横に広がった分は、rails_admin の #sidescroll（overflow-x: auto）で横スクロールして見る
+body.rails_admin .table td {
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none;
+}
