@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [ :google_oauth2 ]
   def self.ransackable_attributes(auth_object = nil)
     %w[name]
@@ -26,6 +26,9 @@ class User < ApplicationRecord
       email: auth.info.email,
       password: Devise.friendly_token[0, 20],
       name: auth.info.name
-    )
+    ) do |user|
+      # Google 側でメールアドレスは確認済みのため、確認メールを送らず確認済みにする
+      user.skip_confirmation!
+    end
   end
 end
