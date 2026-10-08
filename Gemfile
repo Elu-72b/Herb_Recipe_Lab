@@ -62,7 +62,7 @@ gem "activestorage-cloudinary-service"
 gem "image_processing", "~> 1.2"
 
 # Active Storage バリデーション
-gem "active_storage_validations"
+gem "active_storage_validations", "~> 3.0"
 
 # HTTP クライアント（Gemini API 連携で使用）
 # cloudinary 経由の間接依存だったものを明示的な直接依存に切り出す
