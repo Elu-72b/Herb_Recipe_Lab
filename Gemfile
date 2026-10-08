@@ -66,7 +66,7 @@ gem "active_storage_validations", "~> 3.0"
 
 # HTTP クライアント（Gemini API 連携で使用）
 # cloudinary 経由の間接依存だったものを明示的な直接依存に切り出す
-gem "faraday", "~> 2.0"
+gem "faraday", "~> 2.14"
 
 # 起動時間の短縮キャッシュ
 gem "bootsnap", require: false
