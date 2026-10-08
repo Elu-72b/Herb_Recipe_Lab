@@ -59,10 +59,10 @@ gem "cloudinary", "~> 2.0"
 gem "activestorage-cloudinary-service"
 
 # 画像処理（Active Storage バリアント）
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.2"
 
 # Active Storage バリデーション
-gem "active_storage_validations", "~> 3.0"
+gem "active_storage_validations", "~> 4.1"
 
 # HTTP クライアント（Gemini API 連携で使用）
 # cloudinary 経由の間接依存だったものを明示的な直接依存に切り出す
@@ -108,6 +108,8 @@ group :test do
   # システムテスト
   gem "capybara"
   gem "selenium-webdriver"
+  # minitest 6 で minitest/mock が別 gem に分離されたため
+  gem "minitest-mock"
 
   # テストカバレッジ計測
   gem "simplecov", require: false
