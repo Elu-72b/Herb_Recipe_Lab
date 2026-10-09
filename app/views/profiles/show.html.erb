@@ -21,8 +21,11 @@
       </div>
     </div>
 
-    <div class="flex justify-center">
+    <div class="flex flex-col items-center gap-3">
       <%= link_to "プロフィールを編集", edit_profile_path, class: "btn-white-lg" %>
+      <% unless current_user.google_user? %>
+        <%= link_to "パスワードを変更", edit_profile_password_path, class: "btn-white-lg" %>
+      <% end %>
     </div>
 
     <%# ブックマーク一覧（フッターから AI提案 に差し替えたため、導線をここに置く） %>

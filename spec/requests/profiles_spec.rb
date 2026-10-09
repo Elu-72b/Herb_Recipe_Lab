@@ -27,6 +27,13 @@ RSpec.describe "Profiles", type: :request do
         expect(ActionMailer::Base.deliveries.last.to).to eq [ "old@example.com" ]
       end
 
+      it "通知メールにアプリのリンクと送信元が記載されている" do
+        patch profile_path, params: { user: { name: user.name, email: "new@example.com", current_password: "password123" } }
+        body = ActionMailer::Base.deliveries.last.body.encoded
+        expect(body).to include("Herb Recipe Lab")
+        expect(body).to include("http://www.example.com/")
+      end
+
       it "現在のパスワードが誤っているとメールは変更されない" do
         patch profile_path, params: { user: { name: user.name, email: "new@example.com", current_password: "wrong" } }
         expect(response).to have_http_status(:unprocessable_entity)

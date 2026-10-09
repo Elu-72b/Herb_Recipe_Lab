@@ -55,6 +55,16 @@ class User < ApplicationRecord
     valid && save(context: :profile_update)
   end
 
+  # Devise の update_with_password は新パスワードが空だと「変更なし」で成功扱いにするため、空を明示的に弾く
+  def update_password(params)
+    if params[:password].blank?
+      errors.add(:password, :blank)
+      return false
+    end
+
+    update_with_password(params)
+  end
+
   private
 
   # Devise が保存前に strip / downcase するため、正規化後の値で比較する
