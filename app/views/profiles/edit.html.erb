@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-gradient-to-br flex flex-col items-center space-y-3 w-full">
+  <div class="max-w-2xl w-full bg-white rounded-2xl shadow-sm border border-herb-green-100 p-4 md:p-5 my-5 space-y-6">
+    <div class="flex justify-center mb-6">
+      <div class="bg-herb-green-100 px-6 py-2 rounded-full shadow-sm border border-herb-green-600/20">
+        <h2 class="text-xl text-herb-green-700 font-medium tracking-wide">プロフィール編集</h2>
+      </div>
+    </div>
+
+    <%= form_with model: current_user, scope: :user, url: profile_path, method: :patch, class: "space-y-4" do |f| %>
+      <%= render "devise/shared/error_messages", resource: current_user %>
+
+      <div>
+        <%= f.label :name, class: "block text-sm text-herb-green-700 mb-1" %>
+        <%= f.text_field :name, required: true, maxlength: User::NAME_MAX_LENGTH,
+            class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 outline-none" %>
+      </div>
+
+      <% if current_user.google_user? %>
+        <div>
+          <p class="text-sm text-herb-green-700 mb-1">メールアドレス</p>
+          <p class="text-herb-green-700"><%= current_user.email %></p>
+          <p class="text-xs text-herb-green-700/70 mt-1">Google アカウントで管理されているため変更できません</p>
+        </div>
+      <% else %>
+        <div>
+          <%= f.label :email, class: "block text-sm text-herb-green-700 mb-1" %>
+          <%= f.email_field :email, required: true, autocomplete: "email",
+              class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 outline-none" %>
+        </div>
+        <div>
+          <%= f.label :current_password, class: "block text-sm text-herb-green-700 mb-1" %>
+          <%= f.password_field :current_password, autocomplete: "current-password",
+              class: "w-full p-3 border border-herb-green-100 rounded-xl focus:ring-2 focus:ring-herb-green-600 outline-none" %>
+          <p class="text-xs text-herb-green-700/70 mt-1">メールアドレスを変更する場合のみ入力してください</p>
+        </div>
+      <% end %>
+
+      <div class="flex justify-center gap-3 pt-2">
+        <%= link_to "キャンセル", profile_path, class: "btn-white-lg" %>
+        <%= f.submit "更新する", class: "btn-primary-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div>

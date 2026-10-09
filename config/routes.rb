@@ -32,7 +32,8 @@ Rails.application.routes.draw do
   end
 
   get "home", to: "static_pages#home"
-  get "profile", to: "profiles#show"
+  # プロフィール（ユーザーごとに1つのため単数リソース）
+  resource :profile, only: [ :show, :edit, :update ]
 
   # 利用規約・プライバシーポリシー（未ログインでも閲覧可）
   get "terms",   to: "static_pages#terms"
