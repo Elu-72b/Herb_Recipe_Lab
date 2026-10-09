@@ -9,6 +9,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [ :google_oauth2 ]
+
+  NAME_MAX_LENGTH = 20
+
+  validates :name, length: { maximum: NAME_MAX_LENGTH }
+  # 新規登録では任意（既存仕様）。プロフィール編集では空にさせない
+  validates :name, presence: true, on: :profile_update
+
   def self.ransackable_attributes(auth_object = nil)
     %w[name]
   end
@@ -27,5 +34,31 @@ class User < ApplicationRecord
       password: Devise.friendly_token[0, 20],
       name: auth.info.name
     )
+  end
+
+  def google_user?
+    provider.present?
+  end
+
+  # プロフィール（名前・メールアドレス）を更新する。
+  # Google ユーザーはメールを Google 側で管理するため名前のみ。
+  # 通常ユーザーはメールを変えるときだけ現在のパスワードを求める。
+  def update_profile(params)
+    assign_attributes(google_user? ? params.slice(:name) : params.slice(:name, :email))
+
+    valid = valid?(:profile_update)
+    if email_will_change_meaningfully? && !valid_password?(params[:current_password].to_s)
+      errors.add(:current_password, "が正しくありません")
+      valid = false
+    end
+
+    valid && save(context: :profile_update)
+  end
+
+  private
+
+  # Devise が保存前に strip / downcase するため、正規化後の値で比較する
+  def email_will_change_meaningfully?
+    email.to_s.strip.downcase != email_in_database
   end
 end
