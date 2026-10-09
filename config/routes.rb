@@ -33,7 +33,9 @@ Rails.application.routes.draw do
 
   get "home", to: "static_pages#home"
   # プロフィール（ユーザーごとに1つのため単数リソース）
-  resource :profile, only: [ :show, :edit, :update ]
+  resource :profile, only: [ :show, :edit, :update ] do
+    resource :password, only: [ :edit, :update ], module: :profiles
+  end
 
   # 利用規約・プライバシーポリシー（未ログインでも閲覧可）
   get "terms",   to: "static_pages#terms"
