@@ -10,7 +10,7 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 
 # アセットパイプライン
-gem "sprockets-rails"
+gem "sprockets", ">= 4.4"
 
 # JavaScript バンドル
 gem "jsbundling-rails"

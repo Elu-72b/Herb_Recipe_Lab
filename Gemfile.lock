@@ -439,8 +439,8 @@ GEM
     snaky_hash (2.0.7)
       hashie (>= 0.1.0, < 6)
       version_gem (~> 1.1, >= 1.1.14)
-    sprockets (4.2.2)
-      concurrent-ruby (~> 1.0)
+    sprockets (4.4.1)
+      concurrent-ruby (~> 1.1)
       logger
       rack (>= 2.2.4, < 4)
     sprockets-rails (3.5.2)
@@ -523,7 +523,7 @@ DEPENDENCIES
   sassc-rails
   selenium-webdriver
   simplecov
-  sprockets-rails
+  sprockets (>= 4.4)
   stimulus-rails
   tailwindcss-rails (~> 4.4)
   turbo-rails
