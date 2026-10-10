@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.0", ">= 8.1.4"
 
 # データベース
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.7"
 
 # Webサーバー
 gem "puma", ">= 5.0"
