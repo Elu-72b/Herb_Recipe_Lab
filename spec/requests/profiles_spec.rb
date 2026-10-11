@@ -60,4 +60,49 @@ RSpec.describe "Profiles", type: :request do
       end
     end
   end
+
+  describe "DELETE /profile" do
+    let(:user) { create(:user) }
+    let(:other) { create(:user) }
+    let!(:own_recipe) { create(:recipe, user: user) }
+    let!(:other_recipe) { create(:recipe, user: other) }
+    let!(:own_herb) { create(:herb, user: user) }
+    let!(:own_review) { create(:tea_review, user: user) }
+
+    before do
+      create(:drinking_log, recipe: own_recipe)
+      Bookmark.create!(user: user, recipe: other_recipe)  # 自分が付けたもの
+      Bookmark.create!(user: other, recipe: own_recipe)   # 他人が自分のレシピに付けたもの
+      sign_in user
+    end
+
+    it "退会するとログアウトされ、トップへリダイレクトする" do
+      delete profile_path
+      expect(response).to redirect_to(root_path)
+      get profile_path
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "本人の関連データは削除され、他人のデータとハーブは残る" do
+      expect { delete profile_path }
+        .to change(User, :count).by(-1)
+        .and change(Recipe, :count).by(-1)
+        .and change(DrinkingLog, :count).by(-1)
+        .and change(TeaReview, :count).by(-1)
+        .and change(Bookmark, :count).by(-2)
+        .and change(Herb, :count).by(0)
+
+      expect(Recipe.exists?(other_recipe.id)).to be true
+      expect(own_herb.reload.user_id).to be_nil
+    end
+
+    context "管理者が1人だけの場合" do
+      let(:user) { create(:user, :admin) }
+
+      it "退会できない" do
+        expect { delete profile_path }.not_to change(User, :count)
+        expect(response).to redirect_to(profile_path)
+      end
+    end
+  end
 end

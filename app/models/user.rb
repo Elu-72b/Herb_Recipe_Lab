@@ -15,6 +15,8 @@ class User < ApplicationRecord
   validates :name, length: { maximum: NAME_MAX_LENGTH }
   # 新規登録では任意（既存仕様）。プロフィール編集では空にさせない
   validates :name, presence: true, on: :profile_update
+  # dependent: :destroy より先に判定するため prepend する
+  before_destroy :prevent_last_admin_destroy, prepend: true
 
   def self.ransackable_attributes(auth_object = nil)
     %w[name]
@@ -70,5 +72,12 @@ class User < ApplicationRecord
   # Devise が保存前に strip / downcase するため、正規化後の値で比較する
   def email_will_change_meaningfully?
     email.to_s.strip.downcase != email_in_database
+  end
+
+  def prevent_last_admin_destroy
+    return unless admin? && !User.where(admin: true).where.not(id: id).exists?
+
+    errors.add(:base, "管理者が1人のため退会できません")
+    throw :abort
   end
 end

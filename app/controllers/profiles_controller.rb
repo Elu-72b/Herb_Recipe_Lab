@@ -16,6 +16,15 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def destroy
+    if current_user.destroy
+      sign_out(:user)
+      redirect_to root_path, notice: t("devise.registrations.destroyed"), status: :see_other
+    else
+      redirect_to profile_path, alert: current_user.errors.full_messages.to_sentence, status: :see_other
+    end
+  end
+
   private
 
   def profile_params

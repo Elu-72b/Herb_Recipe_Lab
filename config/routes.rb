@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   get "home", to: "static_pages#home"
   # プロフィール（ユーザーごとに1つのため単数リソース）
-  resource :profile, only: [ :show, :edit, :update ] do
+  resource :profile, only: [ :show, :edit, :update, :destroy ] do
     resource :password, only: [ :edit, :update ], module: :profiles
   end
 
