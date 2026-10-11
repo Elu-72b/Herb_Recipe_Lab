@@ -9,7 +9,7 @@ class ReorderGoodJobsCronIndex < ActiveRecord::Migration[8.1]
   def up
     return if cron_index_has_expected_order?
 
-    add_index :good_jobs, [:cron_key, :cron_at],
+    add_index :good_jobs, [ :cron_key, :cron_at ],
       name: REPLACEMENT_INDEX,
       order: { cron_at: "DESC NULLS LAST" },
       where: "cron_key IS NOT NULL",
@@ -23,7 +23,7 @@ class ReorderGoodJobsCronIndex < ActiveRecord::Migration[8.1]
   def down
     return if cron_index_definition && !cron_index_has_expected_order?
 
-    add_index :good_jobs, [:cron_key, :cron_at],
+    add_index :good_jobs, [ :cron_key, :cron_at ],
       name: REPLACEMENT_INDEX,
       where: "cron_key IS NOT NULL",
       unique: true,

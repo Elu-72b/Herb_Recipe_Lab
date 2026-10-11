@@ -9,7 +9,7 @@ class AddBatchQueryIndexes < ActiveRecord::Migration[8.1]
       where: "finished_at IS NOT NULL",
       algorithm: :concurrently,
       if_not_exists: true
-    add_index :good_job_batches, [:created_at, :id],
+    add_index :good_job_batches, [ :created_at, :id ],
       name: :index_good_job_batches_on_created_at_and_id,
       order: { created_at: :desc, id: :desc },
       algorithm: :concurrently,
