@@ -75,7 +75,7 @@
               <%= herb_f.number_field :quantity, step: 0.1, min: 0, placeholder: "量",
                     class: "herb-row-quantity" %>
 
-              <%= herb_f.select :unit, [["g", "g"], ["小さじ", "teaspoon"], ["枚", "piece"], ["個", "individual"]], {},
+              <%= herb_f.select :unit, [["小さじ", "teaspoon"], ["大さじ", "tablespoon"], ["g", "g"], ["枚", "piece"], ["個", "individual"]], {},
                     class: "herb-row-unit" %>
 
               <%= herb_f.hidden_field :id %>

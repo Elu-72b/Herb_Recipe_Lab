@@ -119,6 +119,28 @@ RSpec.describe "Recipes", type: :request do
       get edit_recipe_path(recipe)
       expect(response).to have_http_status(:not_found)
     end
+
+    it "大さじで登録済みのハーブ行は「大さじ」が選択された状態で表示される" do
+      recipe = create(:recipe, user: user)
+      create(:recipe_herb, recipe: recipe, unit: :tablespoon)
+
+      get edit_recipe_path(recipe)
+
+      doc = Nokogiri::HTML(response.body)
+      selected = doc.at_css("select.herb-row-unit option[selected]")
+      expect(selected["value"]).to eq "tablespoon"
+    end
+
+    it "単位の選択肢に小さじ・大さじ・g・枚・個がすべて含まれる" do
+      recipe = create(:recipe, user: user)
+      create(:recipe_herb, recipe: recipe)
+
+      get edit_recipe_path(recipe)
+
+      doc = Nokogiri::HTML(response.body)
+      values = doc.css("select.herb-row-unit").first.css("option").map { |o| o["value"] }
+      expect(values).to eq %w[teaspoon tablespoon g piece individual]
+    end
   end
 
   describe "PATCH /recipes/:id" do
