@@ -5,7 +5,7 @@ Rails.application.configure do
 
   config.hosts << "herb-recipe-lab.com"      # 独自ドメイン
   config.hosts << "www.herb-recipe-lab.com"  # サブドメイン
-  config.hosts << "herb-recipe-lab.onrender.com" # Renderのデフォルトドメイン
+  config.hosts << "herb-recipe-lab-1.onrender.com" # Renderのデフォルトドメイン（Singapore）
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
@@ -87,13 +87,13 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "herb-recipe-lab.onrender.com",
+    domain: "herb-recipe-lab.com",
     user_name: ENV["MAILER_SENDER"],
     password: ENV["MAILER_PASSWORD"],
     authentication: "plain",
     enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = { host: "herb-recipe-lab.onrender.com" }
+  config.action_mailer.default_url_options = { host: "herb-recipe-lab.com", protocol: "https" }
 
   config.good_job.execution_mode = :async
 
