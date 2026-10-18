@@ -11,7 +11,7 @@
 ![Render](https://img.shields.io/badge/Render-Deploy-46E3B7?logo=render&logoColor=white&style=for-the-badge)
 ![Neon](https://img.shields.io/badge/Neon-Postgres-00E599?logo=neon&logoColor=white&style=for-the-badge)
 
-🔗 **サービスURL** : https://herb-recipe-lab.onrender.com
+🔗 **サービスURL** : https://herb-recipe-lab.com
 
 > 📝 **ログイン不要で体験できます。** 公開レシピ・ハーブ図鑑は新規登録なしで閲覧可能です。レシピ投稿・ブックマーク・市販ハーブティーレビュー・AI ブレンド提案などはログインが必要で、操作時にログインへ誘導します。
 
