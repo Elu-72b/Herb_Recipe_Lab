@@ -1,5 +1,23 @@
 # PR コメント テンプレート
 
+## PR タイトルの規定
+
+PR タイトルの頭には、マージ元ブランチの種類に対応する prefix を付けること（issue タイトルと揃える）。
+
+| ブランチ | issue・PR タイトルの頭 |
+| --- | --- |
+| `feature/` | `feat:` |
+| `fix/` | `fix:` |
+| `hotfix/` | `hotfix:` |
+| `refactor/` | `refactor:` |
+| `chore/` | `chore:` |
+| `docs/` | `docs:` |
+| `test/` | `test:` |
+| `spike/`(issue のみ。PR はマージしない) | `spike:` |
+| develop → main(リリース) | `release:` |
+
+---
+
 > PRコメントは以下のフォーマットを **1つのコードブロック（```markdown）内** に記述すること。
 
 ````markdown
