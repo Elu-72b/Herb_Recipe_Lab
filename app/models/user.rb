@@ -21,6 +21,11 @@ class User < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[name]
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   # 既存の連携済みユーザーを探すだけ（作成はしない）。
   # ログイン画面からの Google 認証では未登録なら作成させないため、検索と作成を分けている。
   def self.find_for_oauth(auth)

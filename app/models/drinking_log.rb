@@ -5,6 +5,10 @@ class DrinkingLog < ApplicationRecord
     %w[rating]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   # 風味タグ名（seeds.rb）とDBカラム名のマッピング
   FLAVOR_MAPPING = {
     "甘味" => :sweetness,

@@ -40,7 +40,7 @@ gem "omniauth-rails_csrf_protection"
 gem "kaminari", "~> 1.2"
 
 # 検索機能
-gem "ransack", "~> 5.0"
+gem "ransack", "~> 6.0"
 
 # 管理画面
 gem "rails_admin", "~> 3.3"

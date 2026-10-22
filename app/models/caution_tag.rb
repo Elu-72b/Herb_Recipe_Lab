@@ -13,6 +13,10 @@ class CautionTag < ApplicationRecord
     %w[name]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def self.grouped_by_category
     all_tags = all.index_by(&:name)
     CATEGORIES.transform_values do |names|
