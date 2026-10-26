@@ -37,7 +37,7 @@ gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
 # ページネーション
-gem "kaminari", "~> 1.2"
+gem "kaminari", "~> 1.3"
 
 # 検索機能
 gem "ransack", "~> 6.0"
