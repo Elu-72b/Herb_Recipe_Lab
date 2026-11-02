@@ -25,7 +25,7 @@ gem "stimulus-rails"
 gem "cssbundling-rails"
 
 # TailwindCSS
-gem "tailwindcss-rails", "~> 4.4"
+gem "tailwindcss-rails", "~> 4.7"
 
 # ログイン認証
 gem "devise", "~> 5.0"
@@ -37,7 +37,7 @@ gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
 # ページネーション
-gem "kaminari", "~> 1.2"
+gem "kaminari", "~> 1.3"
 
 # 検索機能
 gem "ransack", "~> 6.0"
