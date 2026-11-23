@@ -40,7 +40,7 @@ gem "omniauth-rails_csrf_protection"
 gem "kaminari", "~> 1.3"
 
 # 検索機能
-gem "ransack", "~> 6.0"
+gem "ransack", "~> 6.1"
 
 # 管理画面
 gem "rails_admin", "~> 3.3"
@@ -96,7 +96,7 @@ group :development, :test do
   gem "rubocop-minitest", require: false
 
   # テストフレームワーク(新規テストは spec/ に RSpec で書く)
-  gem "rspec-rails", "~> 8.0"
+  gem "rspec-rails", "~> 8.1"
   gem "factory_bot_rails"
   gem "faker"
 
